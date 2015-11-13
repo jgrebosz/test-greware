@@ -1,0 +1,4 @@
+To compile the code you will need at least qt4
+Then
+qmake
+make -j
