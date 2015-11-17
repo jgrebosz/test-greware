@@ -2039,6 +2039,7 @@ void appl_form::set_visibility_of_spy_options_dialogs()
     ui->actionDefinition_of_Good_CATE_data->setVisible (0);
     ui->actionDefinition_of_Good_Hector_BaF_data->setVisible (0);
     ui->actionDefinition_of_good_Miniball_data->setVisible (0);
+    ui->actionGalileo_signals_enabling->setVisible (0);
 
     // read from file
     string pat_name = path.options + "visible.options" ;
@@ -3234,7 +3235,8 @@ void appl_form::on_actionChoose_relevant_dialog_windows_triggered()
         ui->actionDefinition_of_Good_Germanium_detectors_data,
         ui->actionDefinition_of_Good_CATE_data,
         ui->actionDefinition_of_Good_Hector_BaF_data,
-        ui->actionDefinition_of_good_Miniball_data
+        ui->actionDefinition_of_good_Miniball_data,
+        ui->actionGalileo_signals_enabling
     };
 
     T4options_visibility dlg;
@@ -3486,147 +3488,212 @@ void appl_form::on_actionGalileo_signals_enabling_triggered()
     // loading the labels, and spectra names_
 
     string outfname = path.calibration + "galil_look_new.txt";
-    string fname = path.calibration + "galil_look.txt";
+    string fname = path.calibration + "galileo_lookup_table_and_calibration.txt";
     ifstream infile (fname);
-    if(!infile) { cerr << "Can't open input file" << fname<< endl; return;}
+    if(!infile) {
+        cerr << "Can't open input file" << fname<< endl;
+        string mess = "Can't open calibration file: " + fname ;
+        QMessageBox::warning ( this,
+                               " Can't open file",
+                               mess.c_str(),
+                               "OK",
+                               "",
+                               "Cancel",
+                               2  // Default
+                               );
+
+        return;
+    }
 
 
     infile >> zjedz ;
     Tfile_line_det_cal_lookup linijka;
     vector<Tfile_line_det_cal_lookup> full_file;
 
-    while(infile)
+    struct  Texcept_read
     {
-        linijka.calib_factors.clear();
-        infile >> linijka.channel;
-        if(infile.eof()) break;
+        string channel;
+        string item;
+        Texcept_read(string ch_, string item_): channel{ch_}, item{item_} {}
+    };
 
-        if(!infile)
-        { cout << " error while reading " << fname << endl; return;}
-
-        infile >> linijka.enable ;
-        infile >> linijka.name_of_detector;
-
-        if(linijka.enable)
+    try
+    {
+        while(infile)
         {
-            infile >> linijka.compton_thresh;
-            infile >> linijka.theta;
-            infile >> linijka.phi;
-            infile >> linijka.cal_order;
-            for(int i = 0 ; i < linijka.cal_order ; ++i)
+            linijka.calib_factors.clear();
+            infile >> linijka.channel;
+            if(infile.eof()) break;
+
+            if(!infile)
             {
-                double tmp;
-                infile >> tmp;
-                linijka.calib_factors.push_back(tmp);
+                throw Texcept_read{"error while reading a file ", fname };
+                //cout << " error while reading " << fname << endl;
+                //return;
             }
-        }
-        else {
-            linijka.cal_order = 1;
-            linijka.calib_factors = { 0, 1 };\
-            linijka.compton_thresh = 0;
-            linijka.theta = 0;
-            linijka.phi = 0;
-        }
-        full_file.push_back(linijka);
-    }
-    infile.close();
 
-    TGalileo_signals_dlg dlg(full_file);
-    dlg.setup("Galileo signals ",
-              "color: rgb(0, 255, 234);\nbackground-color: rgb(0, 17, 255);",
-              //              signal_labels,
-              //              enables,
-              //              cal_factors,
-              spectra_names);
+            infile >> linijka.enable ;
+            if(!infile) {
+                throw Texcept_read( linijka.channel, "enable");
+            };
 
-    bool flag_really_replace = false;
+            infile >> linijka.name_of_detector;
+            if(!infile) { throw Texcept_read(linijka.channel, "name_of_detector"); }
 
-    if(dlg.exec() == QDialog::Accepted)
-    {
-        // saving all new file
-
-        ofstream sav(outfname, ios::trunc);
-
-        //#define sav cout
-        if(!sav) { cerr << "Can't open input file" << outfname<< endl; return;}
-
-        // saving header
-        string header {
-            "// This is a Lookup table for galileo detectors\n"
-            "//===================================================================\n"
-            "//\n"
-            "// Note:\n"
-            "//    1. Everything after two slashes (//) till the end of the line is\n"
-            "//       treated as a COMMENT\n"
-            "//    2. Empty lines, newlines, spaces, tabulators are ignored\n"
-            "//    3. Keywords (names of the parameters) can be typed lowercase\n"
-            "//       or uppercase, as you wish.\n"
-            "//\n"
-            "//       Advice: for your own sake, use rather uppercase 'L' instead\n"
-            "//       of lowercase 'l'\n"
-            "//       (because 'l' is too similar to '1')\n"
-            "//    4. If a channel is disabled (0) then we don't read anything else\n"
-            "//       after so the empty_?? are just here to make it easier to read\n"
-            "//====================================================================\n"
-            "// Channel channel_enable name_of_detector  ComptonThres  theta phi cal_order calibr_factors\n"};
-
-        sav << header << endl;
-
-        //        // saving one line
-        // update enable/disable, order, cal_factors
-
-        for(auto linia : full_file)
-        {
-            sav << linia.channel << "\t"
-                << linia.enable << "\t"
-                << linia.name_of_detector ;
-
-            if(linia.enable){
-                cout << "\t"
-                     << linia.compton_thresh << "\t"
-                     << linia.theta << "\t"
-                     << linia.phi << "\t"
-                     << linia.cal_order << "\t";
-                for(auto c : linia.calib_factors)
+            if(linijka.enable)
+            {
+                infile >> linijka.compton_thresh;
+                if(!infile) { throw Texcept_read(linijka.channel, "compton_thresh"); }
+                infile >> linijka.theta;
+                if(!infile) { throw Texcept_read(linijka.channel, "theta"); }
+                infile >> linijka.phi;
+                if(!infile) { throw Texcept_read(linijka.channel, "phi"); }
+                infile >> linijka.cal_order;
+                if(!infile) { throw Texcept_read(linijka.channel, "cal_order"); }
+                for(int i = 0 ; i < linijka.cal_order ; ++i)
                 {
-                    cout << c << "\t" ;
+                    double tmp;
+                    infile >> tmp;
+                    if(!infile) { throw Texcept_read(linijka.channel, "calibration factor - order: " + to_string(i)); }
+                    linijka.calib_factors.push_back(tmp);
                 }
-            }else{
+            }
+            else {
+                linijka.cal_order = 1;
+                linijka.calib_factors = { 0, 1 };\
+                linijka.compton_thresh = 0;
+                linijka.theta = 0;
+                linijka.phi = 0;
+            }
+            full_file.push_back(linijka);
+        }
 
-                string mess =
-                        "Your non-zero theta/phi information for " +
-                        linia.channel + "will be lost now\n (Ask Alain for details)\n\nAre you sure?";
+        infile.close();
 
-                if(linia.theta && linia.phi)
-                {
-                    int odp = QMessageBox::warning ( this,
-                                                     " Risk of loosing the information",
-                                                     mess.c_str(),
-                                                     "Yes",
-                                                     "No",
-                                                     "Cancel",
-                                                     2  // Default
-                                                     );
-                    switch ( odp )
+        TGalileo_signals_dlg dlg(full_file);
+        dlg.setup("Galileo signals ",
+                  "color: rgb(0, 255, 234);\nbackground-color: rgb(0, 17, 255);",
+                  //              signal_labels,
+                  //              enables,
+                  //              cal_factors,
+                  spectra_names);
+
+        bool flag_really_replace = false;
+
+        if(dlg.exec() == QDialog::Accepted)
+        {
+            // saving all new file
+
+            ofstream sav(outfname, ios::trunc);
+
+            //#define sav cout
+            if(!sav) { cerr << "Can't open input file" << outfname<< endl; return;}
+
+            // saving header
+            string header {
+                "// This is a Lookup table for galileo detectors\n"
+                "//===================================================================\n"
+                "//\n"
+                "// Note:\n"
+                "//    1. Everything after two slashes (//) till the end of the line is\n"
+                "//       treated as a COMMENT\n"
+                "//    2. Empty lines, newlines, spaces, tabulators are ignored\n"
+                "//    3. Keywords (names of the parameters) can be typed lowercase\n"
+                "//       or uppercase, as you wish.\n"
+                "//\n"
+                "//       Advice: for your own sake, use rather uppercase 'L' instead\n"
+                "//       of lowercase 'l'\n"
+                "//       (because 'l' is too similar to '1')\n"
+                "//    4. If a channel is disabled (0) then we don't read anything else\n"
+                "//       after so the empty_?? are just here to make it easier to read\n"
+                "//====================================================================\n"
+                "// Channel channel_enable name_of_detector  ComptonThres  theta phi cal_order calibr_factors\n"};
+
+            sav << header << endl;
+
+            //        // saving one line
+            // update enable/disable, order, cal_factors
+
+            for(auto linia : full_file)
+            {
+                sav << linia.channel << "\t"
+                    << linia.enable << "\t"
+                    << linia.name_of_detector ;
+
+                if(linia.enable){
+                    sav << "\t"
+                         << linia.compton_thresh << "\t"
+                         << linia.theta << "\t"
+                         << linia.phi << "\t"
+                         << linia.cal_order << "\t";
+                    for(auto c : linia.calib_factors)
                     {
-                        default:
-                            flag_really_replace = false;
-                        return;
+                        sav << c << "\t" ;
+                    }
+                }else{
 
-                        case 0:    // Yes
-                        break;
+                    string mess =
+                            "Your non-zero theta/phi information for " +
+                            linia.channel + ", will be lost now\n (Ask Alain for details)\n\nAre you sure?";
+
+                    if(linia.theta && linia.phi)
+                    {
+                        int odp = QMessageBox::warning ( this,
+                                                         " Risk of loosing the information",
+                                                         mess.c_str(),
+                                                         "Yes",
+                                                         "No",
+                                                         "Cancel",
+                                                         2  // Default
+                                                         );
+                        switch ( odp )
+                        {
+                            default:
+                                flag_really_replace = false;
+                            break;
+
+                            case 0:    // Yes
+                            break;
+                        }
                     }
                 }
+                sav << endl;
             }
-            sav << endl;
-        }
-        sav.close();
-        // Here we are if the user said YES, or the re was no problem
-        // renaming file into the old name
+            sav.close();
+            // Here we are if the user said YES, or the re was no problem
+            // renaming file into the old name
 
-// UNCOMMENT THIS LINE BELOW IF YOU REALLY WANT REPLACE THE OLD LUT/CAL FILE
-        // if(flag_really_replace) system( ("mv " + outfname + " " + fname).c_str() ); // renaming
+            // UNCOMMENT THIS LINE BELOW IF YOU REALLY WANT REPLACE THE OLD LUT/CAL FILE
+            // if(flag_really_replace) system( ("mv " + outfname + " " + fname).c_str() ); // renaming
+
+        }
+
+    } // end try
+    catch(Texcept_read obj)
+    {
+        //cout << " error while reading " << fname << endl;
+        //cerr << "Can't open input file" << fname<< endl;
+
+
+
+
+        string mess = "Error while reading a file: \n" + fname +
+                        "\n\nThe error is in a line: "
+                        + obj.channel + " ...,  item: "
+                        + obj.item  ;
+
+                 //   "Can't open calibration file: " + fname ;
+        QMessageBox::warning ( this,
+                               " Error while reading calibration file",
+                               mess.c_str(),
+                               "OK",
+                               "",
+                               "Cancel",
+                               2  // Default
+                               );
+        return;
 
     }
+
 }
 //**************************************************************************************************

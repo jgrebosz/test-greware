@@ -474,8 +474,8 @@
     <addaction name="actionDefinition_of_Good_Hector_BaF_data"/>
     <addaction name="actionDefinition_of_good_Miniball_data"/>
     <addaction name="separator"/>
-    <addaction name="actionChoose_relevant_dialog_windows"/>
     <addaction name="actionGalileo_signals_enabling"/>
+    <addaction name="actionChoose_relevant_dialog_windows"/>
    </widget>
    <widget class="QMenu" name="menuCracow_preferences">
     <property name="title">
