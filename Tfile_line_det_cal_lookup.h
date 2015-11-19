@@ -2,12 +2,13 @@
 #define TFILE_LINE_DET_CAL_LOOKUP_H
 
 #include <vector>
+#include <string>
 ///////////////////////////////////////////////////////////////
 struct  Tfile_line_det_cal_lookup
 {
-    string channel;
+    std::string channel;
     bool enable;
-    string name_of_detector;
+    std::string name_of_detector;
     double compton_thresh;
     double theta;
     double phi;

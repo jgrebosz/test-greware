@@ -3625,7 +3625,7 @@ void appl_form::on_actionGalileo_signals_enabling_triggered()
                          << linia.compton_thresh << "\t"
                          << linia.theta << "\t"
                          << linia.phi << "\t"
-                         << linia.cal_order << "\t";
+                         << (linia.cal_order + 1) << "\t";// because it is not an order, but how many cal words to read.
                     for(auto c : linia.calib_factors)
                     {
                         sav << c << "\t" ;

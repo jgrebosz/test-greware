@@ -174,7 +174,7 @@ private:
     std::vector<QCheckBox*> radios;
 
     std::vector<bool> enables;
-    std::vector<std::vector<double> >  cal_factors;
+    //std::vector<std::vector<double> >  cal_factors;
 
 
     void update();

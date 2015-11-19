@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>608</width>
-    <height>505</height>
+    <width>747</width>
+    <height>537</height>
    </rect>
   </property>
   <property name="font">
@@ -47,7 +47,7 @@ background-color: rgb(0, 17, 255);</string>
     </widget>
    </item>
    <item>
-    <layout class="QHBoxLayout" name="horizontalLayout_2">
+    <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="10,0,10">
      <item>
       <widget class="QFrame" name="frame_2">
        <property name="frameShape">
@@ -56,7 +56,7 @@ background-color: rgb(0, 17, 255);</string>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <layout class="QGridLayout" name="gridLayout_2">
+       <layout class="QGridLayout" name="gridLayout_2" columnstretch="5,1,30,1,1" rowminimumheight="0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0">
         <item row="0" column="0">
          <widget class="QLabel" name="label_00">
           <property name="font">
@@ -68,7 +68,7 @@ background-color: rgb(0, 17, 255);</string>
            </font>
           </property>
           <property name="text">
-           <string>gal-05 D00 (GTS 016)</string>
+           <string>gal-05_00</string>
           </property>
          </widget>
         </item>
@@ -101,8 +101,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="1" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_01">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -140,8 +151,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="2" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_02">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -179,8 +201,32 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="3" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_03">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="4" column="2">
+         <widget class="QLabel" name="label_spec_NAME_04">
+          <property name="frameShape">
+           <enum>QFrame::Panel</enum>
+          </property>
+          <property name="frameShadow">
+           <enum>QFrame::Sunken</enum>
+          </property>
+          <property name="text">
+           <string>Spectrum</string>
           </property>
          </widget>
         </item>
@@ -203,8 +249,8 @@ background-color: rgb(0, 17, 255);</string>
           </property>
          </widget>
         </item>
-        <item row="4" column="2">
-         <widget class="QLabel" name="label_spec_NAME_04">
+        <item row="9" column="2">
+         <widget class="QLabel" name="label_spec_NAME_09">
           <property name="frameShape">
            <enum>QFrame::Panel</enum>
           </property>
@@ -218,8 +264,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="4" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_04">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -257,8 +314,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="5" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_05">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -296,8 +364,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="6" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_06">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -335,8 +414,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="7" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_07">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -374,8 +464,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="8" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_08">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -398,23 +499,21 @@ background-color: rgb(0, 17, 255);</string>
           </property>
          </widget>
         </item>
-        <item row="9" column="2">
-         <widget class="QLabel" name="label_spec_NAME_09">
-          <property name="frameShape">
-           <enum>QFrame::Panel</enum>
-          </property>
-          <property name="frameShadow">
-           <enum>QFrame::Sunken</enum>
-          </property>
-          <property name="text">
-           <string>Spectrum</string>
-          </property>
-         </widget>
-        </item>
         <item row="9" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_09">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -452,8 +551,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="10" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_10">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -491,8 +601,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="11" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_11">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -530,8 +651,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="12" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_12">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -569,8 +701,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="13" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_13">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -603,13 +746,6 @@ background-color: rgb(0, 17, 255);</string>
           </property>
           <property name="text">
            <string>Spectrum</string>
-          </property>
-         </widget>
-        </item>
-        <item row="14" column="3" colspan="2">
-         <widget class="QPushButton" name="pushButton_14">
-          <property name="text">
-           <string>Calibr</string>
           </property>
          </widget>
         </item>
@@ -647,8 +783,37 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="15" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_15">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
+          </property>
+         </widget>
+        </item>
+        <item row="0" column="3" colspan="2">
+         <widget class="QPushButton" name="pushButton_00">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
+          <property name="text">
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -667,11 +832,6 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="0" column="2">
          <widget class="QLabel" name="label_spec_NAME_00">
-          <property name="font">
-           <font>
-            <family>Serif</family>
-           </font>
-          </property>
           <property name="frameShape">
            <enum>QFrame::Panel</enum>
           </property>
@@ -683,10 +843,21 @@ background-color: rgb(0, 17, 255);</string>
           </property>
          </widget>
         </item>
-        <item row="0" column="3" colspan="2">
-         <widget class="QPushButton" name="pushButton_00">
+        <item row="14" column="3" colspan="2">
+         <widget class="QPushButton" name="pushButton_14">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -778,7 +949,7 @@ background-color: rgb(0, 17, 255);</string>
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <layout class="QGridLayout" name="gridLayout">
+       <layout class="QGridLayout" name="gridLayout" columnstretch="5,1,30,1,1">
         <item row="0" column="0">
          <widget class="QLabel" name="label_16">
           <property name="font">
@@ -813,8 +984,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="0" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_16">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -852,8 +1034,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="1" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_17">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -891,8 +1084,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="2" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_18">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -930,8 +1134,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="3" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_19">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -969,8 +1184,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="4" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_20">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -1008,8 +1234,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="5" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_21">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -1047,8 +1284,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="6" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_22">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -1086,8 +1334,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="7" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_23">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -1144,8 +1403,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="9" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_25">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -1183,8 +1453,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="10" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_26">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -1222,8 +1503,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="11" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_27">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -1261,8 +1553,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="12" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_28">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -1300,8 +1603,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="13" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_29">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -1339,8 +1653,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="14" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_30">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -1378,8 +1703,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="15" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_31">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>
@@ -1403,8 +1739,19 @@ background-color: rgb(0, 17, 255);</string>
         </item>
         <item row="8" column="3" colspan="2">
          <widget class="QPushButton" name="pushButton_24">
+          <property name="maximumSize">
+           <size>
+            <width>45</width>
+            <height>16777215</height>
+           </size>
+          </property>
           <property name="text">
-           <string>Calibr</string>
+           <string>...</string>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normalon>:/images/images/pencil.png</normalon>
+           </iconset>
           </property>
          </widget>
         </item>

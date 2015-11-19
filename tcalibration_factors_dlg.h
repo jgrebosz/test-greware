@@ -4,6 +4,8 @@
 #include <QDialog>
 #include <vector>
 
+#include "Tfile_line_det_cal_lookup.h"
+
 namespace Ui {
 class Tcalibration_factors_dlg;
 }
@@ -15,8 +17,8 @@ class Tcalibration_factors_dlg : public QDialog
 public:
     explicit Tcalibration_factors_dlg(QWidget *parent = 0);
     ~Tcalibration_factors_dlg();
-    void setup(std::vector<double> fact);
-std::vector<double> fact_local;
+    void setup(Tfile_line_det_cal_lookup line);
+    Tfile_line_det_cal_lookup line_local;
 
 private slots:
 

@@ -18,20 +18,29 @@ Tcalibration_factors_dlg::~Tcalibration_factors_dlg()
     delete ui;
 }
 //********************************************************************
-void Tcalibration_factors_dlg::setup(std::vector<double> fact)
+void Tcalibration_factors_dlg::setup(Tfile_line_det_cal_lookup line)
 {
-    fact_local = fact;
-    ui->spinBox_degree ->setValue(fact.size()-1);
-    ui->tableWidget->setColumnCount(fact.size());
+    line_local = line;
 
-    for(unsigned int col = 0 ; col < fact.size(); ++col)
+    ui->label_data_track->setText(("The signals from the data track: <span style=\" color:#b20000;\">"
+                                  + line_local.channel +
+                                  "</span><br/>will be assigned to the detector called: ").c_str() );
+
+    ui->LineEdit_det_name->setText(line.name_of_detector.c_str());
+    ui->doubleSpinBox_phi->setValue(line.phi);
+    ui->doubleSpinBox_theta->setValue(line.theta);
+    ui->spinBox_compton->setValue(line.compton_thresh);
+
+    int degree = line.calib_factors.size()-1;
+
+    ui->spinBox_degree ->setValue(degree);
+    ui->tableWidget->setColumnCount(degree+1);
+
+    for(unsigned int col = 0 ; col < line.calib_factors.size(); ++col)
     {
         QTableWidgetItem *newItem = new QTableWidgetItem
-                (tr("%1").arg(fact[col]) );
-        //                (tr("%1").arg(col ));
-        ui->tableWidget->setItem(0, col, newItem);
-
-        //ui->tableWidget->setItem(0, col).
+                (tr("%1").arg(line.calib_factors[col]) );
+        ui->tableWidget->setItem(0, col, newItem);     
     }
 }
 //***********************************************************************
@@ -54,7 +63,7 @@ void Tcalibration_factors_dlg::on_spinBox_degree_valueChanged(int degree)
         //                (tr("%1").arg(4.44) );
         //        ui->tableWidget->setItem(0, arg1-1, newItem);
 
-        double new_value = ((unsigned int) degree >= fact_local.size()   )? 0 : fact_local[degree];
+        double new_value = ((unsigned int) degree >= line_local.calib_factors.size()   )? 0 : line_local.calib_factors[degree];
         ui->tableWidget->setItem(0, degree,
                                  new QTableWidgetItem (tr("%1").arg(new_value) )) ;
 
@@ -98,11 +107,19 @@ void Tcalibration_factors_dlg::on_buttonBox_accepted()
 
     bool success = true;
 
-    vector<double> f;
+    Tfile_line_det_cal_lookup f;
+
+    f.channel = line_local.channel;
+    f.name_of_detector = ui->LineEdit_det_name->text().toStdString();
+    f.compton_thresh = ui->spinBox_compton ->value();
+    f.theta = ui->doubleSpinBox_theta->value();
+    f.phi = ui->doubleSpinBox_phi->value();
+    f.cal_order = ui->spinBox_degree->value();
+
     for(int col = 0 ; col <= ui->spinBox_degree->value()  /* tableWidget->columnCount()*/ ; ++col )
     {
         double tmp = ui->tableWidget->item(0, col)->text().toDouble(&success);
-        if(success) f.push_back(tmp);
+        if(success) f.calib_factors.push_back(tmp);
         else {
             QMessageBox::warning
                     (0, "Wrong entry" ,
@@ -114,6 +131,6 @@ void Tcalibration_factors_dlg::on_buttonBox_accepted()
 
         }
     }
-    if(success) fact_local = f;
+    if(success) line_local = f;
     return;
 }

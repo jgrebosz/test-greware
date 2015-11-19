@@ -184,12 +184,6 @@ void TGalileo_signals_dlg::update()
 
     for(int i = 0 ; i < 32 ; ++i)
     {
-        //        ostringstream s;
-        //        s << "etykieta_" << setfill('0') << setw(2) << i ;
-        //        string nr =  s.str();
-
-        //        labels[i]->setText(nr.c_str() );
-
         if(radios[i]->isChecked()  )
         {
             specnames[i]-> setStyleSheet("background-color: rgb(0, 128, 0);\n color: rgb(255, 255, 255);");
@@ -222,22 +216,18 @@ void TGalileo_signals_dlg::setup(string title, string kolory,
     //    QRect r;
     for(int i = 0 ; i < 32 ; ++i)
     {
-        labels[i]->setText( (fline[i].channel + "  " + fline[i].name_of_detector).c_str() );
+        labels[i]->setText( (fline[i].channel ).c_str() );
         //        labels[i]->adjustSize();
+        specnames[i]->setText(fline[i].name_of_detector.c_str() );
         enables.push_back(fline[i].enable);
-
-
 //        specnames[i]->setText(widma[i].c_str() );
 
-
-        cal_factors.push_back(fline[i].calib_factors);
-
     }
-    int i = 0 ;
-    for(auto sn: widma)
-    {
-        specnames[i++]->setText(sn.c_str() );
-    }
+//    int i = 0 ;
+//    for(auto sn: widma)
+//    {
+//        specnames[i++]->setText(fline[i].name_of_detector.c_str() );
+//    }
     //cout << "enab size = " << enables_.size() << endl;
 
     for(unsigned int i = 0 ; i < enables.size() ; ++i)
@@ -509,13 +499,16 @@ void TGalileo_signals_dlg::on_pushButton_31_clicked()
 //********************************************************************
 void TGalileo_signals_dlg::edit_calib_factors(int nr)
 {
-    vector <double> ccc = cal_factors[nr];
+
+  //  Tfile_line_det_cal_lookup line =  fline[nr];
+
+    //vector <double> ccc = cal_factors[nr];
     Tcalibration_factors_dlg dlg;
-    dlg.setup(ccc);
+    dlg.setup(fline[nr]);
     if(dlg.exec() == QDialog::Accepted)
     {
-        cal_factors[nr] = dlg.fact_local;
-
+        fline[nr] = dlg.line_local;
+        specnames[nr]->setText(fline[nr].name_of_detector.c_str() );
     }
 }
 //********************************************************************
@@ -526,6 +519,6 @@ void TGalileo_signals_dlg::on_buttonBox_accepted()
     for(unsigned int nr = 0 ; nr <fline.size() ; ++nr)
     {
        fline[nr].enable = radios[nr]->isChecked();
-       fline[nr].cal_order = cal_factors[nr].size();
+       //fline[nr].cal_order = cal_factors[nr].size();
     }
 }
