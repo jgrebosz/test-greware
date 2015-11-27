@@ -475,6 +475,8 @@
     <addaction name="actionDefinition_of_good_Miniball_data"/>
     <addaction name="separator"/>
     <addaction name="actionGalileo_signals_enabling"/>
+    <addaction name="actionEuclides_signals_enabling"/>
+    <addaction name="actionNeutronwall_signals_enabling"/>
     <addaction name="actionChoose_relevant_dialog_windows"/>
    </widget>
    <widget class="QMenu" name="menuCracow_preferences">
@@ -1437,6 +1439,16 @@
    </property>
    <property name="toolTip">
     <string>Here you can define which Galileo signals are active (spectra for them will be colected)</string>
+   </property>
+  </action>
+  <action name="actionEuclides_signals_enabling">
+   <property name="text">
+    <string>Euclides signals enabling</string>
+   </property>
+  </action>
+  <action name="actionNeutronwall_signals_enabling">
+   <property name="text">
+    <string>Neutronwall signals_enabling</string>
    </property>
   </action>
  </widget>

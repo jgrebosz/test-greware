@@ -99,7 +99,8 @@ SOURCES += main.cxx\
     t4selfgate_ge_cristal_galileo.cpp \
     Tself_gate_ge_galileo_descr.cpp \
     tgalileo_signals_dlg.cpp \
-    tcalibration_factors_dlg.cpp
+    tcalibration_factors_dlg.cpp \
+    Tfile_line_det_cal_lookup.cpp
 
 HEADERS  += appl_form.h \
     options.h \

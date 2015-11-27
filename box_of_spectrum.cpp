@@ -495,7 +495,7 @@ void box_of_spectrum::draw_all ( QPainter * pior )
                     skok.lineTo ( wx ( ( i ) * waga + beg ),      county ) ;
                     skok.lineTo ( wx ( ( i+1 ) * waga + beg ), county ) ;
                     
-                    //cout << "chanel " << i << " has value " << widmo[i] << endl;
+                    //cout << "channel " << i << " has value " << widmo[i] << endl;
 
                 }
                 piorko.drawPath(skok);

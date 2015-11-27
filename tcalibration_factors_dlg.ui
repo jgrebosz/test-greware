@@ -6,53 +6,66 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>711</width>
-    <height>386</height>
+    <width>657</width>
+    <height>558</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Edit the detector parameters</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout_3">
-   <item row="0" column="0">
-    <layout class="QVBoxLayout" name="verticalLayout">
+  <layout class="QVBoxLayout" name="verticalLayout_5">
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4" stretch="10,1,10">
      <item>
-      <widget class="QLabel" name="label_data_track">
-       <property name="text">
-        <string>The signals from the data track: &lt;span style=&quot; color:#b20000;&quot;&gt;gal_xxx&lt;/span&gt;&lt;br/&gt;will be assigned to the detector called: </string>
-       </property>
-       <property name="textFormat">
-        <enum>Qt::RichText</enum>
-       </property>
-       <property name="wordWrap">
-        <bool>true</bool>
-       </property>
-      </widget>
-     </item>
-     <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_3">
+      <layout class="QVBoxLayout" name="verticalLayout">
        <item>
-        <spacer name="horizontalSpacer_4">
+        <widget class="QLabel" name="label_data_track">
+         <property name="text">
+          <string>The signals from the data track: &lt;span style=&quot; color:#b20000;&quot;&gt;gal_xxx&lt;/span&gt;&lt;br/&gt;will be assigned to the detector called: </string>
+         </property>
+         <property name="textFormat">
+          <enum>Qt::RichText</enum>
+         </property>
+         <property name="wordWrap">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <layout class="QHBoxLayout" name="horizontalLayout_3">
+         <item>
+          <spacer name="horizontalSpacer_4">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
+          <widget class="QLineEdit" name="LineEdit_det_name"/>
+         </item>
+        </layout>
+       </item>
+       <item>
+        <spacer name="verticalSpacer">
          <property name="orientation">
-          <enum>Qt::Horizontal</enum>
+          <enum>Qt::Vertical</enum>
          </property>
          <property name="sizeHint" stdset="0">
           <size>
-           <width>40</width>
-           <height>20</height>
+           <width>20</width>
+           <height>40</height>
           </size>
          </property>
         </spacer>
        </item>
-       <item>
-        <widget class="QLineEdit" name="LineEdit_det_name"/>
-       </item>
       </layout>
      </item>
-    </layout>
-   </item>
-   <item row="0" column="1">
-    <layout class="QHBoxLayout" name="horizontalLayout_7">
      <item>
       <spacer name="horizontalSpacer_2">
        <property name="orientation">
@@ -60,7 +73,7 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>40</width>
+         <width>18</width>
          <height>20</height>
         </size>
        </property>
@@ -74,20 +87,13 @@
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <layout class="QGridLayout" name="gridLayout">
-        <item row="0" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_4">
+       <layout class="QVBoxLayout" name="verticalLayout_3">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_geometry">
           <item>
-           <widget class="QLabel" name="label_8">
+           <widget class="QLabel" name="label_theta">
             <property name="text">
-             <string>Geometry   </string>
-            </property>
-           </widget>
-          </item>
-          <item>
-           <widget class="QLabel" name="label_5">
-            <property name="text">
-             <string>Theta</string>
+             <string>Geometry:    Theta</string>
             </property>
            </widget>
           </item>
@@ -99,7 +105,7 @@
            </widget>
           </item>
           <item>
-           <widget class="QLabel" name="label_6">
+           <widget class="QLabel" name="label_phi">
             <property name="text">
              <string>phi:</string>
             </property>
@@ -114,20 +120,55 @@
           </item>
          </layout>
         </item>
-        <item row="1" column="0">
-         <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_first_thr">
           <item>
-           <widget class="QLabel" name="label_7">
+           <widget class="QLabel" name="label_first_threshold">
             <property name="text">
-             <string>Compton Threshold</string>
+             <string>First threshold</string>
             </property>
            </widget>
           </item>
           <item>
-           <widget class="QSpinBox" name="spinBox_compton"/>
+           <widget class="QSpinBox" name="spinBox_first_threshold">
+            <property name="maximum">
+             <number>8000</number>
+            </property>
+           </widget>
           </item>
           <item>
            <spacer name="horizontalSpacer_3">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>40</width>
+              <height>20</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+        <item>
+         <layout class="QHBoxLayout" name="horizontalLayout_second_thr">
+          <item>
+           <widget class="QLabel" name="label_second_threshold">
+            <property name="text">
+             <string>Second threshold</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QSpinBox" name="spinBox_second_threshold">
+            <property name="maximum">
+             <number>8000</number>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="horizontalSpacer_6">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -146,21 +187,33 @@
      </item>
     </layout>
    </item>
-   <item row="1" column="1">
-    <spacer name="verticalSpacer_2">
+   <item>
+    <spacer name="verticalSpacer_5">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
      </property>
      <property name="sizeHint" stdset="0">
       <size>
        <width>20</width>
-       <height>10</height>
+       <height>37</height>
       </size>
      </property>
     </spacer>
    </item>
-   <item row="2" column="0" colspan="2">
-    <widget class="QFrame" name="frame_2">
+   <item>
+    <widget class="QFrame" name="frame_calibration">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Fixed">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>200</height>
+      </size>
+     </property>
      <property name="frameShape">
       <enum>QFrame::StyledPanel</enum>
      </property>
@@ -171,7 +224,7 @@
       <item>
        <layout class="QHBoxLayout" name="horizontalLayout">
         <item>
-         <widget class="QLabel" name="label">
+         <widget class="QLabel" name="label_degree_1">
           <property name="text">
            <string>degree of calibration</string>
           </property>
@@ -208,12 +261,33 @@
       </item>
       <item>
        <widget class="QTableWidget" name="tableWidget">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
         <property name="rowCount">
          <number>1</number>
         </property>
         <property name="columnCount">
          <number>9</number>
         </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
         <row>
          <property name="text">
           <string>factor:</string>
@@ -266,17 +340,206 @@
         </column>
        </widget>
       </item>
+      <item>
+       <widget class="QLabel" name="label_2">
+        <property name="text">
+         <string>Edit cells in a table above</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_4">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
      </layout>
     </widget>
    </item>
-   <item row="3" column="0">
-    <widget class="QLabel" name="label_2">
-     <property name="text">
-      <string>Edit cells in a table above</string>
+   <item>
+    <spacer name="verticalSpacer_7">
+     <property name="orientation">
+      <enum>Qt::Vertical</enum>
      </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>20</width>
+       <height>17</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item>
+    <widget class="QFrame" name="frame_calibration_2">
+     <property name="sizePolicy">
+      <sizepolicy hsizetype="Preferred" vsizetype="Maximum">
+       <horstretch>0</horstretch>
+       <verstretch>0</verstretch>
+      </sizepolicy>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>200</height>
+      </size>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
+     </property>
+     <property name="frameShadow">
+      <enum>QFrame::Raised</enum>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_4">
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_5">
+        <item>
+         <widget class="QLabel" name="label_degree_2">
+          <property name="text">
+           <string>degree of calibration</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QSpinBox" name="spinBox_degree_2">
+          <property name="maximum">
+           <number>5</number>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_5">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>40</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
+        </item>
+        <item>
+         <widget class="QLabel" name="label_7">
+          <property name="text">
+           <string>a0 + a1*x + a2(x*x) + a3(x*x*x) + ...</string>
+          </property>
+         </widget>
+        </item>
+       </layout>
+      </item>
+      <item>
+       <widget class="QTableWidget" name="tableWidget_2">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>100</height>
+         </size>
+        </property>
+        <property name="baseSize">
+         <size>
+          <width>0</width>
+          <height>0</height>
+         </size>
+        </property>
+        <property name="rowCount">
+         <number>1</number>
+        </property>
+        <property name="columnCount">
+         <number>9</number>
+        </property>
+        <attribute name="horizontalHeaderVisible">
+         <bool>false</bool>
+        </attribute>
+        <row>
+         <property name="text">
+          <string>factor:</string>
+         </property>
+        </row>
+        <column>
+         <property name="text">
+          <string>a0</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>a1</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>a2</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>a3</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>a4</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>a5</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>a6</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>a7</string>
+         </property>
+        </column>
+        <column>
+         <property name="text">
+          <string>a8</string>
+         </property>
+        </column>
+       </widget>
+      </item>
+      <item>
+       <widget class="QLabel" name="label_9">
+        <property name="text">
+         <string>Edit cells in a table above</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <spacer name="verticalSpacer_6">
+        <property name="orientation">
+         <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeHint" stdset="0">
+         <size>
+          <width>20</width>
+          <height>0</height>
+         </size>
+        </property>
+       </spacer>
+      </item>
+     </layout>
     </widget>
    </item>
-   <item row="4" column="1">
+   <item>
     <spacer name="verticalSpacer_3">
      <property name="orientation">
       <enum>Qt::Vertical</enum>
@@ -289,7 +552,7 @@
      </property>
     </spacer>
    </item>
-   <item row="5" column="0">
+   <item>
     <layout class="QHBoxLayout" name="horizontalLayout_2">
      <item>
       <widget class="QDialogButtonBox" name="buttonBox">
@@ -304,22 +567,11 @@
     </layout>
    </item>
   </layout>
-  <zorder>buttonBox</zorder>
-  <zorder>LineEdit_det_name</zorder>
-  <zorder>label_4</zorder>
-  <zorder>label_5</zorder>
-  <zorder>label_6</zorder>
-  <zorder>doubleSpinBox_theta</zorder>
-  <zorder>doubleSpinBox_phi</zorder>
-  <zorder>horizontalSpacer_2</zorder>
-  <zorder>spinBox_compton</zorder>
-  <zorder>label_7</zorder>
-  <zorder>frame</zorder>
-  <zorder>verticalSpacer_2</zorder>
   <zorder>verticalSpacer_3</zorder>
-  <zorder>frame_2</zorder>
-  <zorder>tableWidget</zorder>
-  <zorder>label_2</zorder>
+  <zorder>frame_calibration</zorder>
+  <zorder>verticalSpacer_5</zorder>
+  <zorder>frame_calibration_2</zorder>
+  <zorder>verticalSpacer_7</zorder>
  </widget>
  <resources/>
  <connections>

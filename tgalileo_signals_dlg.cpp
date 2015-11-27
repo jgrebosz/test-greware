@@ -9,13 +9,16 @@
 #include "tcalibration_factors_dlg.h"
 
 using namespace std;
-//************************************************************************************8
-TGalileo_signals_dlg::TGalileo_signals_dlg(vector<Tfile_line_det_cal_lookup> &fline_, QWidget *parent) :
+//************************************************************************************
+TGalileo_signals_dlg::TGalileo_signals_dlg(vector<Tfile_line_det_cal_lookup> &fline_,
+                                           QWidget *parent) :
     QDialog(parent),
     fline(fline_),
     ui(new Ui::TGalileo_signals_dlg)
 {
     ui->setupUi(this);
+
+
 
     pushButtons.push_back( ui->pushButton_00);
     pushButtons.push_back( ui->pushButton_01);
@@ -169,8 +172,32 @@ TGalileo_signals_dlg::TGalileo_signals_dlg(vector<Tfile_line_det_cal_lookup> &fl
     for(auto r : radios)
     {
         r->setChecked(true);
-
     }
+
+
+    int how_many_tabs = 1 + ( (fline.size()-1) / 32) ;
+
+    for(int i = ui->tabWidget->count()  ; i >= how_many_tabs ; --i)
+    {
+            ui->tabWidget->removeTab (i);
+}
+
+
+    for(int nr = 0 ; nr < ui->tabWidget->count() ; ++nr)
+    {
+       ui->tabWidget->setTabText(nr, ("Part " + to_string(nr+1)).c_str()  );
+
+       QWidget * page ;
+       page = ui->tabWidget->widget(nr);
+       page->setStyleSheet(page_colors[nr].c_str() );
+    }
+    ui->tabWidget->setCurrentIndex(0);
+
+    bool many_tabs = ui->tabWidget->count() > 1;
+    ui->label_Yestoall->setVisible(many_tabs);
+    ui->tabWidget->setVisible(many_tabs);
+
+
 
 }
 //***************************************************************
@@ -179,34 +206,61 @@ TGalileo_signals_dlg::~TGalileo_signals_dlg()
     delete ui;
 }
 //***************************************************************
-void TGalileo_signals_dlg::update()
+void TGalileo_signals_dlg::update_enable_disable()
 {
-
-    for(int i = 0 ; i < 32 ; ++i)
+    int offset = 32 * ui->tabWidget->currentIndex();
+    for(unsigned int i = 0 ; i < 32 ; ++i)
     {
         if(radios[i]->isChecked()  )
         {
             specnames[i]-> setStyleSheet("background-color: rgb(0, 128, 0);\n color: rgb(255, 255, 255);");
             radios[i]->setText("On");
             pushButtons[i]->setEnabled(true);
+            fline[i + offset].enable = true;
         }
         else {
             specnames[i]-> setStyleSheet("background-color: rgb(170, 170, 170);\n color: rgb(190, 190, 190);");
             radios[i]->setText("Off");
             pushButtons[i]->setEnabled(false);
+            if( (i + offset) < fline.size() )
+            {
+                fline[i + offset].enable = false;
+            }
         }
-
     }
 
-    //this->adjustSize();
-}
+    //ui->frame_coloured->setStyleSheet(" .QFrame { background-color : rgb(230,230,255) } ");
+    //    ui->frame_coloured->setAutoFillBackground(true);
 
+    ui->frame_lewy->setAutoFillBackground(true);
+    ui->frame_prawy->setAutoFillBackground(false);
+
+    ui->frame_lewy->setStyleSheet(" .QFrame { background-color : rgb(230,230,230)} ");
+    ui->frame_prawy->setStyleSheet(" .QFrame { background-color : rgb(230,230,230) } ");
+
+
+// choice for ADC module nr.
+    //ui->tabWidget->setCurrentWidget(0);
+
+
+
+
+   //this->adjustSize();
+}
 
 //**********************************************************************************
 void TGalileo_signals_dlg::setup(string title, string kolory,
-                                 vector<string> widma)
-{
+                                 string label_first_threshold_,
+                                 string label_second_threshold_,
+                                 string first_calibration_txt,
+                                 string second_calibration_txt)
 
+{
+    first_calibration_tekst = first_calibration_txt;
+    second_calibration_tekst = second_calibration_txt;
+
+    label_first_threshold = label_first_threshold_;
+    label_second_threshold =    label_second_threshold_ ;
 
     ui->labe_title->setText(title.c_str() );  // "Galileo detectors signals");
     ui->labe_title-> setStyleSheet(kolory.c_str()); // "color: rgb(0, 255, 234);\nbackground-color: rgb(0, 17, 255);");
@@ -214,96 +268,105 @@ void TGalileo_signals_dlg::setup(string title, string kolory,
 
     //    int max_width {200} ;
     //    QRect r;
-    for(int i = 0 ; i < 32 ; ++i)
+#if 0
+    for(unsigned int i = 0 ; i < labels.size(); ++i) // only the first tab
     {
         labels[i]->setText( (fline[i].channel ).c_str() );
-        //        labels[i]->adjustSize();
         specnames[i]->setText(fline[i].name_of_detector.c_str() );
         enables.push_back(fline[i].enable);
-//        specnames[i]->setText(widma[i].c_str() );
-
     }
-//    int i = 0 ;
-//    for(auto sn: widma)
-//    {
-//        specnames[i++]->setText(fline[i].name_of_detector.c_str() );
-//    }
-    //cout << "enab size = " << enables_.size() << endl;
+
+
+    for(unsigned int i = fline.size(); i < 32;  ++i) // continue till end of particular tab
+    {
+        labels[i]->setText("");
+        specnames[i]->setText("" );
+        enables.push_back(false);
+    }
+
 
     for(unsigned int i = 0 ; i < enables.size() ; ++i)
     {
         radios[i]->setChecked(enables[i]);
         //cout << "radio " << i << " is " << enables_[i] << endl;
     }
+#endif
 
-    update();
+
+    // if less than 16 - second panel is invisible
+    if(fline.size() < 17) ui->frame_prawy->hide();
+
+
+
+
+    display_next_tab_data(ui->tabWidget->currentIndex() );
     //adjustSize();
 }
 //**********************************************************************************
 void TGalileo_signals_dlg::on_CheckBox_00_clicked()
-{     update(); }
+{     update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_01_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_02_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_03_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_04_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_05_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_06_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_07_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_08_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_09_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_10_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_11_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_12_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_13_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_14_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_15_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_16_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_17_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_18_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_19_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_20_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_21_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_22_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_23_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_24_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_25_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_26_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_27_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_28_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_29_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_30_clicked()
-{    update(); }
+{    update_enable_disable(); }
 void TGalileo_signals_dlg::on_CheckBox_31_clicked()
-{    update(); }
+{    update_enable_disable(); }
 
 void TGalileo_signals_dlg::on_pushButton_00_clicked()
 {
@@ -499,26 +562,85 @@ void TGalileo_signals_dlg::on_pushButton_31_clicked()
 //********************************************************************
 void TGalileo_signals_dlg::edit_calib_factors(int nr)
 {
-
-  //  Tfile_line_det_cal_lookup line =  fline[nr];
+    // Tfile_line_det_cal_lookup line =  fline[nr];
 
     //vector <double> ccc = cal_factors[nr];
+    int offset = (32* ui->tabWidget->currentIndex() );
+    if(nr + offset  >= (signed int) fline.size()) return;
+
+
     Tcalibration_factors_dlg dlg;
-    dlg.setup(fline[nr]);
+    dlg.setup(fline[nr+offset],
+              label_first_threshold,
+            label_second_threshold,
+               first_calibration_tekst,
+              second_calibration_tekst);
     if(dlg.exec() == QDialog::Accepted)
     {
-        fline[nr] = dlg.line_local;
-        specnames[nr]->setText(fline[nr].name_of_detector.c_str() );
+        fline[nr+offset] = dlg.line_local;
+        specnames[nr]->setText(fline[nr+offset].name_of_detector.c_str() );
     }
 }
 //********************************************************************
-
-
 void TGalileo_signals_dlg::on_buttonBox_accepted()
 {
+    // accept all
     for(unsigned int nr = 0 ; nr <fline.size() ; ++nr)
     {
-       fline[nr].enable = radios[nr]->isChecked();
-       //fline[nr].cal_order = cal_factors[nr].size();
+       // fline[nr].enable = radios[nr]->isChecked(); // ????????
+
     }
+}
+//*********************************************************************
+
+void TGalileo_signals_dlg::on_tabWidget_currentChanged(int index)
+{
+    display_next_tab_data(index);
+}
+//*********************************************************************
+void TGalileo_signals_dlg::display_next_tab_data(int tab_nr)
+{
+
+    ui->frame_coloured->setStyleSheet(
+                (" .QFrame { "  + page_colors[tab_nr] + " }" ).c_str()  // no colons nedded
+                );
+
+
+    enables.clear();
+    int offset = tab_nr * 32 ;
+    int minimal = min(labels.size(), fline.size() );
+    for( int i = 0 ; i < minimal; ++i) // only the first tab
+    {
+        if(i+offset >= (signed int) fline.size() )
+        {
+            minimal = i ;
+            break;
+        }
+        labels[i]->setText( (fline[i+offset].channel ).c_str() );
+        specnames[i]->setText(fline[i+offset].name_of_detector.c_str() );
+        enables.push_back(fline[i+offset].enable);
+    }
+
+
+    for( int i = minimal; i < 32;  ++i) // continue till end of particular tab
+    {
+        labels[i]->setText("");
+        specnames[i]->setText("" );
+        enables.push_back(false);
+    }
+
+
+    for(unsigned int i = 0 ; i < enables.size() ; ++i)
+    {
+        radios[i]->setChecked(enables[i]);
+        //cout << "radio " << i << " is " << enables_[i] << endl;
+    }
+
+
+    // if less than 16 - second panel is invisible
+    //if(fline.size() < 17) ui->frame_prawy->hide();
+
+
+    update_enable_disable();
+
 }

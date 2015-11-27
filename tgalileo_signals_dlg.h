@@ -23,13 +23,10 @@ public:
     explicit TGalileo_signals_dlg(vector<Tfile_line_det_cal_lookup> &fline_, QWidget *parent = 0 );
     ~TGalileo_signals_dlg();
     void setup(std::string title,
-               string kolory,
-//               vector<string> etykiety,
-//               vector<bool> enables_,
-//               vector<vector<double> > &cal_factors_,
+               string kolory, string label_first_threshold_, string label_second_threshold_,
+               string first_calibration_txt,
+               string second_calibration_txt);
 
-//               vector<Tfile_line_det_cal_lookup> &fline,
-               vector<string> widma );
 
 
 
@@ -165,6 +162,10 @@ private slots:
 
     void on_buttonBox_accepted();
 
+    //void on_tabWidget_currentChanged(int index);
+
+    void on_tabWidget_currentChanged(int index);
+
 private:
     Ui::TGalileo_signals_dlg *ui;
 
@@ -175,9 +176,27 @@ private:
 
     std::vector<bool> enables;
     //std::vector<std::vector<double> >  cal_factors;
+    vector<string> page_colors
+
+    {  /* " background-color : rgb(230,230,230)",*/
+        " background-color : rgb(230,230,255)",
+        " background-color : rgb(230,255,230)",
+        " background-color : rgb(230,255,255)",
+        " background-color : rgb(255,230,230)",
+        " background-color : rgb(255,230,255)",
+        " background-color : rgb(230,255,255)",
+        " background-color : rgb(255,250,255)"
+    };
+
+string first_calibration_tekst;
+string second_calibration_tekst;
+
+string label_first_threshold;
+string label_second_threshold;
 
 
-    void update();
+    void update_enable_disable();
+    void display_next_tab_data(int tab_nr);
 
     void edit_calib_factors(int nr);
 public:

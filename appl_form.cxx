@@ -2077,7 +2077,6 @@ void appl_form::set_visibility_of_spy_options_dialogs()
     }
     return;
 }
-
 //*********************************************************************************************
 void appl_form::zeroing_really_on_disk ( string name )
 {
@@ -3480,19 +3479,70 @@ void appl_form::on_action_Good_Galileo_Germanium_data_triggered()
 //***************************************************************************************************************
 void appl_form::on_actionGalileo_signals_enabling_triggered()
 {
-    vector<string> signal_labels;
-    vector<string> spectra_names;
-    vector<vector<double> >  cal_factors;
-    vector<bool> enables;
-
-    // loading the labels, and spectra names_
 
     string outfname = path.calibration + "galil_look_new.txt";
     string fname = path.calibration + "galileo_lookup_table_and_calibration.txt";
-    ifstream infile (fname);
+    string header =
+    "//  channel  channel_enable   name_of_the_detector  Alpha_thresholds theta(deg)  phi(deg) domain id";
+
+    common_galileo_signals_dialog(fname, "Galileo germanium detectors",
+                                  "color: rgb(0, 255, 234);\nbackground-color: rgb(0, 17, 255);", // blue
+                                  "Compton threshold",
+                                  false, // second threshold
+                                  "",
+                                  true, // flag_geometry
+                                  false, // no second calibration
+                                  "None", "None",  // labels for calibration factors
+                                  header,
+                                  outfname); // output filename
+
+}
+//**************************************************************************************************
+
+void appl_form::on_actionEuclides_signals_enabling_triggered()
+{
+    string outfname = path.calibration + "euclides_look_new.txt";
+    string fname = path.calibration + "euclides_lookup_table_and_calibration.txt";
+
+    string header =
+    "//chanel channel_enable detector_name alpha_low_thrs alpha_up_thrs "
+            "theta phi "
+            "cal_order_sub0 calibr_factors_sub0 "
+            "cal_order_sub1 calibr_factors_sub1\n" ;
+
+    //---------
+    common_galileo_signals_dialog(fname,
+                                  "Euclides detectors",
+                                  "color: rgb(255, 255, 255);\nbackground-color: rgb(180, 0, 180);",
+                                  "Alpha low threshold:",
+                                  true, // second threshold
+                                  "Alpha up threshold:.",
+                                  true, // flag_geometry
+                                  true, // second calibration needed (dE, E)
+                                  "Delta E calibration",
+                                  "E calibraion",
+                                  header, // header line above data
+                                  outfname ); // output filename
+}
+//**************************************************************************************************
+void appl_form::common_galileo_signals_dialog(string input_file,
+                                              string label_detector,
+                                              string label_color,
+                                              string label_first_threshold,
+                                              bool flag_second_thr,
+                                              string label_second_threshold,
+                                              bool flag_geometry,
+                                              bool flag_second_calibration,
+                                              string first_calibration_txt,
+                                              string second_calibration_txt,
+                                              string header,
+                                              string outfname)
+{
+
+    ifstream infile (input_file);
     if(!infile) {
-        cerr << "Can't open input file" << fname<< endl;
-        string mess = "Can't open calibration file: " + fname ;
+        cerr << "Can't open input file" << input_file<< endl;
+        string mess = "Can't open calibration file: " + input_file ;
         QMessageBox::warning ( this,
                                " Can't open file",
                                mess.c_str(),
@@ -3504,94 +3554,45 @@ void appl_form::on_actionGalileo_signals_enabling_triggered()
 
         return;
     }
-
-
-    infile >> zjedz ;
-    Tfile_line_det_cal_lookup linijka;
     vector<Tfile_line_det_cal_lookup> full_file;
-
-    struct  Texcept_read
-    {
-        string channel;
-        string item;
-        Texcept_read(string ch_, string item_): channel{ch_}, item{item_} {}
-    };
-
     try
     {
         while(infile)
         {
-            linijka.calib_factors.clear();
-            infile >> linijka.channel;
-            if(infile.eof()) break;
+            // in case of the galileo germanium detectors
+            Tfile_line_det_cal_lookup linijka { flag_second_thr, // no second threshold
+                                                flag_geometry,// geometry present
+                                              flag_second_calibration} ;
 
-            if(!infile)
-            {
-                throw Texcept_read{"error while reading a file ", fname };
-                //cout << " error while reading " << fname << endl;
-                //return;
-            }
-
-            infile >> linijka.enable ;
-            if(!infile) {
-                throw Texcept_read( linijka.channel, "enable");
-            };
-
-            infile >> linijka.name_of_detector;
-            if(!infile) { throw Texcept_read(linijka.channel, "name_of_detector"); }
-
-            if(linijka.enable)
-            {
-                infile >> linijka.compton_thresh;
-                if(!infile) { throw Texcept_read(linijka.channel, "compton_thresh"); }
-                infile >> linijka.theta;
-                if(!infile) { throw Texcept_read(linijka.channel, "theta"); }
-                infile >> linijka.phi;
-                if(!infile) { throw Texcept_read(linijka.channel, "phi"); }
-                infile >> linijka.cal_order;
-                if(!infile) { throw Texcept_read(linijka.channel, "cal_order"); }
-                for(int i = 0 ; i < linijka.cal_order ; ++i)
-                {
-                    double tmp;
-                    infile >> tmp;
-                    if(!infile) { throw Texcept_read(linijka.channel, "calibration factor - order: " + to_string(i)); }
-                    linijka.calib_factors.push_back(tmp);
-                }
-            }
-            else {
-                linijka.cal_order = 1;
-                linijka.calib_factors = { 0, 1 };\
-                linijka.compton_thresh = 0;
-                linijka.theta = 0;
-                linijka.phi = 0;
-            }
+            linijka.read_in(infile);
+            // cout << linijka << endl;
             full_file.push_back(linijka);
         }
 
         infile.close();
-
         TGalileo_signals_dlg dlg(full_file);
-        dlg.setup("Galileo signals ",
-                  "color: rgb(0, 255, 234);\nbackground-color: rgb(0, 17, 255);",
-                  //              signal_labels,
-                  //              enables,
-                  //              cal_factors,
-                  spectra_names);
+        dlg.setup(label_detector,
+                  label_color,
+                  label_first_threshold,
+                  label_second_threshold,
+
+                  first_calibration_txt,
+                  second_calibration_txt
+                  );
 
         bool flag_really_replace = false;
 
         if(dlg.exec() == QDialog::Accepted)
         {
             // saving all new file
-
             ofstream sav(outfname, ios::trunc);
 
             //#define sav cout
             if(!sav) { cerr << "Can't open input file" << outfname<< endl; return;}
 
             // saving header
-            string header {
-                "// This is a Lookup table for galileo detectors\n"
+            string top {
+                "// This is a Lookup table and calibration file for galileo detectors\n"
                 "//===================================================================\n"
                 "//\n"
                 "// Note:\n"
@@ -3609,55 +3610,11 @@ void appl_form::on_actionGalileo_signals_enabling_triggered()
                 "//====================================================================\n"
                 "// Channel channel_enable name_of_detector  ComptonThres  theta phi cal_order calibr_factors\n"};
 
-            sav << header << endl;
-
-            //        // saving one line
-            // update enable/disable, order, cal_factors
+            sav << top << header << endl;
 
             for(auto linia : full_file)
             {
-                sav << linia.channel << "\t"
-                    << linia.enable << "\t"
-                    << linia.name_of_detector ;
-
-                if(linia.enable){
-                    sav << "\t"
-                         << linia.compton_thresh << "\t"
-                         << linia.theta << "\t"
-                         << linia.phi << "\t"
-                         << (linia.cal_order + 1) << "\t";// because it is not an order, but how many cal words to read.
-                    for(auto c : linia.calib_factors)
-                    {
-                        sav << c << "\t" ;
-                    }
-                }else{
-
-                    string mess =
-                            "Your non-zero theta/phi information for " +
-                            linia.channel + ", will be lost now\n (Ask Alain for details)\n\nAre you sure?";
-
-                    if(linia.theta && linia.phi)
-                    {
-                        int odp = QMessageBox::warning ( this,
-                                                         " Risk of loosing the information",
-                                                         mess.c_str(),
-                                                         "Yes",
-                                                         "No",
-                                                         "Cancel",
-                                                         2  // Default
-                                                         );
-                        switch ( odp )
-                        {
-                            default:
-                                flag_really_replace = false;
-                            break;
-
-                            case 0:    // Yes
-                            break;
-                        }
-                    }
-                }
-                sav << endl;
+                linia.save_line(sav, this, flag_really_replace);
             }
             sav.close();
             // Here we are if the user said YES, or the re was no problem
@@ -3665,24 +3622,17 @@ void appl_form::on_actionGalileo_signals_enabling_triggered()
 
             // UNCOMMENT THIS LINE BELOW IF YOU REALLY WANT REPLACE THE OLD LUT/CAL FILE
             // if(flag_really_replace) system( ("mv " + outfname + " " + fname).c_str() ); // renaming
-
         }
 
     } // end try
     catch(Texcept_read obj)
     {
-        //cout << " error while reading " << fname << endl;
-        //cerr << "Can't open input file" << fname<< endl;
 
-
-
-
-        string mess = "Error while reading a file: \n" + fname +
-                        "\n\nThe error is in a line: "
-                        + obj.channel + " ...,  item: "
+        string mess = "Error while reading a file: \n" + input_file +
+                        "\n\nThe error is in a line dedicated to the signal: "
+                        + obj.channel + " ...,  \nerror while reading item: "
                         + obj.item  ;
 
-                 //   "Can't open calibration file: " + fname ;
         QMessageBox::warning ( this,
                                " Error while reading calibration file",
                                mess.c_str(),
@@ -3692,8 +3642,29 @@ void appl_form::on_actionGalileo_signals_enabling_triggered()
                                2  // Default
                                );
         return;
-
     }
+}
+//*****************************************************************************************************
+void appl_form::on_actionNeutronwall_signals_enabling_triggered()
+{
+    string outfname = path.calibration + "neutronwall_look_new.txt";
+    string fname = path.calibration + "neutronwall_lookup_table_and_calibration.txt";
 
+    string header =
+    "//  channel channel_enable(1)/disable(0)     name_of_the_detector threshold calibration_order calibr_factors";
+
+    //---------
+    common_galileo_signals_dialog(fname,
+                                  "Neutron detectors",
+                                  "color: rgb(255, 255, 0);\nbackground-color: rgb(190, 0, 0);",
+                                  "Threshold:",
+                                  false , // second threshold
+                                  "None",
+                                  false, // flag_geometry
+                                  false, // second calibration needed (dE, E)
+                                  "E calibration",
+                                  "None",
+                                  header, // header line above data
+                                  outfname ); // output filename
 }
 //**************************************************************************************************

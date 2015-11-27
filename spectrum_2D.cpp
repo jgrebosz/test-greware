@@ -51,7 +51,7 @@ istream & zjedz ( istream & plik )
     do
     {
         plik >> c  ;
-        if ( c == '/' && ( plik.peek() == '/' ) )
+        if ( (c == '/' && ( plik.peek() == '/')) || c == '#' )
         {
             std::string schowek;
             getline ( plik, schowek );

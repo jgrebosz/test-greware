@@ -210,6 +210,10 @@ private slots:
 
     void on_actionGalileo_signals_enabling_triggered();
 
+    void on_actionEuclides_signals_enabling_triggered();
+
+    void on_actionNeutronwall_signals_enabling_triggered();
+
 private:
     Ui::appl_form *ui;
 
@@ -235,7 +239,17 @@ protected:
     //    void ScrollBar_pionowy_widma_sliderMoved ( int value_bottom );
 
 
-
+void common_galileo_signals_dialog(string input_file,
+                                   string label_detector, string label_color,
+                                   string label_first_threshold,
+                                   bool flag_second_thr,
+                                   string label_second_threshold,
+                                   bool flag_geometry,
+                                   bool flag_second_calibration,
+                                   string first_calibration_txt,
+                                   string second_calibration_txt,
+                                   string header,
+                                   string outfname);
 
 
     bool flag_draw_spectra_scales;
