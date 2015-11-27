@@ -3660,7 +3660,7 @@ void appl_form::on_actionNeutronwall_signals_enabling_triggered()
                                   "Threshold:",
                                   false , // second threshold
                                   "None",
-                                  false, // flag_geometry
+                                  true, // flag_geometry
                                   false, // second calibration needed (dE, E)
                                   "E calibration",
                                   "None",
