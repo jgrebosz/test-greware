@@ -92,6 +92,10 @@ void paths::check_for_slash_in_spy_dir()
               conditions    = spy_dir + "system/conditions/";   // ok
               my_binnings    = spy_dir + "my_binnings/";
               incrementers = spy_dir + "system/incrementers_user_def/";
+
+              if( dir.exists(QString( (spy_dir +"experiment_setup/").c_str()) ))
+                  calibration   = spy_dir + "experiment_setup/";
+
               return false;
 
   }

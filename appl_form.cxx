@@ -3562,8 +3562,7 @@ void appl_form::common_galileo_signals_dialog(string input_file,
             // in case of the galileo germanium detectors
             Tfile_line_det_cal_lookup linijka { flag_second_thr, // no second threshold
                                                 flag_geometry,// geometry present
-                                              flag_second_calibration} ;
-
+                                              flag_second_calibration} ;   
             linijka.read_in(infile);
             // cout << linijka << endl;
             full_file.push_back(linijka);

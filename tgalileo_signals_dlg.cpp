@@ -175,17 +175,25 @@ TGalileo_signals_dlg::TGalileo_signals_dlg(vector<Tfile_line_det_cal_lookup> &fl
     }
 
 
+
+
     int how_many_tabs = 1 + ( (fline.size()-1) / 32) ;
 
     for(int i = ui->tabWidget->count()  ; i >= how_many_tabs ; --i)
     {
             ui->tabWidget->removeTab (i);
-}
+    }
 
 
     for(int nr = 0 ; nr < ui->tabWidget->count() ; ++nr)
     {
-       ui->tabWidget->setTabText(nr, ("Part " + to_string(nr+1)).c_str()  );
+        std::size_t poz = fline[ 32* nr].channel.rfind("_") ;
+        if( poz != string::npos)
+        {
+            ui->tabWidget->setTabText(nr, fline[32* nr].channel.substr(0, poz).c_str() );
+        }
+
+       else ui->tabWidget->setTabText(nr, ("vme ? " + to_string(nr+1)).c_str()  );
 
        QWidget * page ;
        page = ui->tabWidget->widget(nr);
@@ -195,7 +203,7 @@ TGalileo_signals_dlg::TGalileo_signals_dlg(vector<Tfile_line_det_cal_lookup> &fl
 
     bool many_tabs = ui->tabWidget->count() > 1;
     ui->label_Yestoall->setVisible(many_tabs);
-    ui->tabWidget->setVisible(many_tabs);
+    //ui->tabWidget->setVisible(many_tabs);
 
 
 
@@ -266,37 +274,8 @@ void TGalileo_signals_dlg::setup(string title, string kolory,
     ui->labe_title-> setStyleSheet(kolory.c_str()); // "color: rgb(0, 255, 234);\nbackground-color: rgb(0, 17, 255);");
 
 
-    //    int max_width {200} ;
-    //    QRect r;
-#if 0
-    for(unsigned int i = 0 ; i < labels.size(); ++i) // only the first tab
-    {
-        labels[i]->setText( (fline[i].channel ).c_str() );
-        specnames[i]->setText(fline[i].name_of_detector.c_str() );
-        enables.push_back(fline[i].enable);
-    }
-
-
-    for(unsigned int i = fline.size(); i < 32;  ++i) // continue till end of particular tab
-    {
-        labels[i]->setText("");
-        specnames[i]->setText("" );
-        enables.push_back(false);
-    }
-
-
-    for(unsigned int i = 0 ; i < enables.size() ; ++i)
-    {
-        radios[i]->setChecked(enables[i]);
-        //cout << "radio " << i << " is " << enables_[i] << endl;
-    }
-#endif
-
-
     // if less than 16 - second panel is invisible
-    if(fline.size() < 17) ui->frame_prawy->hide();
-
-
+    //if(fline.size() < 17) ui->frame_prawy->hide();
 
 
     display_next_tab_data(ui->tabWidget->currentIndex() );
@@ -609,6 +588,7 @@ void TGalileo_signals_dlg::display_next_tab_data(int tab_nr)
     enables.clear();
     int offset = tab_nr * 32 ;
     int minimal = min(labels.size(), fline.size() );
+
     for( int i = 0 ; i < minimal; ++i) // only the first tab
     {
         if(i+offset >= (signed int) fline.size() )
@@ -627,6 +607,7 @@ void TGalileo_signals_dlg::display_next_tab_data(int tab_nr)
         labels[i]->setText("");
         specnames[i]->setText("" );
         enables.push_back(false);
+        radios[i]->setEnabled(false);
     }
 
 
@@ -635,6 +616,9 @@ void TGalileo_signals_dlg::display_next_tab_data(int tab_nr)
         radios[i]->setChecked(enables[i]);
         //cout << "radio " << i << " is " << enables_[i] << endl;
     }
+
+
+    // are there some empty labels? If yes, disable this line
 
 
     // if less than 16 - second panel is invisible
