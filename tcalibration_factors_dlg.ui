@@ -567,11 +567,11 @@
     </layout>
    </item>
   </layout>
-  <zorder>verticalSpacer_3</zorder>
+
   <zorder>frame_calibration</zorder>
-  <zorder>verticalSpacer_5</zorder>
+
   <zorder>frame_calibration_2</zorder>
-  <zorder>verticalSpacer_7</zorder>
+
  </widget>
  <resources/>
  <connections>
