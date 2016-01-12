@@ -19,8 +19,10 @@ using TSG = Tselfgate_type ;
 #include "t4selfgate_miniball_dlg.h"
 #include "t4selfgate_geraddback_dlg.h"
 #include "t4selfgate_agata_psa_dlg.h"
-#include "t4selfgate_ge_cristal_galileo.h"
+#include "t4selfgate_ge_crystal_galileo.h"
 #include "t4selfgate_selector.h"
+#include "t4selfgate_kratta_dlg.h"
+#include "Tself_gate_kratta_descr.h"
 
 using namespace std;
 
@@ -642,7 +644,7 @@ void T4user_spectrum_wizard::called_creator_self_gate(QTableWidget *table, bool 
     {
     case TSG::Types::not_available : return;
 
-    case TSG::Types::german_cristal:
+    case TSG::Types::german_crystal:
       {
         T4selfgate_ger_dlg dlg;
         Tself_gate_ger_descr desc ;
@@ -771,6 +773,25 @@ void T4user_spectrum_wizard::called_creator_self_gate(QTableWidget *table, bool 
 
       }
       break;
+  case TSG::Types::kratta :
+    {
+      T4selfgate_kratta_dlg dlg;
+      Tself_gate_kratta_descr desc ;
+      if(!creation) {
+          string sg_name = select_sg_name_from_disk(Tselfgate_type(choice));
+          if(sg_name.empty()) return;
+          desc.read_definition_from(path.conditions + sg_name);
+        }
+      dlg.set_parameters( &desc );
+      if (dlg.exec() == QDialog::Accepted )
+        {
+          dlg.get_parameters( &desc );
+          desc.write_definitions(path.conditions);
+          if(creation)selfgate_succesfully_created(desc.name, table);
+        }
+
+    }
+    break;
 
 
     default:
@@ -801,7 +822,7 @@ bool T4user_spectrum_wizard::check_xy_time_diff_selfgate_correctness()
       //cout << "X sf_name = " << sf_name << endl;
       // checking the possible use of xy difference checkbox_of_channels
 
-      if(sf_name.find(".self_gate_ger_cristal") != string::npos)
+      if(sf_name.find(".self_gate_ger_crystal") != string::npos)
         {
           Tself_gate_ger_descr d ;
           d.read_definition_from(path.conditions + sf_name);
@@ -869,7 +890,7 @@ bool T4user_spectrum_wizard::check_xy_time_diff_selfgate_correctness()
             // checking the possible use of xy difference checkbox_of_channels
 
 
-            if(sf_name.find(".self_gate_ger_cristal") != string::npos)
+            if(sf_name.find(".self_gate_ger_crystal") != string::npos)
               {
                 Tself_gate_ger_descr d ;
                 d.read_definition_from(path.conditions + sf_name);
@@ -1149,8 +1170,11 @@ void T4user_spectrum_wizard::table_incr_DoubleClicked(QTableWidget * table, int 
     case 1: //            cout << "Colum 2  SG name clicked"  << endl;
       {
         string increm_name = table->item(row,0)->text().toStdString();
-
+        cout << "Trying to find selfgate for " << increm_name << endl;
         Tselfgate_type typ = selfgate_type_for_this_type_of_incrementer(increm_name);
+        cout << "Znaleziony typ " << typ.give_type_name() << ", filtr = "
+            << typ.give_type_filter() << ", info = " << typ.give_type_info()
+            << endl;
         if(typ.sg_is_not_available() )
           {
             string txt = "No self-gate is applicable\n\nfor the incrementer called \n" + increm_name;

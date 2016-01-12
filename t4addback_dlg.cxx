@@ -121,8 +121,8 @@ void T4addback_dlg::show_help()
 {
 /*The addback energy can be Doppler corrected, but
 there is a problem:  which angle to use.
-We need to assume which was the first, primary cristal
-of the cluster. (In other words: which cristal registered
+We need to assume which was the first, primary crystal
+of the cluster. (In other words: which crystal registered
 the oryginal gamma quantum comming from the target).</i>
 */
 }

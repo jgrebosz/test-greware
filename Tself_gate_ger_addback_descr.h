@@ -56,11 +56,11 @@ public:
   bool enable_geom_phi_gate_secondary ;
   double geom_phi_gate_secondary[2];
 
-  // this is the multiplicity inside the cluster where this cristal belongs
+  // this is the multiplicity inside the cluster where this crystal belongs
   bool enable_mult_in_cluster_gate ;
   double mult_in_cluster_gate[2];
 
-  // this is the AC inside the cluster where this cristal belongs
+  // this is the AC inside the cluster where this crystal belongs
   bool enable_AC_in_cluster_gate ;
   double AC_in_cluster_gate[2];
 

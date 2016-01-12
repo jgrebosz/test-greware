@@ -951,7 +951,7 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
                              "Cloning the _A_1_ conditon ",
                              "This is the option to clone a conditon  which contains the substring \"_A_1_\"\n "
                              "Such substring will be replaced with _A_2_ , _A_3_, ... , _R_7_"
-                             "(i.e. for all possible cluster cristals)\n"
+                             "(i.e. for all possible cluster crystals)\n"
                              "By this action, the new 104 conditons  wiil be created.\n\n"
                              "The replacement will be done:\n"
                              "    1. Inside  the name of the conditon, \n\n"
@@ -993,7 +993,7 @@ bool flag_any_change = false;
                                               "Cloning the _A_1_ conditon ",
                                               "This is the option to clone a conditon  which contains the substring \"_A_1_\"\n "
                                               "Such substring will be replaced with _A_2_ , _A_3_, ... , _R_7_"
-                                              "(i.e. for all possible cluster cristals)\n"
+                                              "(i.e. for all possible cluster crystals)\n"
                                               "By this action, the new 104 conditons  wiil be created.\n\n"
                                               "The replacement will be done:\n"
                                               "    1. Inside  the name of the conditon, \n"
@@ -1062,7 +1062,7 @@ bool flag_any_change = false;
             throw e;
 
         }
-        // FOR loop over all cristals========================================
+        // FOR loop over all crystals========================================
         bool make_checking_if_clone_exists = true;
 
         //----------------------

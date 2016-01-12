@@ -19,19 +19,20 @@ class Tselfgate_type
 public:
 
     /* Old, original (RISING) order in enum was:
- *    enum type_of_selfgate  { unknown = 0 , germanium_cristal = 1,
- *                              Hector_BaF_cristal = 2, miniball_cristal = 3,
+ *    enum type_of_selfgate  { unknown = 0 , germanium_crystal = 1,
+ *                              Hector_BaF_crystal = 2, miniball_crystal = 3,
  *                              ger_cluster_addback
  *                            } ;
 */
 
     enum Types { not_available,
-                 german_cristal,
+                 german_crystal,
                  hector,
                  miniball,
                  cluster_addback,
                  agata_psa,           // Agata pulsshape analysis
-                 galileo_ge     // Galileo Germanium detectors
+                 galileo_ge,     // Galileo Germanium detectors
+                 kratta
                };
 
     Types my_type;

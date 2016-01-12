@@ -56,12 +56,12 @@ Tself_gate_ger_addback_descr::Tself_gate_ger_addback_descr()
     geom_phi_gate_secondary[0] = 0;
     geom_phi_gate_secondary[1] = 360;
 
-    // this is the multiplicity inside the cluster where this cristal belongs
+    // this is the multiplicity inside the cluster where this crystal belongs
     enable_mult_in_cluster_gate = false;
     mult_in_cluster_gate[0] = 0;
     mult_in_cluster_gate[1] = 7;
 
-    // this is the multiplicity inside the cluster where this cristal belongs
+    // this is the multiplicity inside the cluster where this crystal belongs
     enable_AC_in_cluster_gate = false;
     AC_in_cluster_gate[0] = 0;
     AC_in_cluster_gate[1] = 0;
@@ -74,7 +74,7 @@ void Tself_gate_ger_addback_descr::read_definition_from(string pathed_name)
 
     enable_energy_time_polygon_gate = "click_here";
     string file_name = pathed_name ;
-    // path.user_def_spectra + name_of_spectrum + ".self_gate_ger_cristal" ;
+    // path.user_def_spectra + name_of_spectrum + ".self_gate_ger_crystal" ;
     ifstream plik(file_name.c_str());
     if(!plik)
     {
@@ -93,10 +93,10 @@ void Tself_gate_ger_addback_descr::read_definition_from(string pathed_name)
         plik >> name;   // will be without the path and extension
 
         //SPY NEEDS the extension to recognize the title
-        //    unsigned int i = name.find( ".self_gate_ger_cristal"); // != string::npos)
+        //    unsigned int i = name.find( ".self_gate_ger_crystal"); // != string::npos)
         //    if(i == string::npos)
         //    {
-        //      name += ".self_gate_ger_cristal" ;
+        //      name += ".self_gate_ger_crystal" ;
         //    }
 
         enable_en4gate = (bool) Nfile_helper::find_in_file(plik, "enable_en4gate");
@@ -134,7 +134,7 @@ void Tself_gate_ger_addback_descr::read_definition_from(string pathed_name)
 
         try
         {  // old versions of the program didn't have this
-            // this is the multiplicity inside the cluster where this cristal belongs
+            // this is the multiplicity inside the cluster where this crystal belongs
             enable_AC_in_cluster_gate = (bool) fif(plik, "enable_AC_in_cluster_gate");
             AC_in_cluster_gate[0] = fif(plik, "AC_in_cluster_gate_low");
             AC_in_cluster_gate[1] = fif(plik, "AC_in_cluster_gate_high");
@@ -229,13 +229,13 @@ void Tself_gate_ger_addback_descr::write_definitions(string path_only)
     }
 
     plik
-            << "// This is a definiton of the 'self_gate' for germanium cristal\n"
+            << "// This is a definiton of the 'self_gate' for germanium crystal\n"
             << "// comments are marked using two slashes: // comment \n\n"
             << "\n//-----------------------------------------------------\n\n"
 
-            << "type_of_self_gate\t\t" << sg_type << "\t\t// 1= Ger cristal, 2= Hec BaF, 3 miniball, 4 Clust addback\n"
+            << "type_of_self_gate\t\t" << sg_type << "\t\t// 1= Ger crystal, 2= Hec BaF, 3 miniball, 4 Clust addback\n"
             << "name\t\t " << name
-               //<< ".self_gate_ger_cristal"
+               //<< ".self_gate_ger_crystal"
             << "\n\n"
 
 

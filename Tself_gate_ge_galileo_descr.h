@@ -1,5 +1,5 @@
 /***************************************************************************
-                          Tself_gate_ge_cristal_galileo_descr.h  -  description
+                          Tself_gate_ge_crystal_galileo_descr.h  -  description
                              -------------------
     begin                : Mon Sep 8 2003
     copyright            : (C) 2003 by dr. Jerzy Grebosz, IFJ Krakow, Poland
@@ -14,8 +14,8 @@
  ***************************************************************************/
 
 
-#ifndef TSELF_GATE_GE_CRISTAL_GALILEO_DESCR_H
-#define TSELF_GATE_GE_CRISTAL_GALILEO_DESCR_H
+#ifndef TSELF_GATE_GE_crystal_GALILEO_DESCR_H
+#define TSELF_GATE_GE_crystal_GALILEO_DESCR_H
 
 #include <string>
 using namespace std;
@@ -23,7 +23,7 @@ using namespace std;
 #include "Tself_gate_abstract_descr.h"
 
 
-/**Text file which describes the gate on the germanium cristal
+/**Text file which describes the gate on the germanium crystal
   *@author dr. Jerzy Grebosz, IFJ Krakow, Poland
   */
 //////////////////////////////////////////////////////////////////////////

@@ -114,7 +114,7 @@ void T4selfgate_agata_psa_dlg::set_parameters( const Tself_gate_agata_psa_descr 
     ui->lineEdit_z_high->setText(QString::number(d->z_gate[1]));
 
 
-    // this is the multiplicity inside the cluster where this cristal belongs
+    // this is the multiplicity inside the cluster where this crystal belongs
     ui->checkBox_mult->setChecked(d-> enable_mult_of_hits_gate);
     ui->lineEdit_mult_low->setText(QString::number(d->mult_of_hits_gate[0]));
     ui->lineEdit_mult_high->setText(QString::number(d->mult_of_hits_gate[1]));
@@ -154,7 +154,7 @@ void T4selfgate_agata_psa_dlg::get_parameters( Tself_gate_agata_psa_descr * d )
     d-> z_gate[0] = ui->lineEdit_z_low->text().toDouble();
     d-> z_gate[1] = ui->lineEdit_z_high->text().toDouble();
 
-    // this is the multiplicity inside the cluster where this cristal belongs
+    // this is the multiplicity inside the cluster where this crystal belongs
     d-> enable_mult_of_hits_gate = ui->checkBox_mult->isChecked();
     d->mult_of_hits_gate[0] = ui->lineEdit_mult_low->text().toDouble();
     d->mult_of_hits_gate[1] = ui->lineEdit_mult_high->text().toDouble();

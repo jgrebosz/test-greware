@@ -3039,8 +3039,8 @@ void appl_form::on_matrix_projection_Action_triggered()
 
         QString name_of_projection = doc->projection ( x_axis ).c_str();   // only one
         string proj_nam =   name_of_projection.toStdString();
-        cerr << "Proj_nam = " << proj_nam
-             << "and name_of_projection = " << name_of_projection.toStdString() << endl;
+//        cerr << "Proj_nam = " << proj_nam
+//             << "and name_of_projection = " << name_of_projection.toStdString() << endl;
 
         Tplate_spectrum * s = 0 ;
         // looking for an extension

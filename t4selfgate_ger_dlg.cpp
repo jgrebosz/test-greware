@@ -166,12 +166,12 @@ void T4selfgate_ger_dlg::set_parameters( const Tself_gate_ger_descr *d )
   ui->lineEdit_gp_phi_low->setText(QString::number(d-> gp_phi_gate[0]));
   ui->lineEdit_gp_phi_high->setText(QString::number(d-> gp_phi_gate[1]));
 
-  // this is the multiplicity inside the cluster where this cristal belongs
+  // this is the multiplicity inside the cluster where this crystal belongs
   ui->checkBox_mult->setChecked(d-> enable_mult_in_cluster_gate);
   ui->lineEdit_clus_mult_low->setText(QString::number(d->mult_in_cluster_gate[0]));
   ui->lineEdit_clus_mult_high->setText(QString::number(d->mult_in_cluster_gate[1]));
 
-  // this is the AC energy inside the cluster where this cristal belongs
+  // this is the AC energy inside the cluster where this crystal belongs
   ui->checkBox_AC->setChecked(d-> enable_AC_in_cluster_gate);
   ui->spinBox_AC_low->setValue((int) d->AC_in_cluster_gate[0]);
   ui->spinBox_AC_high->setValue((int) d->AC_in_cluster_gate[1]);
@@ -239,12 +239,12 @@ void T4selfgate_ger_dlg::get_parameters( Tself_gate_ger_descr * d )
   d-> gp_phi_gate[0] = ui->lineEdit_gp_phi_low->text().toDouble();
   d-> gp_phi_gate[1] = ui->lineEdit_gp_phi_high->text().toDouble();
 
-  // this is the multiplicity inside the cluster where this cristal belongs
+  // this is the multiplicity inside the cluster where this crystal belongs
   d-> enable_mult_in_cluster_gate = ui->checkBox_mult->isChecked();
   d->mult_in_cluster_gate[0] = ui->lineEdit_clus_mult_low->text().toDouble();
   d->mult_in_cluster_gate[1] = ui->lineEdit_clus_mult_high->text().toDouble();
 
-  // this is the AC inside the cluster where this cristal belongs
+  // this is the AC inside the cluster where this crystal belongs
   d-> enable_AC_in_cluster_gate = ui->checkBox_AC->isChecked();
   d->AC_in_cluster_gate[0] = ui->spinBox_AC_low->value();
   d->AC_in_cluster_gate[1] = ui->spinBox_AC_high->value();

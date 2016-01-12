@@ -182,7 +182,7 @@
         <item>
          <widget class="QLabel" name="textLabel1_3">
           <property name="text">
-           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;If you want - only such cristals which time difference to the fastest cristal &lt;br/&gt;- is not bigger than specified - can contribute to the addback&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+           <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-style:italic;&quot;&gt;If you want - only such crystals which time difference to the fastest crystal &lt;br/&gt;- is not bigger than specified - can contribute to the addback&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
           </property>
           <property name="wordWrap">
            <bool>true</bool>
@@ -203,7 +203,7 @@
              <item>
               <widget class="QCheckBox" name="checkBox_time_limit">
                <property name="text">
-                <string>Limit the 'addback participants' to cristals with a time not later than...</string>
+                <string>Limit the 'addback participants' to crystals with a time not later than...</string>
                </property>
               </widget>
              </item>
@@ -214,7 +214,7 @@
              <item>
               <widget class="QLabel" name="textLabel2">
                <property name="text">
-                <string>Max time difference to the fastest cristal</string>
+                <string>Max time difference to the fastest crystal</string>
                </property>
                <property name="wordWrap">
                 <bool>false</bool>
@@ -297,7 +297,7 @@
            <item>
             <widget class="QRadioButton" name="radioButton_max20">
              <property name="text">
-              <string>The primary segment (cristal) is the one, which 
+              <string>The primary segment (crystal) is the one, which 
 deliveres (in 20MeV range) the highest energy (Eprimary). </string>
              </property>
             </widget>

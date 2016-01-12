@@ -49,7 +49,7 @@
       <enum>QFrame::Plain</enum>
      </property>
      <property name="text">
-      <string>&lt;font size=&quot;+1&quot;&gt;BaF cristal should deliver 3 signals:&lt;br&gt;&lt;tt&gt; a). Energy FAST, &lt;/tt&gt;    &lt;tt&gt;b). Energy  SLOW, &lt;/tt&gt;     &lt;tt&gt;c) Time&lt;/tt&gt;&lt;/font&gt;</string>
+      <string>&lt;font size=&quot;+1&quot;&gt;BaF crystal should deliver 3 signals:&lt;br&gt;&lt;tt&gt; a). Energy FAST, &lt;/tt&gt;    &lt;tt&gt;b). Energy  SLOW, &lt;/tt&gt;     &lt;tt&gt;c) Time&lt;/tt&gt;&lt;/font&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -85,7 +85,7 @@
           </size>
          </property>
          <property name="text">
-          <string>When &lt;b&gt;at least one&lt;/b&gt; of these signals comes - the cristal &quot;&lt;font color=&quot;#ff0000&quot;&gt;&lt;b&gt;fired&lt;/b&gt;&lt;/font&gt;&quot;&lt;br&gt;In this case &lt;b&gt;&lt;font color=&quot;#ff0000&quot;&gt;raw&lt;/font&gt;&lt;/b&gt; spectra are incremeted - by NON_ZERO value (Franco!) &lt;br&gt;</string>
+          <string>When &lt;b&gt;at least one&lt;/b&gt; of these signals comes - the crystal &quot;&lt;font color=&quot;#ff0000&quot;&gt;&lt;b&gt;fired&lt;/b&gt;&lt;/font&gt;&quot;&lt;br&gt;In this case &lt;b&gt;&lt;font color=&quot;#ff0000&quot;&gt;raw&lt;/font&gt;&lt;/b&gt; spectra are incremeted - by NON_ZERO value (Franco!) &lt;br&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignVCenter</set>
@@ -123,7 +123,7 @@
          <item>
           <widget class="QLabel" name="textLabel1_4">
            <property name="text">
-            <string>Flag &quot;Good&quot; is set when the signals have sensible values.&lt;br&gt;Only such BaF cristals contribute to the &lt;b&gt;multiplicity&lt;/b&gt;</string>
+            <string>Flag &quot;Good&quot; is set when the signals have sensible values.&lt;br&gt;Only such BaF crystals contribute to the &lt;b&gt;multiplicity&lt;/b&gt;</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignVCenter</set>

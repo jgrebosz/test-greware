@@ -318,7 +318,7 @@
         </font>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inside the 'CAL' ntuple (tree) are the following data.&lt;br/&gt;mw41 position; mw42 position; tof; sci21 position; &lt;br/&gt;CATE positions, CATE dE, E &lt;br/&gt;and &lt;br/&gt;- Germanium cristals energy/time calibrated (for all 105 cristals)&lt;br/&gt;- Hector BaF energy slow, and time (for all 8 cristals) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inside the 'CAL' ntuple (tree) are the following data.&lt;br/&gt;mw41 position; mw42 position; tof; sci21 position; &lt;br/&gt;CATE positions, CATE dE, E &lt;br/&gt;and &lt;br/&gt;- Germanium crystals energy/time calibrated (for all 105 crystals)&lt;br/&gt;- Hector BaF energy slow, and time (for all 8 crystals) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="wordWrap">
         <bool>false</bool>

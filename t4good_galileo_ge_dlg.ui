@@ -79,7 +79,7 @@
               <enum>QFrame::Plain</enum>
              </property>
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The Gallileo germanium cristal delivers some signals: &lt;br/&gt;a). wEnergy &lt;br/&gt;b). eEnergy &lt;br/&gt;c). Time &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;The Gallileo germanium crystal delivers some signals: &lt;br/&gt;a). wEnergy &lt;br/&gt;b). eEnergy &lt;br/&gt;c). Time &lt;br/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="textFormat">
               <enum>Qt::RichText</enum>
@@ -103,7 +103,7 @@
                 <item>
                  <widget class="QCheckBox" name="checkBox_wEn_vs_eEn_banana">
                   <property name="text">
-                   <string>(Y):  wEnergy  vs. (X): eEnergy   -   of this cristal are in an individual polygon gate:</string>
+                   <string>(Y):  wEnergy  vs. (X): eEnergy   -   of this crystal are in an individual polygon gate:</string>
                   </property>
                  </widget>
                 </item>
@@ -182,7 +182,7 @@
               </size>
              </property>
              <property name="text">
-              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When &lt;span style=&quot; font-weight:600;&quot;&gt;at least one&lt;/span&gt; of these signals comes - the cristal is considered as &amp;quot;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;fired&lt;/span&gt;&amp;quot;.&lt;br/&gt;In this case &lt;span style=&quot; font-weight:600; color:#0026ff;&quot;&gt;all &lt;/span&gt;&lt;span style=&quot; color:#0026ff;&quot;&gt;raw&lt;/span&gt; spectra are incremeted &lt;br/&gt;(energy raw, and time raw) and the 'fan' spectrum.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;When &lt;span style=&quot; font-weight:600;&quot;&gt;at least one&lt;/span&gt; of these signals comes - the crystal is considered as &amp;quot;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;fired&lt;/span&gt;&amp;quot;.&lt;br/&gt;In this case &lt;span style=&quot; font-weight:600; color:#0026ff;&quot;&gt;all &lt;/span&gt;&lt;span style=&quot; color:#0026ff;&quot;&gt;raw&lt;/span&gt; spectra are incremeted &lt;br/&gt;(energy raw, and time raw) and the 'fan' spectrum.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
              </property>
              <property name="alignment">
               <set>Qt::AlignVCenter</set>
@@ -410,7 +410,7 @@ p, li { white-space: pre-wrap; }
        <item row="0" column="0" colspan="2">
         <widget class="QLabel" name="textLabel1_4">
          <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Flag &amp;quot;Good&amp;quot; is set when the signals have sensible values.&lt;br/&gt;Only such germanium cristals contribute to the &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;multiplicity&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:10pt;&quot;&gt;Flag &amp;quot;Good&amp;quot; is set when the signals have sensible values.&lt;br/&gt;Only such germanium crystals contribute to the &lt;/span&gt;&lt;span style=&quot; font-size:10pt; font-weight:600;&quot;&gt;multiplicity&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignVCenter</set>

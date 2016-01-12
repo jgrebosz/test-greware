@@ -1,5 +1,5 @@
 /***************************************************************************
-                          Tself_gate_ge_cristal_galileo_descr.cpp  -  description
+                          Tself_gate_ge_crystal_galileo_descr.cpp  -  description
                              -------------------
     begin                : Mon Sep 8 2003
     copyright            : (C) 2003 by dr. Jerzy Grebosz, IFJ Krakow, Poland
@@ -22,7 +22,7 @@
 //********************************************************************
 Tself_gate_ge_galileo_descr::Tself_gate_ge_galileo_descr()
 {
-  sg_type = Tselfgate_type::galileo_ge ; //  germanium_cristal ; // this is germanium
+  sg_type = Tselfgate_type::galileo_ge ; //  germanium_crystal ; // this is germanium
   enable_en4gate = false ;
   en4_gate[0] = 0 ;
   en4_gate[1] = 4096 ;
@@ -78,7 +78,7 @@ void Tself_gate_ge_galileo_descr::read_definition_from(string pathed_name)
 {
 
   string file_name = pathed_name ;
-  // path.user_def_spectra + name_of_spectrum + ".self_gate_ger_cristal" ;
+  // path.user_def_spectra + name_of_spectrum + ".self_gate_ger_crystal" ;
   ifstream plik(file_name.c_str());
   if(!plik)
   {
@@ -97,10 +97,10 @@ void Tself_gate_ge_galileo_descr::read_definition_from(string pathed_name)
     plik >> name;   // will be without the path and extension
 
     //SPY NEEDS the extension to recognize the title
-    //    unsigned int i = name.find( ".self_gate_ger_cristal"); // != string::npos)
+    //    unsigned int i = name.find( ".self_gate_ger_crystal"); // != string::npos)
     //    if(i == string::npos)
     //    {
-    //      name += ".self_gate_ger_cristal" ;
+    //      name += ".self_gate_ger_crystal" ;
     //    }
 
     enable_en4gate = (bool) Nfile_helper::find_in_file(plik, "enable_en4gate");
@@ -176,9 +176,9 @@ void Tself_gate_ge_galileo_descr::write_definitions(string path_only)
 {
   string file_name = path_only + name;
 
-  //  if(file_name.find(".self_gate_ger_cristal") == string::npos)
+  //  if(file_name.find(".self_gate_ger_crystal") == string::npos)
   //  {
-  //    file_name += ".self_gate_ger_cristal" ;
+  //    file_name += ".self_gate_ger_crystal" ;
   //  }
 
   ofstream plik(file_name.c_str());
@@ -190,13 +190,13 @@ void Tself_gate_ge_galileo_descr::write_definitions(string path_only)
   }
 
   plik
-  << "// This is a definiton of the 'self_gate' for Galileo germanium cristal\n"
+  << "// This is a definiton of the 'self_gate' for Galileo germanium crystal\n"
   << "// comments are marked using two slashes: // comment \n\n"
   << "\n//-----------------------------------------------------\n\n"
 
-  << "type_of_self_gate\t\t" << sg_type << "\t\t// 1= Ger cristal, 2= Hec BaF\n"
+  << "type_of_self_gate\t\t" << sg_type << "\t\t// 1= Ger crystal, 2= Hec BaF\n"
   << "name\t\t " << name
-  //<< ".self_gate_ger_cristal"
+  //<< ".self_gate_ger_crystal"
   << "\n\n"
 
 

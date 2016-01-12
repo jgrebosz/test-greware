@@ -707,7 +707,7 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
 
     string introduction_txt =  "This is the option to clone a spectrum which contains the substring \"_A_1_\"\n "
             "Such substring will be replaced with _A_2_ , _A_3_, ... , _R_7_"
-            "(i.e. for all possible cluster cristals)\n"
+            "(i.e. for all possible cluster crystals)\n"
             "By this action, the new 104 spectra wiil be created.\n\n"
             "The replacement will be done :\n"
             "    1. Inside  the name of the spectrum,\n"
@@ -824,7 +824,7 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
                                  0 );
         }
 
-        // FOR loop over all cristals========================================
+        // FOR loop over all crystals========================================
         bool make_checking_if_clone_exists = true;
 
 #if 0

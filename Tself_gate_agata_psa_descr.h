@@ -16,7 +16,7 @@ using namespace std;
 #include "Tself_gate_abstract_descr.h"
 
 
-/**Text file which describes the gate on the agata cristal
+/**Text file which describes the gate on the agata crystal
   *@author dr. Jerzy Grebosz, IFJ Krakow, Poland
   */
 //////////////////////////////////////////////////////////////////////////
@@ -42,7 +42,7 @@ public:
   double z_gate[2];
 
 
-  // this is the multiplicity inside the cryostat where this cristal  belongs
+  // this is the multiplicity inside the cryostat where this crystal  belongs
   bool enable_mult_of_hits_gate ;
   double mult_of_hits_gate[2];
 

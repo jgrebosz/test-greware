@@ -128,8 +128,8 @@ void T4addline_1d_wizard::on_pushButton_expl_all_when_clicked()
 {
   QMessageBox::information( this, "Why we need the ALL, WHEN keywords?\n\n",
                             "It may happen for example when 'ALL'' means"
-                            "the 'a set of all 105 germanium cristals'.\n"
-                            "Of course it is very unlikely that 105 cristals will (fire) be present "
+                            "the 'a set of all 105 germanium crystals'.\n"
+                            "Of course it is very unlikely that 105 crystals will (fire) be present "
                             "in one event.\n"
                             "So some items may not be present.\n\n"
                             "Here - you have to decide how this gate (condition) should be evaluated in such istuation");

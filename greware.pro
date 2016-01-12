@@ -9,14 +9,13 @@ TARGET = greware
 TEMPLATE = app
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
-
-CONFIG  += warn_on  static debug
+CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant
 #CONFIG  += warn_on  static release
 
 #static is probably for pictures (loaded into program)
 
 QMAKE_CXXFLAGS += -std=c++11
-QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug
+#QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug
 
 #QMAKE_CXXFLAGS += -std=c++11
 
@@ -83,8 +82,10 @@ SOURCES += main.cxx\
     t4picture_angle.cpp \
     tselfgate_type.cxx \
     t4selfgate_hec_dlg.cpp \
+    t4selfgate_kratta_dlg.cpp \
     Tself_gate_mib_descr.cpp \
     Tself_gate_hec_descr.cpp \
+    Tself_gate_kratta_descr.cpp \
     Tself_gate_ger_addback_descr.cpp \
     Tself_gate_agata_psa_descr.cxx \
     t4selfgate_miniball_dlg.cpp \
@@ -96,7 +97,7 @@ SOURCES += main.cxx\
     tgui_options.cpp \
     t4interesting_ranges_galileo.cpp \
     t4good_galileo_ge_dlg.cpp \
-    t4selfgate_ge_cristal_galileo.cpp \
+    t4selfgate_ge_crystal_galileo.cpp \
     Tself_gate_ge_galileo_descr.cpp \
     tgalileo_signals_dlg.cpp \
     tcalibration_factors_dlg.cpp \
@@ -160,8 +161,10 @@ HEADERS  += appl_form.h \
     t4picture_angle.h \
     tselfgate_type.h \
     t4selfgate_hec_dlg.h \
+    t4selfgate_kratta_dlg.h \
     Tself_gate_mib_descr.h \
     Tself_gate_hec_descr.h \
+    Tself_gate_kratta_descr.h \
     Tself_gate_ger_addback_descr.h \
     Tself_gate_agata_psa_descr.h \
     t4selfgate_miniball_dlg.h \
@@ -173,7 +176,7 @@ HEADERS  += appl_form.h \
     tgui_options.h \
     t4interesting_ranges_galileo.h \
     t4good_galileo_ge_dlg.h \
-    t4selfgate_ge_cristal_galileo.h \
+    t4selfgate_ge_crystal_galileo.h \
     Tself_gate_ge_galileo_descr.h \
     tgalileo_signals_dlg.h \
     tcalibration_factors_dlg.h \
@@ -228,9 +231,10 @@ FORMS    += appl_form.ui \
     tgui_options.ui \
     t4interesting_ranges_galileo.ui \
     t4good_galileo_ge_dlg.ui \
-    t4selfgate_ge_cristal_galileo.ui \
+    t4selfgate_ge_crystal_galileo.ui \
     tgalileo_signals_dlg.ui \
-    tcalibration_factors_dlg.ui
+    tcalibration_factors_dlg.ui \
+    t4selfgate_kratta_dlg.ui
 
 #IMAGES	= images/tracking2.jpeg \
 #        images/zarowka.png \

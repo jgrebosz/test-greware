@@ -46,7 +46,7 @@ Tself_gate_abstract_descr *   Tself_gate_abstract_descr::create_descr_for_sg_fil
 
         break;
 
-        case Tselfgate_type::german_cristal:   d = new Tself_gate_ger_descr ; break;
+        case Tselfgate_type::german_crystal:   d = new Tself_gate_ger_descr ; break;
         case Tselfgate_type::hector:   d = new Tself_gate_hec_descr ; break;
         case Tselfgate_type::miniball:   d = new Tself_gate_mib_descr ; break;
         case Tselfgate_type::cluster_addback:   d = new Tself_gate_ger_addback_descr ; break;

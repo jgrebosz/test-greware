@@ -18,7 +18,7 @@ using namespace std;
 #include <stdexcept>
 #include "tselfgate_type.h"
 
-/**Abstract for selfgates cristal, cate, hector, etc
+/**Abstract for selfgates crystal, cate, hector, etc
   *@author dr. Jerzy Grebosz, IFJ Krakow, Poland
   */
 
@@ -28,11 +28,7 @@ public:
     string name;
 public:
 
-    // enum type_of_selfgate  { unknown = 0 , germanium_cristal = 1,
-    //                          Hector_BaF_cristal = 2, miniball_cristal = 3,
-    //                          ger_cluster_addback, agata_psa_hit } ;
 
-    //  type_of_selfgate  type ;
     Tselfgate_type sg_type;
 
     Tself_gate_abstract_descr();

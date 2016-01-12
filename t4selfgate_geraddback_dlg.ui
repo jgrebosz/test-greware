@@ -151,7 +151,7 @@
           <item>
            <widget class="QCheckBox" name="checkBox_time">
             <property name="text">
-             <string>Calibrated Time value (of the fastest of the cristals participating in this addback):</string>
+             <string>Calibrated Time value (of the fastest of the crystals participating in this addback):</string>
             </property>
            </widget>
           </item>
@@ -513,7 +513,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox">
      <property name="title">
-      <string>Geometric position of the PRIMARY (highest energy) germanium cristal</string>
+      <string>Geometric position of the PRIMARY (highest energy) germanium crystal</string>
      </property>
      <property name="flat">
       <bool>false</bool>
@@ -653,7 +653,7 @@
    <item>
     <widget class="QGroupBox" name="groupBox_2">
      <property name="title">
-      <string>Geometric position of the SECONDARY (second highest energy) germanium cristal</string>
+      <string>Geometric position of the SECONDARY (second highest energy) germanium crystal</string>
      </property>
      <layout class="QGridLayout" name="gridLayout">
       <item row="0" column="0">

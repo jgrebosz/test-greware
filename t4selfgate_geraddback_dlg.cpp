@@ -199,7 +199,7 @@ void T4selfgate_geraddback_dlg::set_parameters( const Tself_gate_ger_addback_des
   ui->lineEdit_geom_phi_low_secondary->setText(QString::number(d-> geom_phi_gate_secondary[0]));
   ui->lineEdit_geom_phi_high_secondary->setText(QString::number(d-> geom_phi_gate_secondary[1]));
 
-  // this is the multiplicity inside the cluster where this cristal belongs
+  // this is the multiplicity inside the cluster where this crystal belongs
   /*
   ui->checkBox_mult->setChecked(d-> enable_mult_in_cluster_gate);
   ui->lineEdit_clus_mult_low->setText(QString::number(d->mult_in_cluster_gate[0]));
@@ -207,7 +207,7 @@ void T4selfgate_geraddback_dlg::set_parameters( const Tself_gate_ger_addback_des
   ui->checkBox_mult->setChecked(false);  // <-- Piotr suggest to never use it !!!!!!!!!!!!!!!!!!!!
 */
 
-  // this is the AC energy inside the cluster where this cristal belongs
+  // this is the AC energy inside the cluster where this crystal belongs
   ui->checkBox_AC->setChecked(d-> enable_AC_in_cluster_gate);
   ui->spinBox_AC_low->setValue((int) d->AC_in_cluster_gate[0]);
   ui->spinBox_AC_high->setValue((int) d->AC_in_cluster_gate[1]);
@@ -268,14 +268,14 @@ void T4selfgate_geraddback_dlg::get_parameters( Tself_gate_ger_addback_descr * d
   d-> geom_phi_gate_secondary[0] = ui->lineEdit_geom_phi_low_secondary->text().toDouble();
   d-> geom_phi_gate_secondary[1] = ui->lineEdit_geom_phi_high_secondary->text().toDouble();
 
-  // this is the multiplicity inside the cluster where this cristal belongs
+  // this is the multiplicity inside the cluster where this crystal belongs
   /*
   d-> enable_mult_in_cluster_gate = ui->checkBox_mult->isChecked();
   d->mult_in_cluster_gate[0] = ui->lineEdit_clus_mult_low->text().toDouble();
   d->mult_in_cluster_gate[1] = ui->lineEdit_clus_mult_high->text().toDouble();
 */
 
-  // this is the AC inside the cluster where this cristal belongs
+  // this is the AC inside the cluster where this crystal belongs
   d-> enable_AC_in_cluster_gate = ui->checkBox_AC->isChecked();
   d->AC_in_cluster_gate[0] = ui->spinBox_AC_low->value();
   d->AC_in_cluster_gate[1] = ui->spinBox_AC_high->value();

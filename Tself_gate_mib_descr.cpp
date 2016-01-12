@@ -43,7 +43,7 @@ Tself_gate_mib_descr::Tself_gate_mib_descr()
     gp_phi_gate[0] = 0;
     gp_phi_gate[1] = 6.28;
 
-    // this is the multiplicity inside the cryostat where this cristal belongs
+    // this is the multiplicity inside the cryostat where this crystal belongs
     enable_mult_in_cryostat_gate = false;
     mult_in_cryostat_gate[0] = 0;
     mult_in_cryostat_gate[1] = 7;
@@ -75,10 +75,10 @@ void Tself_gate_mib_descr::read_definition_from(string pathed_file_name)
         plik >> name;   // will be without the path and extension
 
         //SPY NEEDS the extension to recognize the title
-        //    unsigned int i = name.find( ".self_gate_mib_cristal"); // != string::npos)
+        //    unsigned int i = name.find( ".self_gate_mib_crystal"); // != string::npos)
         //    if(i == string::npos)
         //    {
-        //      name += ".self_gate_mib_cristal" ;
+        //      name += ".self_gate_mib_crystal" ;
         //    }
 
         enable_core_energy_gate = (bool) Nfile_helper::find_in_file(plik, "enable_core_energy_gate");
@@ -137,9 +137,9 @@ void Tself_gate_mib_descr::write_definitions(string path_only)
 {
     string file_name = path_only + name;
 
-    //  if(file_name.find(".self_gate_mib_cristal") == string::npos)
+    //  if(file_name.find(".self_gate_mib_crystal") == string::npos)
     //  {
-    //    file_name += ".self_gate_mib_cristal" ;
+    //    file_name += ".self_gate_mib_crystal" ;
     //  }
 
     ofstream plik(file_name.c_str());
@@ -149,13 +149,13 @@ void Tself_gate_mib_descr::write_definitions(string path_only)
     }
 
     plik
-            << "// This is a definiton of the 'self_gate' for mibmanium cristal\n"
+            << "// This is a definiton of the 'self_gate' for mibmanium crystal\n"
             << "// comments are marked using two slashes: // comment \n\n"
             << "\n//-----------------------------------------------------\n\n"
 
-            << "type_of_self_gate\t\t" << sg_type << "\t\t// 1= Ger cristal, 2= Hec BaF\n"
+            << "type_of_self_gate\t\t" << sg_type << "\t\t// 1= Ger crystal, 2= Hec BaF\n"
             << "name\t\t " << name
-               //<< ".self_gate_mib_cristal"
+               //<< ".self_gate_mib_crystal"
             << "\n\n"
 
 

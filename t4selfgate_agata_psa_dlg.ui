@@ -482,7 +482,7 @@ in one event there may be many gamma &quot;hits&quot; registered.</string>
         <bool>true</bool>
        </property>
        <property name="text">
-        <string>Multiplicity of hits in this cristal  is in the range</string>
+        <string>Multiplicity of hits in this crystal  is in the range</string>
        </property>
       </widget>
      </item>

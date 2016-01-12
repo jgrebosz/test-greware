@@ -23,7 +23,7 @@ using namespace std;
 #include "Tself_gate_abstract_descr.h"
 
 
-/**Text file which describes the gate on the germanium cristal
+/**Text file which describes the gate on the germanium crystal
   *@author dr. Jerzy Grebosz, IFJ Krakow, Poland
   */
 //////////////////////////////////////////////////////////////////////////
@@ -68,11 +68,11 @@ public:
   bool enable_gp_phi_gate ;
   double gp_phi_gate[2];
 
-  // this is the multiplicity inside the cluster where this cristal belongs
+  // this is the multiplicity inside the cluster where this crystal belongs
   bool enable_mult_in_cluster_gate ;
   double mult_in_cluster_gate[2];
 
-  // this is the AC inside the cluster where this cristal belongs
+  // this is the AC inside the cluster where this crystal belongs
   bool enable_AC_in_cluster_gate ;
   double AC_in_cluster_gate[2];
 

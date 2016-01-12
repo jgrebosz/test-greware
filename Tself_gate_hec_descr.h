@@ -16,7 +16,7 @@ using namespace std;
 #include "Tself_gate_abstract_descr.h"
 
 
-/**Text file which describes the gate on the germanium cristal
+/**Text file which describes the gate on the germanium crystal
   *@author dr. Jerzy Grebosz, IFJ Krakow, Poland
   */
 //////////////////////////////////////////////////////////////////////////

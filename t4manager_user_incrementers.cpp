@@ -795,7 +795,7 @@ void T4manager_user_incrementers::cloning_A_1_()
                                               "Cloning the _A_1_ incrementer ",
                                               "This is the option to clone a incrementer  which contains the substring \"_A_1_\"\n "
                                               "Such substring will be replaced with _A_2_ , _A_3_, ... , _R_7_"
-                                              "(i.e. for all possible cluster cristals)\n"
+                                              "(i.e. for all possible cluster crystals)\n"
                                               "By this action, the new 104 incrementers  wiil be created.\n\n"
                                               "The replacement will be done:\n"
                                               "    1. Inside  the name of the incrementer, \n"
@@ -864,7 +864,7 @@ void T4manager_user_incrementers::cloning_A_1_()
             throw e;
 
         }
-        // FOR loop over all cristals========================================
+        // FOR loop over all crystals========================================
         bool make_checking_if_clone_exists = true;
 
         //----------------------

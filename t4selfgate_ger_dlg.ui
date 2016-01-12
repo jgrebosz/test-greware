@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Selfgate for Ge cristals  incrementers</string>
+   <string>Selfgate for Ge crystals  incrementers</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_3">
    <item>
@@ -110,7 +110,7 @@
    <item>
     <widget class="QLabel" name="textLabel_invocation">
      <property name="text">
-      <string>&lt;b&gt;The 'self gate' allows to use the germanium cristal as the incrementer, only when:&lt;/b&gt;</string>
+      <string>&lt;b&gt;The 'self gate' allows to use the germanium crystal as the incrementer, only when:&lt;/b&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignVCenter</set>
@@ -508,7 +508,7 @@
            <item>
             <widget class="QLabel" name="textLabel1_8">
              <property name="text">
-              <string>of this cristal are in the polygon gate:</string>
+              <string>of this crystal are in the polygon gate:</string>
              </property>
              <property name="wordWrap">
               <bool>false</bool>
@@ -585,7 +585,7 @@
       <string notr="true">background-color: rgb(225, 227, 255);</string>
      </property>
      <property name="title">
-      <string>Geometrical position of the germanium cristal</string>
+      <string>Geometrical position of the germanium crystal</string>
      </property>
      <layout class="QGridLayout" name="gridLayout_5">
       <item row="0" column="0">
@@ -872,7 +872,7 @@
         <bool>true</bool>
        </property>
        <property name="text">
-        <string>Multiplicity of the CLUSTER (where this cristal belongs to) is in the range</string>
+        <string>Multiplicity of the CLUSTER (where this crystal belongs to) is in the range</string>
        </property>
       </widget>
      </item>
@@ -935,7 +935,7 @@
         <bool>true</bool>
        </property>
        <property name="text">
-        <string>AC energy of the CLUSTER (where this cristal belongs to) is in the range</string>
+        <string>AC energy of the CLUSTER (where this crystal belongs to) is in the range</string>
        </property>
       </widget>
      </item>

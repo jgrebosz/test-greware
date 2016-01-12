@@ -267,7 +267,7 @@
       <string notr="true">color: rgb(26, 81, 0);</string>
      </property>
      <property name="title">
-      <string>Geometric position of the particular Miniball cristal</string>
+      <string>Geometric position of the particular Miniball crystal</string>
      </property>
      <layout class="QVBoxLayout" name="verticalLayout">
       <item>
@@ -569,7 +569,7 @@
         <bool>true</bool>
        </property>
        <property name="text">
-        <string>Multiplicity of the CRYOSTAT (where this cristal belongs to) is in the range</string>
+        <string>Multiplicity of the CRYOSTAT (where this crystal belongs to) is in the range</string>
        </property>
       </widget>
      </item>

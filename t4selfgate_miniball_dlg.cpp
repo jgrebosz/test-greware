@@ -64,7 +64,7 @@ void T4selfgate_miniball_dlg::set_parameters( const Tself_gate_mib_descr *d )
 {
 
     string nnn = d->name;
-    string::size_type i = nnn.find(".self_gate_mib_cristal");
+    string::size_type i = nnn.find(".self_gate_mib_crystal");
     if(i != string::npos)
     {
         // nnn.erase(i) ;    // always give with extension
@@ -97,7 +97,7 @@ void T4selfgate_miniball_dlg::set_parameters( const Tself_gate_mib_descr *d )
     ui->lineEdit_gp_phi_low->setText(QString::number(d-> gp_phi_gate[0]));
     ui->lineEdit_gp_phi_high->setText(QString::number(d-> gp_phi_gate[1]));
 
-    // this is the multiplicity inside the cryostat where this cristal belongs
+    // this is the multiplicity inside the cryostat where this crystal belongs
     ui->checkBox_mult->setChecked(d-> enable_mult_in_cryostat_gate);
     ui->lineEdit_clus_mult_low->setText(QString::number(d->mult_in_cryostat_gate[0]));
     ui->lineEdit_clus_mult_high->setText(QString::number(d->mult_in_cryostat_gate[1]));
@@ -111,9 +111,9 @@ void T4selfgate_miniball_dlg::get_parameters( Tself_gate_mib_descr * d )
 
     string s = d->name = ui->lineEdit_name->text().toStdString();
     // if there is no extension, add it
-    if(s.find(".self_gate_mib_cristal") == string::npos)
+    if(s.find(".self_gate_mib_crystal") == string::npos)
     {
-        d->name += ".self_gate_mib_cristal" ;
+        d->name += ".self_gate_mib_crystal" ;
     }
 
     d->enable_core_energy_gate = ui->checkBox_core_energy->isChecked() ;
@@ -142,7 +142,7 @@ void T4selfgate_miniball_dlg::get_parameters( Tself_gate_mib_descr * d )
     d-> gp_phi_gate[0] = ui->lineEdit_gp_phi_low->text().toDouble();
     d-> gp_phi_gate[1] = ui->lineEdit_gp_phi_high->text().toDouble();
 
-    // this is the multiplicity inside the cryostat where this cristal belongs
+    // this is the multiplicity inside the cryostat where this crystal belongs
     d-> enable_mult_in_cryostat_gate = ui->checkBox_mult->isChecked();
     d->mult_in_cryostat_gate[0] = ui->lineEdit_clus_mult_low->text().toDouble();
     d->mult_in_cryostat_gate[1] = ui->lineEdit_clus_mult_high->text().toDouble();

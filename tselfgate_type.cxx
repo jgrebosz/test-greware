@@ -8,19 +8,20 @@ std::map<Tselfgate_type::Types, std::vector<std::string> >  Tselfgate_type::self
 
 Tselfgate_type      obligatory_object_to_run_the_constructor(Tselfgate_type::not_available); // This guarantees that the map will be loaded
 
-//************************************************************************************************************
+//***********************************************************************************************************
 Tselfgate_type::Tselfgate_type(Types t):my_type(t)
 {
     if(selfgate_types_map.empty())
     {
         // loading the map of selfgate types
         selfgate_types_map[not_available] = { "not_available", ".not_available", "No selfgate" };
-        selfgate_types_map[german_cristal] = { "german_cristal", ".self_gate_ger_cristal", "Single germanium cristal" };
-        selfgate_types_map[hector] = { "hector", ".self_gate_hec_cristal", "Hector BaF detector " };
-        selfgate_types_map[miniball] = {"miniball", ".self_gate_mib_cristal", "MINIBALL germanium detectors"} ;
-        selfgate_types_map[cluster_addback] = {"cluster_addback", ".self_gate_ger_addback_cluster", "Addback in cluster of cristals of germanium (Rising)"} ;
+        selfgate_types_map[german_crystal] = { "german_crystal", ".self_gate_ger_crystal", "Single germanium crystal" };
+        selfgate_types_map[hector] = { "hector", ".self_gate_hec_crystal", "Hector BaF detector " };
+        selfgate_types_map[miniball] = {"miniball", ".self_gate_mib_crystal", "MINIBALL germanium detectors"} ;
+        selfgate_types_map[cluster_addback] = {"cluster_addback", ".self_gate_ger_addback_cluster", "Addback in cluster of crystals of germanium (Rising)"} ;
         selfgate_types_map[agata_psa] = {"agata_psa", ".self_gate_agata_psa", "AGATA germanium detectors - for pulse shape analysis"} ;
         selfgate_types_map[galileo_ge] = {"Germanium_galileo", ".self_gate_galileo_ge", "GALILEO germanium detectors"} ;
+        selfgate_types_map[kratta] = { "kratta", ".self_gate_kratta_crystal", "KRATTA detector " };
 
     }
 }
@@ -30,8 +31,8 @@ void example()
 {
     using TSG = Tselfgate_type ;    // useful, make it localy of course
 
-    Tselfgate_type obj{Tselfgate_type::german_cristal} ;
-    cout << "typ german " << Tselfgate_type::german_cristal
+    Tselfgate_type obj{Tselfgate_type::german_crystal} ;
+    cout << "typ german " << Tselfgate_type::german_crystal
          << " has extension : "  << obj.give_type_extension( )
          << " has filter  : " << obj.give_type_filter()
          << " explanation = " << obj.give_type_info()

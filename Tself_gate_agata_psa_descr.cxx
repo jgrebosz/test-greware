@@ -39,7 +39,7 @@ Tself_gate_agata_psa_descr::Tself_gate_agata_psa_descr()
     z_gate[0] = -100;
     z_gate[1] = +100;
 
-    // this is the multiplicity inside the cryostat where this cristal  belongs
+    // this is the multiplicity inside the cryostat where this crystal  belongs
     enable_mult_of_hits_gate = false;
     mult_of_hits_gate[0] = 0 ;
     mult_of_hits_gate[1] = 100;
@@ -51,7 +51,7 @@ Tself_gate_agata_psa_descr::Tself_gate_agata_psa_descr()
 void Tself_gate_agata_psa_descr::read_definition_from(string pathed_name)
 {
     string file_name = pathed_name ;
-    // path.user_def_spectra + name_of_spectrum + ".self_gate_aga_cristal" ;
+    // path.user_def_spectra + name_of_spectrum + ".self_gate_aga_crystal" ;
     ifstream plik(file_name.c_str());
     if (!plik)
     {
@@ -66,10 +66,10 @@ void Tself_gate_agata_psa_descr::read_definition_from(string pathed_name)
         plik >> name;   // will be without the path and extension
 
         //SPY NEEDS the extension to recognize the title
-//    unsigned int i = name.find( ".self_gate_aga_cristal"); // != string::npos)
+//    unsigned int i = name.find( ".self_gate_aga_crystal"); // != string::npos)
 //    if(i == string::npos)
 //    {
-//      name += ".self_gate_aga_cristal" ;
+//      name += ".self_gate_aga_crystal" ;
 //    }
 
         enable_energy_gate = (bool) Nfile_helper::find_in_file(plik, "enable_energy_gate");
@@ -101,7 +101,7 @@ void Tself_gate_agata_psa_descr::read_definition_from(string pathed_name)
         z_gate[1] = fif(plik, "z_gate_high");
 	
         //------------	
-	  // this is the multiplicity inside the cryostat where this cristal  belongs
+	  // this is the multiplicity inside the cryostat where this crystal  belongs
 
         enable_mult_of_hits_gate = (bool) fif(plik, "enable_mult_of_hits_gate");
 
@@ -120,9 +120,9 @@ void Tself_gate_agata_psa_descr::write_definitions(string path_only)
 {
     string file_name = path_only + name;
 
-//  if(file_name.find(".self_gate_aga_cristal") == string::npos)
+//  if(file_name.find(".self_gate_aga_crystal") == string::npos)
 //  {
-//    file_name += ".self_gate_aga_cristal" ;
+//    file_name += ".self_gate_aga_crystal" ;
 //  }
 
     ofstream plik(file_name.c_str());
@@ -134,13 +134,13 @@ void Tself_gate_agata_psa_descr::write_definitions(string path_only)
     }
 
     plik
-    << "// This is a definiton of the 'self_gate' for germanium agata cristal\n"
+    << "// This is a definiton of the 'self_gate' for germanium agata crystal\n"
     << "// comments are marked using two slashes: // comment \n\n"
     << "\n//-----------------------------------------------------\n\n"
 
-    << "type_of_self_gate\t\t" << sg_type << "\t\t// 1= Ger cristal, 2= Hec BaF\n"
+    << "type_of_self_gate\t\t" << sg_type << "\t\t// 1= Ger crystal, 2= Hec BaF\n"
     << "name\t\t " << name
-    //<< ".self_gate_aga_cristal"
+    //<< ".self_gate_aga_crystal"
     << "\n\n"
 
 

@@ -23,7 +23,7 @@
       <enum>QFrame::Plain</enum>
      </property>
      <property name="text">
-      <string>Minibal detecting cristal may deliver  signals: &lt;br&gt;&lt;font size=&quot;-1&quot;&gt;a). Energy core (segment 0),  &lt;br&gt;b). Energies of segments 1-6  &lt;br&gt;c) Time (NOT SURE YET)&lt;/font&gt;</string>
+      <string>Minibal detecting crystal may deliver  signals: &lt;br&gt;&lt;font size=&quot;-1&quot;&gt;a). Energy core (segment 0),  &lt;br&gt;b). Energies of segments 1-6  &lt;br&gt;c) Time (NOT SURE YET)&lt;/font&gt;</string>
      </property>
      <property name="wordWrap">
       <bool>false</bool>
@@ -145,7 +145,7 @@
           </size>
          </property>
          <property name="text">
-          <string>When &lt;b&gt;at least one&lt;/b&gt; of these signals comes - the cristal is consider to be &quot;&lt;font color=&quot;#ff0000&quot;&gt;&lt;b&gt;fired&lt;/b&gt;&lt;/font&gt;&quot;&lt;br&gt;In this case &lt;b&gt;&lt;font color=&quot;#ff0000&quot;&gt;all raw&lt;/font&gt;&lt;/b&gt; spectra are incremeted &lt;br&gt;(energies of each segments raw,and time raw) and the 'fan' spectrum.</string>
+          <string>When &lt;b&gt;at least one&lt;/b&gt; of these signals comes - the crystal is consider to be &quot;&lt;font color=&quot;#ff0000&quot;&gt;&lt;b&gt;fired&lt;/b&gt;&lt;/font&gt;&quot;&lt;br&gt;In this case &lt;b&gt;&lt;font color=&quot;#ff0000&quot;&gt;all raw&lt;/font&gt;&lt;/b&gt; spectra are incremeted &lt;br&gt;(energies of each segments raw,and time raw) and the 'fan' spectrum.</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignVCenter</set>
@@ -216,7 +216,7 @@
        <item>
         <widget class="QLabel" name="textLabel1_4">
          <property name="text">
-          <string>Flag &quot;Good&quot; is set when the signals have sensible values.&lt;br&gt;Only such detecting cristals contribute to the &lt;b&gt;multiplicity&lt;/b&gt;</string>
+          <string>Flag &quot;Good&quot; is set when the signals have sensible values.&lt;br&gt;Only such detecting crystals contribute to the &lt;b&gt;multiplicity&lt;/b&gt;</string>
          </property>
          <property name="alignment">
           <set>Qt::AlignVCenter</set>

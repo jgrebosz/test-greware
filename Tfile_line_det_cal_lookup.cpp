@@ -2,15 +2,17 @@
 using namespace std;
 extern istream & zjedz(istream & plik) ;
 #include "appl_form.h"
+#include <cctype>
 //*********************************************************************************
 bool Tfile_line_det_cal_lookup::read_in(ifstream &infile)
 {
     calib_factors.clear();
     infile >> zjedz >> channel;
-    // cout << "Read in a channel =>>>>>  " << channel << endl;
+    cout << "Read in a channel =>>>>>  " << channel << endl;
 
     if(infile.eof()) return true; // success
-    if(!infile) throw Texcept_read{"signal name", "error while reading a name of a signal"};
+    if(!infile)
+        throw Texcept_read{"signal name", "error while reading a name of a signal"};
 
     infile >> enable ;
     if(!infile)  throw Texcept_read( channel, "enable");
@@ -18,10 +20,42 @@ bool Tfile_line_det_cal_lookup::read_in(ifstream &infile)
     infile >> name_of_detector;
     if(!infile) { throw Texcept_read(channel, "name_of_detector"); }
 
-    if(enable)
+    bool flag_try_anyway = false;
+
+    if(enable == false)
     {
+            infile >> zjedz ;
+            char c = infile.peek();
+            if(infile.eof() ||  isalpha(c))
+            {
+                cal_numbers = 1;
+                calib_factors = { 0, 1};\
+                first_thresh = 0;
+                theta = 0;
+                phi = 0;
+
+                if(second_calibration_present) cal2_numbers = 1;
+                calib2_factors = { 0, 1};
+            }
+            else // it is numerical, so continue
+            {
+
+                flag_try_anyway = true;
+            }
+
+    }
+
+
+    if(enable == true || flag_try_anyway)
+    {
+        infile >> zjedz ;
+        if(infile.eof() || !infile) return true;
+
         infile >> first_thresh;
-        if(!infile) { throw Texcept_read(channel, "first threshold"); }
+
+        if(!infile) {
+            throw Texcept_read(channel, "first threshold");
+        }
 
         if(second_threshold_present) {
             infile >> second_threshold;
@@ -61,16 +95,7 @@ bool Tfile_line_det_cal_lookup::read_in(ifstream &infile)
             }
         }
     }
-    else {
-        cal_numbers = 1;
-        calib_factors = { 0, 1};\
-        first_thresh = 0;
-        theta = 0;
-        phi = 0;
 
-        if(second_calibration_present) cal2_numbers = 1;
-        calib2_factors = { 0, 1};
-    }
     infile >> zjedz;
 
     return 1;
@@ -82,7 +107,8 @@ void Tfile_line_det_cal_lookup::save_line(ofstream &sav, appl_form *ptr, bool & 
         << enable << "\t"
         << name_of_detector ;
 
-    if(enable){
+    if(true /*enable*/)
+    {
         sav << "\t" << first_thresh ;
         if(second_threshold_present)
             sav << "\t" << second_threshold ;

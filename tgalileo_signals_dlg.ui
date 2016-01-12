@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>791</width>
-    <height>603</height>
+    <height>616</height>
    </rect>
   </property>
   <property name="font">
@@ -52,6 +52,12 @@ background-color: rgb(0, 17, 255);</string>
    </item>
    <item row="2" column="0">
     <widget class="QTabWidget" name="tabWidget">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>30</height>
+      </size>
+     </property>
      <property name="currentIndex">
       <number>0</number>
      </property>
@@ -59,6 +65,7 @@ background-color: rgb(0, 17, 255);</string>
       <attribute name="title">
        <string>Part 1</string>
       </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_2"/>
      </widget>
      <widget class="QWidget" name="tab_2">
       <attribute name="title">
