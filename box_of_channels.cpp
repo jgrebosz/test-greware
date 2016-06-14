@@ -138,10 +138,13 @@ void box_of_channels::draw_all( QPainter * piorko )
 
   typ_x roznica_kon_pocz = fabs(kon - pocz) ;
 
-  //    cout
-  //            << "CHANNELS pocz = " << pocz  <<  ", kon= " << kon
-  //            << ", Roznica = " << roznica_kon_pocz
-  //            << endl ;
+//      cout
+//              << "CHANNELS pocz = " << pocz  <<  ", kon= " << kon
+//              << ", Roznica = " << roznica_kon_pocz
+//              << endl ;
+
+    spectrum_descr sd = parent->give_specif();
+
 
   if(roznica_kon_pocz < 0.000001) return;
 
@@ -180,14 +183,14 @@ void box_of_channels::draw_all( QPainter * piorko )
 
 
 
-  //    cout << "----- Wstepnie: "
-  //         <<  " pierwsza_dzialka=" << pierwsza_dzialka
-  //          << " dzialka_skali = " << dzialka_skali
-  //          << ", ile_dzialek = " << ile_dzialek
-  //          << ", co_ile_dzialek_numerek = " << co_ile_dzialek_numerek
+//      cout << "----- Wstepnie: "
+//           <<  " pierwsza_dzialka=" << pierwsza_dzialka
+//            << " dzialka_skali = " << dzialka_skali
+//            << ", ile_dzialek = " << ile_dzialek
+//            << ", co_ile_dzialek_numerek = " << co_ile_dzialek_numerek
 
-  //          << ", ile_numerkow= " << ile_numerkow
-  //          << endl;
+//            << ", ile_numerkow= " << ile_numerkow
+//            << endl;
 
 
   QString przykladowy_tekst;
@@ -236,6 +239,7 @@ void box_of_channels::draw_all( QPainter * piorko )
           &&
           summary_texts > min_allowed_space)
         {
+            if(dzialka_skali < sd.waga) dzialka_skali = sd.waga;
           break;      // OK
         }
       else if(summary_texts > max_allowed_space )   // too many texts
@@ -251,6 +255,9 @@ void box_of_channels::draw_all( QPainter * piorko )
               co_ile_dzialek_numerek  = 5;
               // a zageszczamy dzialki
               dzialka_skali/= 5; // 4 ;
+
+//              if(dzialka_skali < sd.waga) dzialka_skali = sd.waga;
+
               ile_dzialek = roznica_kon_pocz / dzialka_skali;
               ile_numerkow =  ile_dzialek /co_ile_dzialek_numerek;
 
@@ -266,6 +273,8 @@ void box_of_channels::draw_all( QPainter * piorko )
       //             << " szer tekstow = " << (ile_numerkow * numberBox.width() )
       //             << endl;
     }
+
+  // end of for proba
 
   //    if  ( relx(roznica_kon_pocz) < 400)
   //    {
@@ -285,13 +294,13 @@ void box_of_channels::draw_all( QPainter * piorko )
   ile_numerkow =  ile_dzialek /co_ile_dzialek_numerek;
 
 
-  //    cout << "-----Ostatecznie: "
-  //         <<  " pierwsza_dzialka=" << pierwsza_dzialka
-  //          << " dzialka_skali = " << dzialka_skali
-  //          << ", ile_dzialek = " << ile_dzialek
-  //          << ", co_ile_dzialek_numerek = " << co_ile_dzialek_numerek
-  //          << ", ile_numerkow= " << ile_numerkow
-  //          << endl;
+//      cout << "-----Ostatecznie: "
+//           <<  " pierwsza_dzialka=" << pierwsza_dzialka
+//            << " dzialka_skali = " << dzialka_skali
+//            << ", ile_dzialek = " << ile_dzialek
+//            << ", co_ile_dzialek_numerek = " << co_ile_dzialek_numerek
+//            << ", ile_numerkow= " << ile_numerkow
+//            << endl;
 
 
   //---------------------
