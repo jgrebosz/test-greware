@@ -15,6 +15,80 @@
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>
+    <widget class="QLabel" name="label_4">
+     <property name="text">
+      <string>At first please define patterns which you want to be replaced by some other strings</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_3">
+     <item>
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#0000ff;&quot;&gt;Pattern %1&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::RichText</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_pattern1"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
+    <layout class="QHBoxLayout" name="horizontalLayout_4">
+     <item>
+      <widget class="QCheckBox" name="checkBox_pattern2">
+       <property name="text">
+        <string>Check if using</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;Pattern %2&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+       </property>
+       <property name="textFormat">
+        <enum>Qt::RichText</enum>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLineEdit" name="lineEdit_pattern2"/>
+     </item>
+     <item>
+      <spacer name="horizontalSpacer_2">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>40</width>
+         <height>20</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+    </layout>
+   </item>
+   <item>
     <widget class="QSplitter" name="splitter">
      <property name="orientation">
       <enum>Qt::Horizontal</enum>
@@ -26,7 +100,7 @@
          <item>
           <widget class="QLabel" name="textLabel1_2">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#000000;&quot;&gt;Your spectrum name contains a 'pattern'&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000aa;&quot;&gt; _&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000ea;&quot;&gt;A&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000aa;&quot;&gt;_&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#ff0000;&quot;&gt;1&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000aa;&quot;&gt;_&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#000000;&quot;&gt;Your spectrum name contains a 'pattern'&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000aa;&quot;&gt; _&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000ea;&quot;&gt;%1&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000aa;&quot;&gt;_&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#ff0000;&quot;&gt;%2&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000aa;&quot;&gt;_&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="scaledContents">
             <bool>false</bool>
@@ -40,6 +114,13 @@
        </item>
        <item>
         <widget class="QLabel" name="label_spectrum_name">
+         <property name="font">
+          <font>
+           <pointsize>11</pointsize>
+           <weight>75</weight>
+           <bold>true</bold>
+          </font>
+         </property>
          <property name="text">
           <string>TextLabel</string>
          </property>
@@ -70,7 +151,7 @@
          <item>
           <widget class="QLabel" name="textLabel_skeleton">
            <property name="text">
-            <string>Skeleton  for new spectra names</string>
+            <string>Skeleton  for new file names (spectra or conditions)</string>
            </property>
            <property name="wordWrap">
             <bool>false</bool>
@@ -170,6 +251,9 @@
          </item>
          <item>
           <widget class="QLineEdit" name="lineEdit_two">
+           <property name="enabled">
+            <bool>false</bool>
+           </property>
            <property name="styleSheet">
             <string notr="true">color: rgb(255, 0, 0);</string>
            </property>
@@ -216,7 +300,7 @@
        <item>
         <widget class="QLabel" name="textLabel4">
          <property name="text">
-          <string>List of spectra names created by your skeleton</string>
+          <string>List of file names created by your skeleton</string>
          </property>
          <property name="wordWrap">
           <bool>true</bool>

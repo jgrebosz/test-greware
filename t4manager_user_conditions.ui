@@ -299,7 +299,7 @@ selection-background-color: rgb(176, 76, 4);</string>
                <item>
                 <widget class="QPushButton" name="push_How_to_clone">
                  <property name="text">
-                  <string>How to clone</string>
+                  <string>How to duplicate</string>
                  </property>
                  <property name="icon">
                   <iconset>
@@ -310,7 +310,7 @@ selection-background-color: rgb(176, 76, 4);</string>
                <item>
                 <widget class="QPushButton" name="push_A_1_cloning">
                  <property name="text">
-                  <string>Clone &quot;_A_1_&quot;</string>
+                  <string>Multi-Clone (by pattern)</string>
                  </property>
                  <property name="icon">
                   <iconset>

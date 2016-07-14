@@ -705,17 +705,16 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
     error e;
     //---------------
 
-    string introduction_txt =  "This is the option to clone a spectrum which contains the substring \"_A_1_\"\n "
-            "Such substring will be replaced with _A_2_ , _A_3_, ... , _R_7_"
+    string introduction_txt =  "This is the option to clone a spectrum which contains \n"
+            "at most 2 pattern of characters which had to be smartly replaced\n"
+            "Such substring will be replaced with your desired values"
             "(i.e. for all possible cluster crystals)\n"
-            "By this action, the new 104 spectra wiil be created.\n\n"
+            "By this action, the set of new spectra wiil be created.\n\n"
             "The replacement will be done :\n"
             "    1. Inside  the name of the spectrum,\n"
             "    2. Inside the name of any incrementer,\n"
             "    3. Inside the name of any used selfgates (not very useful!)\n"
             "    4. Inside the name of condition assigned to this spectrum_1D.\n" ;
-
-    string pattern = "_A_1_";   // <----- PERHAPS THE USER could define his own?
 
 
     bool flag_any_change = false;
@@ -726,9 +725,8 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
         if(nr >= ui->table->rowCount() || nr == -1)
         {
             e.title = "No spectrum selected";
-            e.message = "\n\n\nSelect some spectrum name containing pattern '" +
-                    pattern + "'\n\n\n\nINFO:\n" +
-                    introduction_txt;
+            e.message = "\n\n\nSelect some spectrum name containing patters to be cloned '"
+                    "`\n\n\n\nINFO:\n" + introduction_txt;
             ;
             e.kind = 2; //warning;
             throw e;
@@ -739,33 +737,44 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
         // checking if the name of the spectrum contains the pattern (substring A_1)
 
         string specname = vec_spectra[nr].name_of_spectrum;
-        string::size_type loc = specname.find( pattern);
-        if( loc == string::npos )
+#if 0
+         if(specname.empty() ||  row == -1)
         {
-            e.title = "Wrong name of the spectrum";
-            e.message = "\n\n\nThe name of the selected spectrum does not contain the substring '"
-                    + pattern + "'\n\n\n\nINFO:\n" +
+            e.title = "No spectrum is selected now";
+            e.message = "\n\n\nPlease select a spectrum which you want to clone\n\n"
+ +
                     introduction_txt;
             e.kind = 1; // critcial
             throw e;
         }
 
+#endif
 
-
-
-        string one = "A B C D E F";
-        string two = "01 02 03 04";
+         string::size_type loc ;
+        string pattern1 = "_00_";
+        string pattern2  = "";
+        string one = "B C";
+        string two = "01 02 ";
 
         vector<string> chain_one;   // for result
         vector<string> chain_two;
+        vector<string> filenames;
 
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         T4pattern_defining_dlg dlg;
-        dlg.set_parameters(specname, pattern, &one, &two);
+        dlg.set_parameters(specname, pattern1, pattern2, &one, &two);
         if( dlg.exec() != QDialog::Accepted) return;
 
-        dlg.get_parameters(&chain_one, &chain_two);
+        dlg.get_parameters(&chain_one, &chain_two, &filenames);
 
-        //cout << "OK, we can clone it !" << endl;
+        cout << "After closing the dialog for parameters there are following spectra" << endl;
+
+        for(auto x : filenames)
+        {
+            cout << x << endl;
+
+        }
 
         //  reading the whole contents of the template file
         string pathed_name = path.user_def_spectra + specname + user_spec_ext;
@@ -793,78 +802,22 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
             contents += '\n';
         }
 
-        //  search all the positions of the pattern substrings A_1
-        vector<string::size_type> position;
 
-        for(string::size_type i = 0 ; ; i++)
-        {
-            loc = contents.find(pattern, i);
-            if( loc == string::npos )
-            {
-                break;
-            }
-            cout << "found at position " << loc << endl;
-            position.push_back(loc);
-            i = loc;
-        }
-        //in the file there is a file name = which must contain pattern,
-        // so the size is at least 1
-        if(position.size() < 2 )
-        {
-            cout << "No " << pattern << " found inside the file " <<  specname << endl;
+        string file_contents_skeleton = dlg.find_patterns_and_make_skeleton_with_procents(contents);
 
+//        cout << "SZKIELET WIDMA ZAWIERA: \n"<< file_contents_skeleton << endl;
 
-            string mess = "The cloned spectrum definition does not use anything \n"
-                    "(incrementer, condition name, or selfgate name)\n"
-                    "with the substring \"" +
-                    pattern + "\"\nPerhaps you are doing some nonsense...";
-            QMessageBox::warning(this, "Some nonsense ? ", mess.c_str(),
-                                 "Ackonwledged",
-                                 "",  "Cancel",
-                                 0 );
-        }
+        //  search all the positions of the pattern substrings and replace with  %1 %2
 
         // FOR loop over all crystals========================================
-        bool make_checking_if_clone_exists = true;
-
-#if 0
-
-        string markers =
-                "ABCDEFGJKLMNPQR"  ; // : "ABCDGJKL" ;
-
-        string mess = "Which set of detectors do you have?";
-        int  odp = QMessageBox::information(this, "Set of Detectors", mess.c_str(),
-                                            "ABCDEFGJKLMNPQR",
-                                            "ABCDGJKL",  "Cancel",
-                                            0 );
-
-        switch(odp)
-        {
-            case 0:
-            default:
-            break;
-
-            case 1:
-                markers = "ABCDGJKL" ;
-            break;
-
-            case 2:
-                raise();
-            return;
-            break;
-        }
-
-
-#endif
-
-
         // ready to create the new spectra
 
-
-        string txt = introduction_txt +
+        string txt = /*introduction_txt + */
                 "\n\nDo you really want to create such set of clones ? ";
+
+        for(auto x : filenames) {  txt += x + "   "; }
         int result = QMessageBox::information(this,
-                                              "Cloning the _A_1_ spectra",
+                                              "Cloning the spectra",
                                               txt.c_str(),
                                               QMessageBox::Yes,
                                               QMessageBox::No,
@@ -873,43 +826,56 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
         {
             return ;
         }
-
+#if 1
+         bool flag_pattern2_in_use = (file_contents_skeleton.find("%2") != string::npos);
+         int file_nr = 0 ;
         for(unsigned int d = 0 ; d < chain_one.size() ; d++)
             for(unsigned int k= 0 ; k < chain_two.size() ; k++)
             {
-                //                if(d == 0 && k == 1) continue; // to skip the first one - which is a wzor
+                // if(d == 0 && k == 1) continue; // to skip the first one - which is a wzor
+
+                // changing the contents ---------------
+
+
+                bool flag_any_change = false;
+                string result_bw;
+
+//                cout << "chain one size =" << chain_one.size();
+//                cout << ", chain two size =" << chain_two.size();
+//                cout << ", d = " << d ;
+//                cout << ", k = " << k  << endl;
+
+
+//                cout << "cloning skeleton for arguments: [" << chain_one[d] << "] [" << chain_two[k]
+//                     << "], pattern2 = [" << pattern2 << "]"<< endl;
+
+                if(  (k > 0 && !flag_pattern2_in_use) ) continue;
+
+
+                string result =
+                        dlg.make_a_clone_from_skeleton_using_kombination(file_contents_skeleton,
+                                                                             chain_one[d],
+                                                                             chain_two[k],
+                                                                             &result_bw,
+                                                                             &flag_any_change);
+
+
+                if(!flag_any_change) continue;
+                //cout << "result: " << result << endl;
 
 
 
+                // ------------------------------------
 
-                //      cout << "d = " << d << " , k = " << k << endl;
-                ostringstream s;
-                s << "_" << chain_one[d] << "_" << chain_two[k] << "_" ;
-                string new_pattern = s.str();
-                // For loop over all patterns inside
-                string output_contents = contents;
-                for(unsigned int i = 0 ; i < position.size() ; i++)
-                {
-                    output_contents.replace(position[i],  new_pattern.size(), new_pattern);
-                }
-                // save -------------- -----------------------------
-                string new_filename = specname;
-                // change all the patterns in the new filename
+                // save under a proper name --------------------------
 
-                do
-                {
-                    loc = new_filename.find(pattern);
-                    if(loc != string::npos)
-                    {
-                        new_filename.replace(loc,  new_pattern.size(), new_pattern);
-                    }
-                    cout << "Currently new_filename = " << new_filename << endl;
-                }
-                while(loc != string::npos);
-                cout << "New file = " << new_filename << endl;
+                string new_filename = filenames[file_nr++]; // specname;
+                //cout << "New file " << nr << ")  = " << new_filename << endl;
+                // adding the path --------------
                 new_filename =  path.user_def_spectra + new_filename +  user_spec_ext;
 
                 // checking if it exists
+                static bool make_checking_if_clone_exists = true;
                 if(make_checking_if_clone_exists)
                 {
                     ifstream plik_exists(new_filename.c_str());
@@ -941,7 +907,7 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
                     e.kind = 1; // critial
                     throw e;
                 }
-                plikB << output_contents ;
+                plikB << result_bw;
                 if(!plikB)
                 {
                     e.message= string ("Can't write the file ") +  new_filename ;
@@ -952,7 +918,7 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
                 plikB.close();
                 flag_any_change = true;
             } // end for  d (detectors) and for k
-
+#endif
 
         update_the_table() ;
         if(flag_any_change)appl_form_ptr-> warning_spy_is_in_action();

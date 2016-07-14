@@ -291,7 +291,7 @@
              <item row="0" column="0">
               <widget class="QPushButton" name="push_clone">
                <property name="text">
-                <string>How to clone</string>
+                <string>How to duplicate a spectrum</string>
                </property>
                <property name="icon">
                 <iconset resource="greware_icons.qrc">
@@ -305,7 +305,7 @@
                 <bool>true</bool>
                </property>
                <property name="text">
-                <string>Clone &quot;_A_1_&quot;</string>
+                <string>Multi-Clone smartly (by pattern)</string>
                </property>
                <property name="icon">
                 <iconset resource="greware_icons.qrc">

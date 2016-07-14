@@ -12,7 +12,7 @@ using namespace std;
 #include <QMessageBox>
 #include <QProgressDialog>
 #include <QDir>
-
+#include "t4pattern_defining_dlg.h"
 
 #include "t4user_condition_wizard.h"
 
@@ -934,8 +934,7 @@ void T4manager_user_conditions::filtered_condtions_only()
 //********************************************************************************************************
 void T4manager_user_conditions::on_push_A_1_cloning_clicked()
 {
-    cout << "on_push_A_1_cloning_clicked()" << endl;
-
+//    cout << "on_push_A_1_cloning_clicked()" << endl;
 
     class error
     {
@@ -946,37 +945,38 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
     };
     error e;
     //---------------
+    string introduction_txt =  "This is the option to clone a condition which contains \n"
+            "at most 2 pattern of characters which had to be smartly replaced\n"
+            "Such substring will be replaced with your desired values"
+            "(i.e. for all possible cluster crystals)\n"
+            "By this action, the set of new spectra wiil be created.\n\n"
+            "The replacement will be done :\n"
+            "The replacement will be done:\n"
+            "    1. Inside  the name of the conditon, \n"
+            "and everywhere inside the definition of this conditon:\n"
+            "    2. Inside the name of any incrementer (variable) ,\n"
+            "    3. Inside the name of any other condition refered in this condition.\n";
 
     QMessageBox::information(this,
-                             "Cloning the _A_1_ conditon ",
-                             "This is the option to clone a conditon  which contains the substring \"_A_1_\"\n "
-                             "Such substring will be replaced with _A_2_ , _A_3_, ... , _R_7_"
-                             "(i.e. for all possible cluster crystals)\n"
-                             "By this action, the new 104 conditons  wiil be created.\n\n"
-                             "The replacement will be done:\n"
-                             "    1. Inside  the name of the conditon, \n\n"
-                             "and everywhere inside the definition of this conditon:\n\n"
-                             "    2. Inside the name of any incrementer (variable) ,\n"
-                             "    3. Inside the name of any other condition refered in this condition.\n"
-                             "",
+                             "Cloning the conditon ", introduction_txt.c_str(),
 
                              QMessageBox::Ok);
 
 
 
-bool flag_any_change = false;
+    bool flag_any_change = false;
     try
     {
         int nr = ui->table->currentRow() ;
         if(nr >= ui->table->rowCount() || nr == -1)
         {
             e.title = "No conditon is selected to clone";
-            e.message = /*(nr == -1) ? "No conditon is selected to clone" :*/ "At first select the conditon to be cloned\nby clicking once on its name\n";
-            e.kind = 2; //warning;
+            e.message = "Please  select the conditon to be cloned\nby clicking once on its name\n";
+            e.kind = 2; // warning;
             throw e;
         }
         row_is_selected();
-
+#if 0
         // checking if the name of the spectrum contains the substring A_1
         string pattern = "_A_1_";
         string condname = vec_cond_descr[nr].name ;
@@ -1182,6 +1182,217 @@ bool flag_any_change = false;
                              QMessageBox::NoButton);
         return;
     }
+#else
+
+        // checking if the name of the spectrum contains the substring A_1
+        string pattern = "_A_1_";
+        string condname = vec_cond_descr[nr].name ;
+        string::size_type loc ;
+
+        int result = QMessageBox::information(this,
+                                              "Cloning the conditon ",
+                                              introduction_txt.c_str(),
+
+                                              QMessageBox::Yes,
+                                              QMessageBox::No,
+                                              QMessageBox::Cancel);
+        if(result != QMessageBox::Yes )
+        {
+            return ;
+        }
+
+// string condname = vec_cond_descr[nr].name ;
+
+
+        string pattern1 = "_00_";
+        string pattern2  = "";
+        string one = "B C";
+        string two = "01 02 ";
+
+        vector<string> chain_one;   // for result
+        vector<string> chain_two;
+        vector<string> filenames;
+
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        T4pattern_defining_dlg dlg;
+        dlg.set_parameters(condname, pattern1, pattern2, &one, &two);
+        if( dlg.exec() != QDialog::Accepted) return;
+
+        dlg.get_parameters(&chain_one, &chain_two, &filenames);
+
+        cout << "After closing the dialog for parameters there are following spectra" << endl;
+
+        for(auto x : filenames)
+        {
+            cout << x << endl;
+
+        }
+
+
+        //  reading the whole contents of the template file
+        string pathed_name = path.conditions + condname + user_cond_ext;
+
+        ifstream plik(pathed_name.c_str() );
+        if(!plik)
+        {
+            string m = "Error while opening the file :";
+            m + pathed_name;
+
+            e.title = "Can't open a file ";
+            e.message = m ;
+            e.kind = 1; // critical
+            throw e;
+        }
+
+        // read in the whole contents - to replace strings in the memory
+        string contents;
+        string one_line;
+        while(plik)
+        {
+            getline(plik, one_line);  // delimiter (\n) is not added to the string
+            // so we add it
+            contents += one_line;
+            contents += '\n';
+        }
+
+
+        string file_contents_skeleton = dlg.find_patterns_and_make_skeleton_with_procents(contents);
+
+        cout << "SZKIELET CONDITIION ZAWIERA: \n"<< file_contents_skeleton << endl;
+
+        //  search all the positions of the pattern substrings and replace with  %1 %2
+
+        // FOR loop over all crystals========================================
+        bool make_checking_if_clone_exists = true;
+        // ready to create the new spectra
+
+        string txt = /*introduction_txt + */
+                "\n\nDo you really want to create such set of clones ? ";
+
+        for(auto x : filenames) {  txt += x + "   "; }
+       result = QMessageBox::information(this,
+                                              "Cloning the spectra",
+                                              txt.c_str(),
+                                              QMessageBox::Yes,
+                                              QMessageBox::No,
+                                              QMessageBox::Cancel);
+        if(result != QMessageBox::Yes )
+        {
+            return ;
+        }
+#if 1
+         bool flag_pattern2_in_use = (file_contents_skeleton.find("%2") != string::npos);
+         int file_nr = 0 ;
+        for(unsigned int d = 0 ; d < chain_one.size() ; d++)
+            for(unsigned int k= 0 ; k < chain_two.size() ; k++)
+            {
+                // if(d == 0 && k == 1) continue; // to skip the first one - which is a wzor
+
+                // changing the contents ---------------
+
+
+                bool flag_any_change = false;
+                string result_bw;
+
+//                cout << "chain one size =" << chain_one.size();
+//                cout << ", chain two size =" << chain_two.size();
+//                cout << ", d = " << d ;
+//                cout << ", k = " << k  << endl;
+
+
+//                cout << "cloning skeleton for arguments: [" << chain_one[d] << "] [" << chain_two[k]
+//                     << "], pattern2 = [" << pattern2 << "]"<< endl;
+
+                if(  (k > 0 && !flag_pattern2_in_use) ) continue;
+
+
+                string result =
+                        dlg.make_a_clone_from_skeleton_using_kombination(file_contents_skeleton,
+                                                                             chain_one[d],
+                                                                             chain_two[k],
+                                                                             &result_bw,
+                                                                             &flag_any_change);
+
+
+                if(!flag_any_change) continue;
+                //cout << "result: " << result << endl;
+
+
+
+                // ------------------------------------
+
+                // save under a proper name --------------------------
+
+                string new_filename = filenames[file_nr++]; // condname;
+                //cout << "New file " << nr << ")  = " << new_filename << endl;
+                // adding the path --------------
+                new_filename =  path.conditions + new_filename +  user_cond_ext;
+
+                // checking if it exists
+
+                if(make_checking_if_clone_exists)
+                {
+                    ifstream plik_exists(new_filename.c_str());
+                    if(plik_exists)
+                    {
+                        int odp =  QMessageBox::question(this,
+                                                         "Overwrite ?",
+                                                         string("Condition called \n" +
+                                                                new_filename +
+                                                                "\nalready exist. \n Overwite it?").c_str(),
+                                                         QMessageBox::Yes,
+                                                         QMessageBox::YesAll,
+                                                         QMessageBox::No);
+                        switch(odp)
+                        {
+                            case QMessageBox::No: continue; break;
+                            case QMessageBox::Yes: break;
+                            case QMessageBox::YesAll: make_checking_if_clone_exists = false ; break;
+                        }
+                    } // if exists
+                } // if make checking
+                cerr << "saving file " << new_filename << endl;
+
+                ofstream plikB(new_filename.c_str());
+                if(!plikB)
+                {
+                    e.message= string ("Can't open the file for writing: ") +  new_filename ;
+                    e.title = "Error while opening the file";
+                    e.kind = 1; // critial
+                    throw e;
+                }
+                plikB << result_bw;
+                if(!plikB)
+                {
+                    e.message= string ("Can't write the file ") +  new_filename ;
+                    e.title = "Error while writing the file";
+                    e.kind = 1; // critial
+                    throw e;
+                }
+                plikB.close();
+                flag_any_change = true;
+            } // end for  d (detectors) and for k
+#endif
+
+        update_the_table() ;
+        // if(flag_any_change)appl_form_ptr-> warning_spy_is_in_action();
+
+    }// end of try
+    catch(error m)
+    {
+        QMessageBox::warning(this,
+                             m.title.c_str(),
+                             m.message.c_str(),
+                             QMessageBox::Ok,
+                             QMessageBox::NoButton,
+                             QMessageBox::NoButton);
+        return;
+    }
+
+
+#endif
+
     raise();   // to the top of desktop
      if(flag_any_change)appl_form_ptr-> warning_spy_is_in_action();
 }
