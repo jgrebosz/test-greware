@@ -1,6 +1,15 @@
 *.o
 cracow4*
-
+ui_*
+greware
+moc_*
+greware.pro.user*
+Makefile
+*.gz
+*.tar
+paths.cnf
+qrc_greware_icons.cpp
+options.cracow
 
 
 

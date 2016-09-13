@@ -9,7 +9,7 @@
 #include <string>
 
 #include "paths.h"
-extern paths path;
+extern Tpaths path;
 #include "swiat.h"   // for typ_x  typedef 
 
 //--------------------------------

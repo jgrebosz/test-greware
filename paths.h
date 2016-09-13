@@ -1,11 +1,11 @@
-#ifndef PATHS_H
-#define PATHS_H
+#ifndef TPATHS_H
+#define TPATHS_H
 #include <string>
 using namespace std ;
 #include <qstring.h>
 #include <cstdlib>
 
-class paths
+class Tpaths
 {
 public:
     string spectra ;
@@ -23,7 +23,7 @@ public:
     string my_binnings;
     string incrementers;
 
-    paths()
+    Tpaths()
     {
         spy_dir = "./" ;
     }
@@ -61,7 +61,7 @@ public:
 
 };
 
-extern paths path ;
+extern Tpaths path ;
 
 
 extern const string user_spec_ext ;
@@ -70,4 +70,4 @@ extern const string user_cond_ext ;
 extern const string user_cond_filter ;
 extern const string user_incr_ext ;
 extern const string user_incr_filter ;
-#endif //PATHS_H
+#endif //TPATHS_H

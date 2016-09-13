@@ -4,9 +4,9 @@
 #include <qdir.h>
 
 
-paths path ;
+Tpaths path ;
 //***********************************************************
-bool paths::read_from_disk()
+bool Tpaths::read_from_disk()
 {
 
   ifstream plik("paths.cnf");
@@ -26,7 +26,7 @@ bool paths::read_from_disk()
   else return false;
 }
 //***********************************************************
-void paths::save_to_disk()   // this is a main function after choosing from GUI
+void Tpaths::save_to_disk()   // this is a main function after choosing from GUI
 {
   check_for_slash_in_spy_dir() ;
   is_it_legal();
@@ -42,7 +42,7 @@ void paths::save_to_disk()   // this is a main function after choosing from GUI
 }
 
 //************************************************************
-bool paths::is_it_legal()
+bool Tpaths::is_it_legal()
 {
   // we test here if spectra directory exist here
   QDir dir;
@@ -55,7 +55,7 @@ bool paths::is_it_legal()
   else return false;
 }
 //***********************************************************
-void paths::check_for_slash_in_spy_dir()
+void Tpaths::check_for_slash_in_spy_dir()
 {
   if(spy_dir[spy_dir.length() -1] != '/' )
     {
@@ -67,7 +67,7 @@ void paths::check_for_slash_in_spy_dir()
 
 }
 //**************************************************************
- bool paths::old_or_new_structure_of_directories()
+ bool Tpaths::old_or_new_structure_of_directories()
  {
      check_for_slash_in_spy_dir() ;
    // checking if it is an old/new style of directories

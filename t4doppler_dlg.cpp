@@ -10,7 +10,7 @@
 #include "Tfile_helper.h"
 istream & zjedz(istream & plik);
 #include "paths.h"
-extern paths path;
+//extern paths path;
 
 //************************************************************************************
 T4doppler_dlg::T4doppler_dlg(QWidget *parent) :

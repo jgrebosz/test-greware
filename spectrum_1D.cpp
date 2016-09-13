@@ -30,7 +30,7 @@
 
 #include "paths.h"
 #include "options.h"
-extern paths path;
+extern Tpaths path;
 extern options current_options;
 
 
@@ -2230,7 +2230,7 @@ void spectrum_1D::focusInEvent(QFocusEvent * e)
 {
     if(e->gotFocus())
     {
-        cout << "spectrum 1D got a focus for " << give_spectrum_name() << endl ;
+        //cout << "spectrum 1D got a focus for " << give_spectrum_name() << endl ;
         emit enable_selected_actions(1);  // 1d spectrum
     }
 }

@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>787</width>
-    <height>536</height>
+    <height>650</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -100,7 +100,7 @@
          <item>
           <widget class="QLabel" name="textLabel1_2">
            <property name="text">
-            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#000000;&quot;&gt;Your spectrum name contains a 'pattern'&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000aa;&quot;&gt; _&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000ea;&quot;&gt;%1&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000aa;&quot;&gt;_&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#ff0000;&quot;&gt;%2&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000aa;&quot;&gt;_&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#000000;&quot;&gt;Your file name contains a 'pattern'&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000aa;&quot;&gt; _&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000ea;&quot;&gt;%1&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000aa;&quot;&gt;_&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#ff0000;&quot;&gt;%2&lt;/span&gt;&lt;span style=&quot; font-size:large; font-weight:600; color:#0000aa;&quot;&gt;_&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="scaledContents">
             <bool>false</bool>
@@ -116,7 +116,7 @@
         <widget class="QLabel" name="label_spectrum_name">
          <property name="font">
           <font>
-           <pointsize>11</pointsize>
+           <pointsize>12</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>
@@ -162,6 +162,11 @@
        </item>
        <item>
         <widget class="QLabel" name="label_skeleton">
+         <property name="font">
+          <font>
+           <pointsize>13</pointsize>
+          </font>
+         </property>
          <property name="styleSheet">
           <string notr="true">background-color: rgb(200, 200, 200);</string>
          </property>
@@ -181,6 +186,9 @@
        </item>
        <item>
         <widget class="QLineEdit" name="lineEdit_skeleton">
+         <property name="text">
+          <string>???????</string>
+         </property>
          <property name="frame">
           <bool>false</bool>
          </property>

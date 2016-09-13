@@ -2,7 +2,7 @@
 #include "ui_t4welcome.h"
 
 #include "paths.h"
-extern paths path ;
+//extern paths path ;
 #include <QMessageBox>
 //#include <cstdlib>
 using namespace std;

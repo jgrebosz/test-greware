@@ -25,7 +25,7 @@ using namespace std;
 #include "spectrum_2D.h"
 #include "paths.h"
 #include "options.h"
-extern paths path;
+extern Tpaths path;
 extern options current_options;
 #include "t4setting_paths_dlg.h"
 #include "t4size_spectrum_dlg.h"
@@ -51,6 +51,7 @@ extern options current_options;
 #include "t4good_galileo_ge_dlg.h"
 #include "t4good_ger_dlg.h"
 #include "t4good_hector_dlg.h"
+#include "t4good_kratta_dlg.h"
 #include "t4lycca_parameters.h"
 #include "t4active_stopper_dlg.h"
 #include "t4manager_user_incrementers.h"
@@ -1130,7 +1131,7 @@ void appl_form::on_Action_undo_triggered()
 {
 
     //  cout << "somebody pressed undo" << endl ;
-    COTO;
+    // COTO;
 
     //     if ( ! ws->currentSubWindow() ) return ;
 
@@ -3667,3 +3668,9 @@ void appl_form::on_actionNeutronwall_signals_enabling_triggered()
                                   outfname ); // output filename
 }
 //**************************************************************************************************
+
+void appl_form::on_actionGood_signals_from_KRATTA_element_triggered()
+{
+    T4good_kratta_dlg  dlg ;
+    dlg.exec() ;
+}

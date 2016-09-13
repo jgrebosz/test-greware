@@ -1161,9 +1161,9 @@ void  box_of_matrix::mouseReleaseEvent ( QMouseEvent* )
                 typ_x ydiff  = y2 - y1  ;
 
                 //    cout << "Moved by differnc  " << xdiff << " " << ydiff << endl ;
-                COTO;
+//                COTO;
                 it_of_moving_vertex = banana[nr_of_moved_polygon].polygon.begin() ;
-                COTO;
+//                COTO;
 
                 for ( ; it_of_moving_vertex !=banana[nr_of_moved_polygon].polygon.end() ;  it_of_moving_vertex++ )
                 {

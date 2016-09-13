@@ -10,7 +10,7 @@
 #include <fstream>
 
 extern options current_options ;
-extern paths path ;
+extern Tpaths path ;
 class polygon_gate;
 class T4results_of_integration;
 

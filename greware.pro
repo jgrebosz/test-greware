@@ -1,7 +1,7 @@
 
 #-------------------------------------------------
 #
-# Project created by QtCreator 2010-12-17T12:19:05
+# Project created by QtCreator 2010-12-17 T12:19:05
 #
 #-------------------------------------------------
 
@@ -9,15 +9,14 @@ TARGET = greware
 TEMPLATE = app
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
 CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant
 #CONFIG  += warn_on  static release
-
 #static is probably for pictures (loaded into program)
 
-QMAKE_CXXFLAGS += -std=c++11
-#QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug
+QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug
 
-#QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++11
 
 target.path = ./grewareGUI/
 INSTALLS += target
@@ -101,7 +100,8 @@ SOURCES += main.cxx\
     Tself_gate_ge_galileo_descr.cpp \
     tgalileo_signals_dlg.cpp \
     tcalibration_factors_dlg.cpp \
-    Tfile_line_det_cal_lookup.cpp
+    Tfile_line_det_cal_lookup.cpp \
+    t4good_kratta_dlg.cpp
 
 HEADERS  += appl_form.h \
     options.h \
@@ -180,7 +180,8 @@ HEADERS  += appl_form.h \
     Tself_gate_ge_galileo_descr.h \
     tgalileo_signals_dlg.h \
     tcalibration_factors_dlg.h \
-    Tfile_line_det_cal_lookup.h
+    Tfile_line_det_cal_lookup.h \
+    t4good_kratta_dlg.h
 
 
 FORMS    += appl_form.ui \
@@ -234,7 +235,8 @@ FORMS    += appl_form.ui \
     t4selfgate_ge_crystal_galileo.ui \
     tgalileo_signals_dlg.ui \
     tcalibration_factors_dlg.ui \
-    t4selfgate_kratta_dlg.ui
+    t4selfgate_kratta_dlg.ui \
+    t4good_kratta_dlg.ui
 
 #IMAGES	= images/tracking2.jpeg \
 #        images/zarowka.png \

@@ -6,7 +6,7 @@ using namespace std;
 #include <QMessageBox>
 
 #include "paths.h"
-extern paths path;
+//extern paths path;
 
 extern istream & zjedz(istream & plik) ;
 

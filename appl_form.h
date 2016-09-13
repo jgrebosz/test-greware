@@ -214,6 +214,8 @@ private slots:
 
     void on_actionNeutronwall_signals_enabling_triggered();
 
+    void on_actionGood_signals_from_KRATTA_element_triggered();
+
 private:
     Ui::appl_form *ui;
 

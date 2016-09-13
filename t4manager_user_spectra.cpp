@@ -686,10 +686,13 @@ void T4manager_user_spectra::review_double_clicked()
 
 }
 //****************************************************************
-
 void T4manager_user_spectra::on_ComboBox_filter_textChanged(const QString & /*arg1*/)
 {
+    static bool flag_working = false ;
+    if(flag_working)return;
+    flag_working = true;
     update_the_table() ;
+    flag_working = false;
     ui->ComboBox_filter->setFocus();
 }
 //****************************************************************

@@ -1448,7 +1448,7 @@ bool T4user_spectrum_wizard::has_any_ALL_incremeter() const
     {
       string incrName = ui->table_incr_x->item(i, 0)->text().toStdString();   // incrementer name
       if(incrName.substr(0,3) == "ALL") {
-          cout << "Found ALL incrementer :  " << incrName << endl;
+          //cout << "Found ALL incrementer :  " << incrName << endl;
           return true;
         }
 
@@ -1457,7 +1457,7 @@ bool T4user_spectrum_wizard::has_any_ALL_incremeter() const
     {
       string incrName = ui->table_incr_y->item(i, 0)->text().toStdString();   // incrementer name
       if(incrName.substr(0,3) == "ALL") {
-          cout << "Found ALL incrementer :  " << incrName << endl;
+          //cout << "Found ALL incrementer :  " << incrName << endl;
           return true;
         }
 

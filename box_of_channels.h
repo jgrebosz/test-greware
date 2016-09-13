@@ -106,8 +106,6 @@ public:
 public slots:
     void wheelEvent ( QWheelEvent * e );
 
-//    void resizeEvent ( QResizeEvent * );
-
 };
 
 #endif // box_of_channels_h

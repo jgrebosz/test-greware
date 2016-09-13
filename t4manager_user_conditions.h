@@ -34,7 +34,7 @@ private slots:
     void on_push_A_1_cloning_clicked();
     void on_push_Save_review_as_file_clicked();
     void on_ComboBox_filter_textChanged(const QString &);
-    void check_stitistics();
+    void check_statistics();
     void on_table_cellDoubleClicked(int, int);
     void on_review_cellDoubleClicked(int row, int column);
 

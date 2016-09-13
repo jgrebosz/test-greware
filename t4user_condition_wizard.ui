@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>845</width>
+    <width>863</width>
     <height>550</height>
    </rect>
   </property>
@@ -280,7 +280,7 @@
               <item>
                <widget class="QCheckBox" name="checkBox_AND_gates">
                 <property name="text">
-                 <string>conjuncition of gates</string>
+                 <string>conjunction of gates</string>
                 </property>
                </widget>
               </item>
@@ -562,8 +562,7 @@
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(220, 255, 220, 255), stop:1 rgba(240, 255, 240, 255));
-</string>
+       <string notr="true">background-color: rgb(227, 255, 231);</string>
       </property>
       <property name="rowCount">
        <number>1</number>
@@ -588,6 +587,29 @@
       <column/>
       <column/>
       <column/>
+      <item row="0" column="0">
+       <property name="text">
+        <string/>
+       </property>
+       <property name="background">
+        <brush brushstyle="NoBrush">
+         <color alpha="255">
+          <red>192</red>
+          <green>255</green>
+          <blue>192</blue>
+         </color>
+        </brush>
+       </property>
+       <property name="foreground">
+        <brush brushstyle="NoBrush">
+         <color alpha="255">
+          <red>255</red>
+          <green>192</green>
+          <blue>192</blue>
+         </color>
+        </brush>
+       </property>
+      </item>
      </widget>
     </item>
     <item>
@@ -825,8 +847,11 @@
         <pointsize>9</pointsize>
        </font>
       </property>
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
       <property name="styleSheet">
-       <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:1, stop:0 rgba(255, 220, 220, 255), stop:1 rgba(255, 240, 240, 255));</string>
+       <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 231, 232, 255), stop:1 rgba(255, 255, 255, 255));</string>
       </property>
       <property name="rowCount">
        <number>3</number>
@@ -841,6 +866,22 @@
       <column/>
       <column/>
       <column/>
+      <item row="0" column="1">
+       <property name="text">
+        <string/>
+       </property>
+      </item>
+      <item row="2" column="3">
+       <property name="background">
+        <brush brushstyle="NoBrush">
+         <color alpha="255">
+          <red>50</red>
+          <green>0</green>
+          <blue>0</blue>
+         </color>
+        </brush>
+       </property>
+      </item>
      </widget>
     </item>
     <item>
@@ -1744,16 +1785,7 @@ color: rgb(255, 255, 255);</string>
              <property name="spacing">
               <number>6</number>
              </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -1867,16 +1899,7 @@ following conditions is true</string>
              <property name="spacing">
               <number>6</number>
              </property>
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>
@@ -1981,16 +2004,7 @@ color: rgb(255, 255, 255);</string>
              <number>3</number>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_23">
-             <property name="leftMargin">
-              <number>0</number>
-             </property>
-             <property name="topMargin">
-              <number>0</number>
-             </property>
-             <property name="rightMargin">
-              <number>0</number>
-             </property>
-             <property name="bottomMargin">
+             <property name="margin">
               <number>0</number>
              </property>
              <item>

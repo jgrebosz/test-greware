@@ -19,7 +19,7 @@
 #include <QTimer>
 #include <QMenu>
 
-extern paths path;
+extern Tpaths path;
 extern options current_options ;
 #undef COTO
 #define COTO
@@ -2195,7 +2195,7 @@ void spectrum_2D::focusInEvent ( QFocusEvent * e )
 {
     if ( e->gotFocus() )
     {
-        cout << "spectrum 2D got a focus " << endl ;
+        //cout << "spectrum 2D got a focus " << endl ;
         emit enable_selected_actions ( 2 ); // 2d spectrum
     }
 }

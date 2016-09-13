@@ -5,7 +5,7 @@
 #include "paths.h"
 #include "options.h"
 
-extern paths path;
+//extern paths path;
 extern options current_options ;
 
 #include "appl_form.h"

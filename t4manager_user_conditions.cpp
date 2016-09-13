@@ -81,7 +81,7 @@ T4manager_user_conditions::T4manager_user_conditions(QWidget *parent) :
 
 
     statistics_timer = new QTimer( this );
-    connect( statistics_timer, SIGNAL(timeout()), this, SLOT(check_stitistics()) );
+    connect( statistics_timer, SIGNAL(timeout()), this, SLOT(check_statistics()) );
     statistics_timer->start(1*1000) ;  // 1000 is 1 second
 
 }
@@ -242,7 +242,7 @@ void T4manager_user_conditions::on_push_remove_selected_clicked()
         } // for row
     } // for sel range
 outside:
-     if(flag_any_change)appl_form_ptr-> warning_spy_is_in_action();
+    if(flag_any_change)appl_form_ptr-> warning_spy_is_in_action();
     update_the_table() ;
 }
 //***********************************************************************
@@ -449,7 +449,7 @@ void T4manager_user_conditions::row_is_selected()
     ui->table->selectRow (row_nr ) ;
 }
 //******************************************************************
-void T4manager_user_conditions::check_stitistics()
+void T4manager_user_conditions::check_statistics()
 {
 
     //    int nr_rows =vec_cond_descr.size();
@@ -459,19 +459,34 @@ void T4manager_user_conditions::check_stitistics()
 
     for (int j = 0; j < nr_rows; ++j )
     {
-
-
         if(ui->table->item(j, 0) == nullptr)
         {
-            cout << "Scandal! nr of rows in the table now (after filtering) = " << ui->table->rowCount() << endl;
-            cout << "While checking  statistics of cond "
-                 << (vec_cond_descr[j].give_name() )
-                 << " which should be in row "<< j << endl;
-            cerr << "while row j=" << j << " does not exist " << endl;
+            cout << "Scandal! nr of rows in the table now (after filtering) = "
+                 << ui->table->rowCount() << endl;
+            cout << "in function " << __func__
+                 << " which should be in row " << j << endl;
+            cerr << "while row j=" << j << " does not exist (is nullptr) " << endl;
+
         }
-        ui->table->item(j, 0)->setText( vec_cond_descr[j].give_name().c_str());
-        ui->table->item(j, 1)->setText( "not used now?");
-        ui->table->item(j, 2)->setText( "");
+
+        if( j >= (int) vec_cond_descr.size() )
+        {
+            cerr << "In function " << __func__ << ": a row nr " << j
+                 << " is too big for the vec_cond_descr which has the size = "
+                 << vec_cond_descr.size() << endl;
+            int licznik = 0 ;
+            for(auto x : vec_cond_descr)
+            {
+                cout << licznik++ << ") -> " << x.give_name().c_str() << endl;
+                ui->table->item(j, 2)->setText( "error prone?");
+            }
+        }else{
+
+            // XYZ Tutaj j=42 give_name  dalo name niedostepny !!!
+            ui->table->item(j, 0)->setText( vec_cond_descr[j].give_name().c_str());
+            ui->table->item(j, 1)->setText( "not used now?");
+            ui->table->item(j, 2)->setText( "");
+        }
     }
     ui->label_statistics->setText("Statistics report not found");
     string info, cname, tested, was_true ;
@@ -572,7 +587,7 @@ void T4manager_user_conditions::update_review()
             extra_lines = max(extra_lines, r) ;
 
         } //
-//        COTO ;
+        //        COTO ;
         //   cout << "    item_2D_AND.size() = " << vec_cond_descr[j].item_2D_AND.size() << endl;
         for (unsigned int r = 0; r < vec_cond_descr[j].item_2D_AND.size(); ++r)
         {
@@ -649,7 +664,7 @@ void T4manager_user_conditions::update_review()
             ui->review->item(current_line+r, 17)->setText( vec_cond_descr[j]. other_condition_NAND[r].c_str() );
             extra_lines = max(extra_lines, r) ;
         }
-//        COTO ;
+        //        COTO ;
         for (unsigned int r = 0; r < vec_cond_descr[j].other_condition_NOR.size(); ++r)
         {
             if(r)
@@ -776,11 +791,11 @@ bool T4manager_user_conditions::is_possible_to_remove_this_condition( string con
   is using a condition with this name
 
   */
-         cout
-          << " F. T4manager_user_conditions::is_possible_to_remove_this_condition("
-          << condition_name
-          << ")"
-          << endl;
+    cout
+            << " F. T4manager_user_conditions::is_possible_to_remove_this_condition("
+            << condition_name
+            << ")"
+            << endl;
 
 
     bool possible = true;
@@ -806,7 +821,7 @@ bool T4manager_user_conditions::is_possible_to_remove_this_condition( string con
             possible = false;
             continue ; // error wile opening
         }
-//        cout << "Searching the name " <<   condition_name   << " iniside this spectrum " << name_c << endl;
+        //        cout << "Searching the name " <<   condition_name   << " iniside this spectrum " << name_c << endl;
 
         string word;
         while(!plik.eof() )
@@ -858,7 +873,7 @@ bool T4manager_user_conditions::is_possible_to_remove_this_condition( string con
         int nr = 0 ;
         for ( QStringList::Iterator it = lista.begin() ; it != lista.end() ;  ++it, nr++ )
         {
-//            cout << "Trying to read condition definition " << (*it).toStdString() << endl;
+            //            cout << "Trying to read condition definition " << (*it).toStdString() << endl;
             string name_c = path.conditions + (*it).toStdString() ;
 
             // Opening the definition and checking  if there is a condition name here
@@ -934,7 +949,7 @@ void T4manager_user_conditions::filtered_condtions_only()
 //********************************************************************************************************
 void T4manager_user_conditions::on_push_A_1_cloning_clicked()
 {
-//    cout << "on_push_A_1_cloning_clicked()" << endl;
+    //    cout << "on_push_A_1_cloning_clicked()" << endl;
 
     class error
     {
@@ -946,16 +961,16 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
     error e;
     //---------------
     string introduction_txt =  "This is the option to clone a condition which contains \n"
-            "at most 2 pattern of characters which had to be smartly replaced\n"
-            "Such substring will be replaced with your desired values"
-            "(i.e. for all possible cluster crystals)\n"
-            "By this action, the set of new spectra wiil be created.\n\n"
-            "The replacement will be done :\n"
-            "The replacement will be done:\n"
-            "    1. Inside  the name of the conditon, \n"
-            "and everywhere inside the definition of this conditon:\n"
-            "    2. Inside the name of any incrementer (variable) ,\n"
-            "    3. Inside the name of any other condition refered in this condition.\n";
+                               "at most 2 pattern of characters which had to be smartly replaced\n"
+                               "Such substring will be replaced with your desired values"
+                               "(i.e. for all possible cluster crystals)\n"
+                               "By this action, the set of new spectra wiil be created.\n\n"
+                               "The replacement will be done :\n"
+                               "The replacement will be done:\n"
+                               "    1. Inside  the name of the conditon, \n"
+                               "and everywhere inside the definition of this conditon:\n"
+                               "    2. Inside the name of any incrementer (variable) ,\n"
+                               "    3. Inside the name of any other condition refered in this condition.\n";
 
     QMessageBox::information(this,
                              "Cloning the conditon ", introduction_txt.c_str(),
@@ -1057,7 +1072,7 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
 
             e.title = "Some nonsense ? ";
             e.message = "The  cloned conditon  definition does not use anything with the substring \"_A_0_\" "
-                    "\nPerhaps you are doing some nonsense...";
+                        "\nPerhaps you are doing some nonsense...";
             e.kind = 2; // critial
             throw e;
 
@@ -1185,24 +1200,9 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
 #else
 
         // checking if the name of the spectrum contains the substring A_1
-        string pattern = "_A_1_";
+       // string pattern = "_A_1_";
         string condname = vec_cond_descr[nr].name ;
         string::size_type loc ;
-
-        int result = QMessageBox::information(this,
-                                              "Cloning the conditon ",
-                                              introduction_txt.c_str(),
-
-                                              QMessageBox::Yes,
-                                              QMessageBox::No,
-                                              QMessageBox::Cancel);
-        if(result != QMessageBox::Yes )
-        {
-            return ;
-        }
-
-// string condname = vec_cond_descr[nr].name ;
-
 
         string pattern1 = "_00_";
         string pattern2  = "";
@@ -1271,19 +1271,19 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
                 "\n\nDo you really want to create such set of clones ? ";
 
         for(auto x : filenames) {  txt += x + "   "; }
-       result = QMessageBox::information(this,
-                                              "Cloning the spectra",
-                                              txt.c_str(),
-                                              QMessageBox::Yes,
-                                              QMessageBox::No,
-                                              QMessageBox::Cancel);
+        int result = QMessageBox::information(this,
+                                          "Cloning the spectra",
+                                          txt.c_str(),
+                                          QMessageBox::Yes,
+                                          QMessageBox::No,
+                                          QMessageBox::Cancel);
         if(result != QMessageBox::Yes )
         {
             return ;
         }
-#if 1
-         bool flag_pattern2_in_use = (file_contents_skeleton.find("%2") != string::npos);
-         int file_nr = 0 ;
+
+        bool flag_pattern2_in_use = (file_contents_skeleton.find("%2") != string::npos);
+        int file_nr = 0 ;
         for(unsigned int d = 0 ; d < chain_one.size() ; d++)
             for(unsigned int k= 0 ; k < chain_two.size() ; k++)
             {
@@ -1295,24 +1295,24 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
                 bool flag_any_change = false;
                 string result_bw;
 
-//                cout << "chain one size =" << chain_one.size();
-//                cout << ", chain two size =" << chain_two.size();
-//                cout << ", d = " << d ;
-//                cout << ", k = " << k  << endl;
+                //                cout << "chain one size =" << chain_one.size();
+                //                cout << ", chain two size =" << chain_two.size();
+                //                cout << ", d = " << d ;
+                //                cout << ", k = " << k  << endl;
 
 
-//                cout << "cloning skeleton for arguments: [" << chain_one[d] << "] [" << chain_two[k]
-//                     << "], pattern2 = [" << pattern2 << "]"<< endl;
+                //                cout << "cloning skeleton for arguments: [" << chain_one[d] << "] [" << chain_two[k]
+                //                     << "], pattern2 = [" << pattern2 << "]"<< endl;
 
                 if(  (k > 0 && !flag_pattern2_in_use) ) continue;
 
 
                 string result =
                         dlg.make_a_clone_from_skeleton_using_kombination(file_contents_skeleton,
-                                                                             chain_one[d],
-                                                                             chain_two[k],
-                                                                             &result_bw,
-                                                                             &flag_any_change);
+                                                                         chain_one[d],
+                                                                         chain_two[k],
+                                                                         &result_bw,
+                                                                         &flag_any_change);
 
 
                 if(!flag_any_change) continue;
@@ -1346,9 +1346,9 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
                                                          QMessageBox::No);
                         switch(odp)
                         {
-                            case QMessageBox::No: continue; break;
-                            case QMessageBox::Yes: break;
-                            case QMessageBox::YesAll: make_checking_if_clone_exists = false ; break;
+                        case QMessageBox::No: continue; break;
+                        case QMessageBox::Yes: break;
+                        case QMessageBox::YesAll: make_checking_if_clone_exists = false ; break;
                         }
                     } // if exists
                 } // if make checking
@@ -1373,7 +1373,7 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
                 plikB.close();
                 flag_any_change = true;
             } // end for  d (detectors) and for k
-#endif
+
 
         update_the_table() ;
         // if(flag_any_change)appl_form_ptr-> warning_spy_is_in_action();
@@ -1394,12 +1394,18 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
 #endif
 
     raise();   // to the top of desktop
-     if(flag_any_change)appl_form_ptr-> warning_spy_is_in_action();
+    if(flag_any_change)appl_form_ptr-> warning_spy_is_in_action();
 }
 //********************************************************************************************
 void T4manager_user_conditions::on_ComboBox_filter_textChanged(const QString &  /* arg1*/ )
 {
-    update_the_table();
+  static bool flag_working = 0;
+
+  if(flag_working) return; // if there are many conditions - we do not want "pile-ups"
+
+  flag_working = true;
+  update_the_table();
+  flag_working = false;
 }
 //********************************************************************************************
 

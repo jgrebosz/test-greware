@@ -358,7 +358,7 @@
      <x>0</x>
      <y>0</y>
      <width>1114</width>
-     <height>31</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -473,6 +473,7 @@
     <addaction name="actionDefinition_of_Good_CATE_data"/>
     <addaction name="actionDefinition_of_Good_Hector_BaF_data"/>
     <addaction name="actionDefinition_of_good_Miniball_data"/>
+    <addaction name="actionGood_signals_from_KRATTA_element"/>
     <addaction name="separator"/>
     <addaction name="actionGalileo_signals_enabling"/>
     <addaction name="actionEuclides_signals_enabling"/>
@@ -1449,6 +1450,11 @@
   <action name="actionNeutronwall_signals_enabling">
    <property name="text">
     <string>Neutronwall signals_enabling</string>
+   </property>
+  </action>
+  <action name="actionGood_signals_from_KRATTA_element">
+   <property name="text">
+    <string>&quot;Good&quot; signals from KRATTA element </string>
    </property>
   </action>
  </widget>
