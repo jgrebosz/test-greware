@@ -63,12 +63,6 @@ void Tincrementer_description_cracow::read_incrementer()
 
 
 
-    //  plik >> zjedz >> name
-    //  >> zjedz >> other_incrementer_nameA
-    //  >> zjedz >> operation
-    //  >> zjedz >> flag_exprB_is_constant
-    //  >> zjedz >> other_incrementer_nameB
-    //  >> zjedz >> constant_valueB;
 
 
     try{
@@ -96,8 +90,25 @@ void Tincrementer_description_cracow::read_incrementer()
     catch(Tno_keyword_exception &m)
     {
         cout << "Error during reading the file "
-             << pat_name << "\n" << m.message << endl;
-        throw;
+             << pat_name << "\n" << m.message
+
+             << "\n so most probably it is an OLD format of incrementer"
+             << endl;
+
+        FH::repair_the_stream(plik);
+        plik.seekg(0);
+
+          plik >> zjedz >> name
+          >> zjedz >> other_incrementer_nameA
+          >> zjedz >> operation
+          >> zjedz >> flag_exprB_is_constant
+          >> zjedz >> other_incrementer_nameB
+          >> zjedz >> constant_valueB;
+
+          if(!plik) {
+              cerr << "The format is even not good as 'old' " << endl;
+              throw;
+          }
     }
     catch(Treading_value_exception &m)
     {

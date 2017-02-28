@@ -49,10 +49,13 @@ namespace File_helper   // was Tfile_helper - see using declaration at the end
 
   /* find a keyword, - just for positioning cursor  */
   void spot_in_file(ifstream& s, string slowo)throw( Tno_keyword_exception);
+  void repair_the_stream(ifstream& s)  ;
 
 };
 /////////////////////////////////////////////////////////////////////////
 istream & zjedz(istream & plik);
+
+
 
 namespace  FH = File_helper;
 namespace  Nfile_helper = File_helper;

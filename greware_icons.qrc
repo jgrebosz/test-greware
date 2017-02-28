@@ -114,6 +114,7 @@
         <file>images/from_center.jpg</file>
         <file>images/full_array.jpg</file>
         <file>images/full_array_logo.jpg</file>
+        <file>images/sum_2D.png</file>
     </qresource>
     <qresource prefix="/">
         <file>images/1d_binning.cdr</file>

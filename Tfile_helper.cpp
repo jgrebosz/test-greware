@@ -129,3 +129,13 @@ double File_helper::find_in_file(ifstream& s, string slowo) throw(
 
 }
 //*************************************************************************
+//*****************************************************************************
+namespace File_helper
+{
+void repair_the_stream(ifstream& s)
+{
+// repair the stream
+    s.clear(s.rdstate() & ~(ios::eofbit | ios::failbit));
+}
+
+}

@@ -369,7 +369,6 @@
     <addaction name="actionClose_all_spectra"/>
     <addaction name="actionSave"/>
     <addaction name="actionSave_as"/>
-    <addaction name="actionSum_many_2D_spectra"/>
     <addaction name="separator"/>
     <addaction name="filePrintAction"/>
     <addaction name="actionDefine_snapshot_program_to_print"/>
@@ -428,6 +427,7 @@
     <addaction name="black_white_action"/>
     <addaction name="actionChange_the_binning_and_range"/>
     <addaction name="matrix_projection_Action"/>
+    <addaction name="actionSum_many_2D_spectra"/>
     <addaction name="actionOther_tools_for_matrix_operations"/>
    </widget>
    <widget class="QMenu" name="menuTools">
@@ -547,14 +547,13 @@
    <addaction name="Action_undo"/>
    <addaction name="parameters_Action"/>
    <addaction name="full_spectrum_action"/>
-   <addaction name="shift_left_action"/>
-   <addaction name="shift_right_action"/>
    <addaction name="Yscale05_action"/>
    <addaction name="Yscale2_action"/>
    <addaction name="Yscale_fit_action"/>
    <addaction name="separator"/>
    <addaction name="expand_spectrum_action"/>
    <addaction name="Integrate_spectrum_action"/>
+   <addaction name="actionSum_many_2D_spectra"/>
    <addaction name="matrix_projection_Action"/>
    <addaction name="petrify_Action"/>
    <addaction name="log_scale_Action"/>
@@ -682,6 +681,11 @@
    </property>
   </action>
   <action name="actionSum_many_2D_spectra">
+   <property name="icon">
+    <iconset>
+     <normalon>:/images/images/sum_2D.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Sum many 2D spectra</string>
    </property>

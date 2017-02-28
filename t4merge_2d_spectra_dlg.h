@@ -4,6 +4,7 @@
 #include <QDialog>
 #include <string>
 #include <vector>
+#include "paths.h"
 
 
 struct binning_2D
@@ -34,10 +35,28 @@ private slots:
 
     void on_button_add_clicked();
 
+    void on_pushButton_restore_the_list_clicked();
+
+    void on_pushButton_save_the_list_clicked();
+
+    void on_pushButton_add_to_automate_list_clicked();
+
+    void on_pushButton_remove_from_automate_list_clicked();
+
+    void on_pushButton_exec_periodic_manually_clicked();
+
 protected:
     bool  read_in_file ( std::string fname, std::vector<int> & spec )  ;
     binning_2D binning ;            // nr of bins, np. 1024 (are double!!!)
     binning_2D binning_sum ;            // nr of bins, np. 1024
+
+    bool save_periodic_list_to_disk( );
+    bool restore_periodic_list_from_disk( );
+
+    QString  periodic_list_file = { "periodic_summing_list.txt" };
+    bool execute_periodic_summings();
+    bool calculations(int nr_of_spectrum, string spec_name, double factor, vector<int> &sum_spectrum);
+    bool save_result2D_spectrum(string name, vector<int> &sum_spectrum);
 private:
     Ui::T4merge_2d_spectra_dlg *ui;
 };
