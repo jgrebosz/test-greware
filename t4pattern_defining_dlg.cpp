@@ -3,7 +3,7 @@
 
 #include <string>
 #include <iostream> // cout
-
+#include <fstream>
 using namespace std;
 #include <sstream>
 #include "paths.h"
@@ -14,17 +14,21 @@ T4pattern_defining_dlg::T4pattern_defining_dlg(QWidget *parent) :
     ui(new Ui::T4pattern_defining_dlg)
 {
     ui->setupUi(this);
-    nieb_pocz = "<span style=\" color:#0000ff;\">";
+    nieb_pocz = "<span style=\"  font-weight:600; color:#0000ff;\">";
 
-    czerw_pocz = "<span style=\" color:#ff0000;\">";
+    czerw_pocz = "<span style=\"  font-weight:600; color:#ff0000;\">";
     kolor_kon = "</span>";
     pattern1 = "%%";
     ui->lineEdit_pattern1->setText(pattern1.c_str());
 
     flag_second_pattern = false;
+
     ui->lineEdit_pattern2->setVisible( flag_second_pattern);
     ui->lineEdit_two->setVisible( flag_second_pattern);
     ui->lineEdit_two->setEnabled(flag_second_pattern);
+
+    ui->groupBox_pattern_found->setVisible(false);
+    ui->groupBox_results->setVisible(false);
 }
 //************************************************************************************
 T4pattern_defining_dlg::~T4pattern_defining_dlg()
@@ -36,7 +40,7 @@ void T4pattern_defining_dlg::set_parameters(std::string specname,
                                             std::string pattern1_,
                                             std::string pattern2_,
                                             std::string *one_symbols,
-                                            std::string *two_symbols)
+                                            std::string *two_symbols, string contents)
 {
     pattern1 = pattern1_;
     pattern2 = pattern2_;
@@ -45,6 +49,7 @@ void T4pattern_defining_dlg::set_parameters(std::string specname,
     ui->lineEdit_one->setText(suggested_one.c_str());
     ui->lineEdit_two->setText(suggested_second.c_str());
     original_specname = specname ;
+    template_file_contents = contents;
 
     // finding the pattern in the name (may be few times)
     ui->label_spectrum_name->setText(specname.c_str());
@@ -81,9 +86,9 @@ string T4pattern_defining_dlg::find_patterns_and_make_skeleton_with_procents(str
                              "%1"
                              //+ kolor_kon
                              );
-//            cout << "found at position " << loc << ", after blue_replacement = "
-//                 << skeleton
-//                 << endl;
+            //            cout << "found at position " << loc << ", after blue_replacement = "
+            //                 << skeleton
+            //                 << endl;
             flag_some_pattern_found = true;
 
         }
@@ -110,16 +115,22 @@ string T4pattern_defining_dlg::find_patterns_and_make_skeleton_with_procents(str
                                  //+ kolor_kon
                                  );
                 flag_some_pattern_found = true;
-//                cout << "found at position " << loc << ", after red replacement = "
-//                     << skeleton
-//                     << endl;
+                //                cout << "found at position " << loc << ", after red replacement = "
+                //                     << skeleton
+                //                     << endl;
 
             }
         }
 
     }
-    if(!flag_some_pattern_found) skeleton = "";
+    if(!flag_some_pattern_found){
 
+        skeleton = "";
+
+    }
+
+    ui->groupBox_pattern_found->setVisible(flag_some_pattern_found);
+    ui->groupBox_results->setVisible(flag_some_pattern_found);
     return skeleton;
 
 }
@@ -133,7 +144,7 @@ void T4pattern_defining_dlg::get_parameters(vector<string> * vone, vector<string
 //************************************************************************************
 void T4pattern_defining_dlg::show_spectra_names()
 {
-    cout << "New run\n" ;
+    //cout << "New run\n" ;
     string text_spectra_names ;
     spectra_names.clear();
     bw_spectra_names.clear();
@@ -181,8 +192,8 @@ void T4pattern_defining_dlg::show_spectra_names()
             string result_bw;
 
 
-//            cout << "cloning skeleton for arguments: [" << vec_one[i1] << "] [" << vec_two[i2]
-//                 << "], pattern2 = [" << pattern2 << "]"<< endl;
+            //            cout << "cloning skeleton for arguments: [" << vec_one[i1] << "] [" << vec_two[i2]
+            //                 << "], pattern2 = [" << pattern2 << "]"<< endl;
             if( (!flag_second_pattern && i2 > 0) || (i2 > 0 && !flag_pattern2_in_use) ) continue;
             string result = make_a_clone_from_skeleton_using_kombination(skeleton,
                                                                          vec_one[i1], vec_two[i2],
@@ -200,6 +211,10 @@ void T4pattern_defining_dlg::show_spectra_names()
 
         }
     ui->textEdit_spectra_names->setText(text_spectra_names.c_str() );
+
+    QList<int> lista = { 9, 1};  // 1:9 OK
+    ui->splitter->setSizes(lista);
+
 
 
 
@@ -239,9 +254,7 @@ string T4pattern_defining_dlg::make_a_clone_from_skeleton_using_kombination(stri
     if(flag_second_pattern == false && proc2.size() > 2) return "";
 
 
-
-
-    // remove colours from the name
+    // remove colours from the name ========================================
     string result_bw = result;
 
     do{
@@ -265,11 +278,9 @@ string T4pattern_defining_dlg::make_a_clone_from_skeleton_using_kombination(stri
     bw_spectra_names.push_back(result_bw);
     *result_bw_glob = result_bw;
 
-//    cout << "Tpattern_defining_dlg::make_a_clone_from_skeleton     BW result =" << result_bw << endl;
-
+    //    cout << "Tpattern_defining_dlg::make_a_clone_from_skeleton     BW result =" << result_bw << endl;
     return result;
 }
-
 //********************************************************************************
 void T4pattern_defining_dlg::on_lineEdit_one_textChanged(const QString &  /* arg1*/)
 {
@@ -284,7 +295,7 @@ void T4pattern_defining_dlg::on_lineEdit_two_textChanged(const QString & /*arg1*
 
 void T4pattern_defining_dlg::on_checkBox_pattern2_clicked(bool checked)
 {
-    cout << "checked = " << checked << endl;
+    // cout << "checked = " << checked << endl;
     flag_second_pattern = checked;
     ui->lineEdit_pattern2  ->setVisible(checked);  //  ->setEnabled(checked);
     ui->lineEdit_two->setVisible(checked);
@@ -307,7 +318,6 @@ void T4pattern_defining_dlg::on_lineEdit_pattern2_textChanged(const QString &arg
     show_spectra_names();
 }
 //********************************************************************************
-//************************************************************************************
 void T4pattern_defining_dlg::prepare_filename_skeleton()
 {
     string skel = find_patterns_and_make_skeleton_with_procents(original_specname);
@@ -318,6 +328,60 @@ void T4pattern_defining_dlg::prepare_filename_skeleton()
 
     ui->textLabel1_2->setText(!skel.empty() ? "Your spectrum name contains some patern":
                                               "Your spectrum name DOES NOT contain such paterns");
+    if(skel.empty() == false)     prepare_file_contents_skeleton();
+}
+//********************************************************************************
+void T4pattern_defining_dlg::prepare_file_contents_skeleton()
+{
+    string result = find_patterns_and_make_skeleton_with_procents(template_file_contents);
+
+    ui->textEdit_contents_of_cloned_file->setText("");
+    size_t  poz ;
+    if(vec_one.empty() ) return;
+
+    string proc1 = vec_one[0] ; // { "PATTERN_1"};
+
+    //bool flag_any_change = false;
+    do{
+        poz = result.find("%1");
+        if(poz != string::npos)
+        {
+            result.replace(poz, 2, nieb_pocz  +proc1+ kolor_kon );
+            //flag_any_change = true;
+        }
+    }while(poz != string::npos);
 
 
+    if(flag_second_pattern && vec_two.size())
+    {
+        string proc2 = vec_two[0] ;
+
+        do{
+            poz = result.find("%2");
+            if(poz != string::npos)
+            {
+                result.replace(poz, 2, czerw_pocz  +proc2+ kolor_kon);
+                //flag_any_change = true;
+            }else continue;
+        }while(poz != string::npos);
+    }
+
+    do{
+        poz = result.find("\n");
+        if(poz != string::npos)
+        {
+            result.replace(poz, 1, "<br>");
+            //flag_any_change = true;
+        }else continue;
+    }while(poz != string::npos);
+
+
+    string rt = R"(<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0//EN" "http://www.w3.org/TR/REC-html40/strict.dtd">
+            <html><head><meta name="qrichtext" content="1" /><style type="text/css">
+            p, li { white-space: pre-wrap; }
+    </style></head><body style=" font-family:'Sans Serif'; font-size:9pt; font-weight:400; font-style:normal;">
+            <p style=" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;">)";
+            rt += result;
+
+    ui->textEdit_contents_of_cloned_file->setText(rt.c_str());
 }

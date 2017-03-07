@@ -753,7 +753,36 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
 
 #endif
 
-         string::size_type loc ;
+         //  reading the whole contents of the template file
+         string pathed_name = path.user_def_spectra + specname + user_spec_ext;
+         //string pathed_name =  specname;
+         ifstream plik(pathed_name.c_str() );
+         if(!plik)
+         {
+             string m = "Error while opening the file :";
+             m + pathed_name;
+
+             e.title = "Can't open a file ";
+             e.message = m ;
+             e.kind = 1; // critical
+             throw e;
+         }
+
+         // read in the whole contents - to replace strings in the memory
+         string contents;
+         string one_line;
+         while(plik)
+         {
+             getline(plik, one_line);  // delimiter (\n) is not added to the string
+             // so we add it
+             contents += one_line;
+             contents += '\n';
+         }
+
+
+
+
+        string::size_type loc ;
         string pattern1 = "_00_";
         string pattern2  = "";
         string one = "B C";
@@ -766,7 +795,7 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
         T4pattern_defining_dlg dlg;
-        dlg.set_parameters(specname, pattern1, pattern2, &one, &two);
+        dlg.set_parameters(specname, pattern1, pattern2, &one, &two, contents);
         if( dlg.exec() != QDialog::Accepted) return;
 
         dlg.get_parameters(&chain_one, &chain_two, &filenames);
@@ -779,31 +808,6 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
 
         }
 
-        //  reading the whole contents of the template file
-        string pathed_name = path.user_def_spectra + specname + user_spec_ext;
-        //string pathed_name =  specname;
-        ifstream plik(pathed_name.c_str() );
-        if(!plik)
-        {
-            string m = "Error while opening the file :";
-            m + pathed_name;
-
-            e.title = "Can't open a file ";
-            e.message = m ;
-            e.kind = 1; // critical
-            throw e;
-        }
-
-        // read in the whole contents - to replace strings in the memory
-        string contents;
-        string one_line;
-        while(plik)
-        {
-            getline(plik, one_line);  // delimiter (\n) is not added to the string
-            // so we add it
-            contents += one_line;
-            contents += '\n';
-        }
 
 
         string file_contents_skeleton = dlg.find_patterns_and_make_skeleton_with_procents(contents);

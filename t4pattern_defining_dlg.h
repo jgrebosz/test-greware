@@ -21,7 +21,7 @@ public:
     void set_parameters(std::string specname,
                    std::string pattern1_, string pattern2_,
                    std::string *one,
-                   std::string *two);
+                   std::string *two, std::string contents);
     void   get_parameters(vector<string> * vone, vector<string> * vtwo, vector<string> *filenames);
     string find_patterns_and_make_skeleton_with_procents(string text);
 
@@ -63,7 +63,8 @@ private:
     string original_specname;
     string suggested_one ;
     string suggested_second;
-
+    void prepare_file_contents_skeleton();
+    string template_file_contents;
 
 };
 

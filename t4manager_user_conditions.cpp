@@ -1199,8 +1199,8 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
     }
 #else
 
-        // checking if the name of the spectrum contains the substring A_1
-       // string pattern = "_A_1_";
+
+
         string condname = vec_cond_descr[nr].name ;
         string::size_type loc ;
 
@@ -1212,22 +1212,6 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
         vector<string> chain_one;   // for result
         vector<string> chain_two;
         vector<string> filenames;
-
-
-        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-        T4pattern_defining_dlg dlg;
-        dlg.set_parameters(condname, pattern1, pattern2, &one, &two);
-        if( dlg.exec() != QDialog::Accepted) return;
-
-        dlg.get_parameters(&chain_one, &chain_two, &filenames);
-
-        cout << "After closing the dialog for parameters there are following spectra" << endl;
-
-        for(auto x : filenames)
-        {
-            cout << x << endl;
-
-        }
 
 
         //  reading the whole contents of the template file
@@ -1255,6 +1239,25 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
             contents += one_line;
             contents += '\n';
         }
+
+
+
+        //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+        T4pattern_defining_dlg dlg;
+        dlg.set_parameters(condname, pattern1, pattern2, &one, &two, contents);
+        if( dlg.exec() != QDialog::Accepted) return;
+
+        dlg.get_parameters(&chain_one, &chain_two, &filenames);
+
+        cout << "After closing the dialog for parameters there are following spectra" << endl;
+
+        for(auto x : filenames)
+        {
+            cout << x << endl;
+
+        }
+
+
 
 
         string file_contents_skeleton = dlg.find_patterns_and_make_skeleton_with_procents(contents);
