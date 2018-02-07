@@ -49,7 +49,7 @@
 ////////////////////////////////////////////////////////////////////
 class spectrum_2D : public Tplate_spectrum
 {
-    Q_OBJECT ;
+    Q_OBJECT
 
     //const string   name_of_matrix ;
     //	  list<Tundo_2D> undo_list ;
@@ -163,7 +163,7 @@ public slots:
     void keyPressEvent ( QKeyEvent *e );
 
     void wheelEvent ( QWheelEvent * e );
-    //void mouseMoveEvent ( QMouseEvent * e );
+	void mouseMoveEvent ( QMouseEvent * e );
 
     // ---------
     void paintEvent ( QPaintEvent * );
@@ -387,7 +387,7 @@ public slots:
 
     void slot_integrate_polygon()  ;
 
-    void slot_copy_polygon();;
+    void slot_copy_polygon();
 
     void slot_paste_polygon()
     {
@@ -478,6 +478,7 @@ protected: // Protected methods
 
 };
 
+istream & zjedz ( istream & plik );
 
 #endif   // SPECTRUM_2D_H
 

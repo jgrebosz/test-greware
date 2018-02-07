@@ -16,6 +16,9 @@ public:
     explicit T4results_of_integration(QWidget *parent = 0);
     ~T4results_of_integration();
 
+    T4results_of_integration(const T4results_of_integration&) = delete;
+    T4results_of_integration& operator=(const T4results_of_integration&) = delete;
+
     void add_results(const char *ss);
     bool multi_line_mode();
 

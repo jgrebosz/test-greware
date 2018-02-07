@@ -2,8 +2,8 @@
 #define Tselfgate_type_H
 
 /* NOTE:
- * The original of this file is always in the Cracow directory,
- * not in the spy directory. So always copy it from Cracow-->Spy,
+ * The original of this file is always in the Greware directory,
+ * not in the spy directory. So always copy it from Greware-->Spy,
  * not the other way
  */
 
@@ -32,7 +32,8 @@ public:
                  cluster_addback,
                  agata_psa,           // Agata pulsshape analysis
                  galileo_ge,     // Galileo Germanium detectors
-                 kratta
+                 kratta,
+                 paris
                };
 
     Types my_type;

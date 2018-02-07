@@ -996,7 +996,9 @@ void box_of_spectrum::mouseMoveEvent ( QMouseEvent* e )
             //             QString wydruk ;
             //             wydruk=
             appl_form_ptr->send_to_statusbar(
-                        QString ( "Spectrum  X: %1  Y: %2" ).arg ( real_x, 10 ).arg ( real_y, 10 ).toStdString(),
+                        QString ( "Spectrum  X: %1  Y: %2     %3" ).arg ( real_x, 10 )
+                        .arg ( real_y, 10 )
+                        .arg( parent->give_spectrum_name().c_str()).toStdString(),
                         10*1000 ); //  seconds on the screen
         }
 

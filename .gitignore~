@@ -9,7 +9,6 @@ Makefile
 *.tar
 paths.cnf
 qrc_greware_icons.cpp
-options.cracow
 
 
 

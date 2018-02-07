@@ -23,7 +23,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab">
       <attribute name="title">
@@ -109,6 +109,16 @@ Edit--&gt; selecting the spectra&lt;/p&gt;&lt;/font&gt;</string>
           <widget class="QPushButton" name="button_add">
            <property name="text">
             <string>Add spectrum name to the summing list</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_screen_spectra">
+           <property name="styleSheet">
+            <string notr="true">background-color: rgb(230, 255, 228);</string>
+           </property>
+           <property name="text">
+            <string>Add screen spectra</string>
            </property>
           </widget>
          </item>

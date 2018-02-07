@@ -28,6 +28,8 @@ public:
     explicit T4select_spectra(QWidget *parent = 0);
     ~T4select_spectra();
 
+    T4select_spectra(const T4select_spectra&) = delete;
+    T4select_spectra& operator=(const T4select_spectra&) = delete;
     void init();
     void set_parameters ( QMdiArea  * ws );
     void set_filter (QStringList fff );

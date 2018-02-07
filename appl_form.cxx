@@ -83,8 +83,8 @@ int general_font_size = 8;
 QColor background_colour_of_1D_spectrum = QColor(0, 0, 60);
 
 //********************************************************************
-appl_form::appl_form ( QWidget *parent )
-    : QMainWindow ( parent ), ui ( new Ui::appl_form )
+appl_form::appl_form ( QWidget *parent_w )
+    : QMainWindow ( parent_w ), ui ( new Ui::appl_form )
 {
     // error "incorrect sRGB profile - comes out of the fact of using some *.png file
     // which was made in the wrong colour profile.
@@ -269,7 +269,14 @@ void appl_form::on_actionSelecting_the_spectra_triggered()
         //         COTO;
         remove_existing_spectra_windows();
         dlg->show_chosen_spectra();
-        on_actionTile_triggered();
+#define MY_TILE_AFTER_SELECT true
+
+#if MY_TILE_AFTER_SELECT
+        on_actionTile_triggered(); // my version
+#else
+        ws->tileSubWindows();
+#endif
+
         should_sliders_be_enabled();
         QApplication::restoreOverrideCursor();
     }
@@ -714,8 +721,11 @@ void appl_form::set_paths()
 //***********************************************************************
 void appl_form::on_actionTile_with_system_function_triggered()
 {
+    //ws->setActivationOrder(QMdiArea::StackingOrder);
+    ws->setActivationOrder(QMdiArea::CreationOrder);
+
     ws->tileSubWindows();
-    QList <QMdiSubWindow*> windows = ws->subWindowList()  ;
+//    QList <QMdiSubWindow*> windows = ws->subWindowList()  ;
 
     //    cout << "System tile"
     //         << " width " << width()
@@ -737,9 +747,14 @@ void appl_form::on_actionTile_with_system_function_triggered()
 //***********************************************************************
 void appl_form::on_actionTile_triggered()
 {
-    //ws->tileSubWindows();   // the official one - gives wrong (opposite) order
+#if 0
+    ws->tileSubWindows();   // the official one - gives wrong (opposite) order
+#else
 
-    // one spectrum is below the other
+    // cout << __func__ << ", not a system one!" << endl;
+    // MY versions, should be (?) better?
+    //// one spectrum is below the other
+
     QList <QMdiSubWindow*> windows = ws->subWindowList()  ;
 
     if(windows.empty() ) return;
@@ -785,6 +800,13 @@ void appl_form::on_actionTile_triggered()
                                           horizontal_distance,
                                           wys
                                           );
+//            cout << "spectrum nr " << counter << ", name =" ;
+
+
+//                         cout <<  windows[counter]->windowTitle().toStdString()  ;
+
+//                 cout << ", x = " << (x*horizontal_distance)
+//                 << ", y = " << (y*vertical_distance) << endl;
         }
         //        windows[i]->update();
     }
@@ -794,16 +816,17 @@ void appl_form::on_actionTile_triggered()
     //         << " ws->height() = " << ws->height()
     //         << endl;
 
-    //    for ( int i = 0 ; i < windows.count()  ; i++ )
-    //    {
-    //        //        auto wsk = (windows[i] );
-    //        //wsk->resize( 400,100);
-    //        cout << " x: " << windows[i]->x()
-    //        << " y: " << windows[i]->y()
-    //        << " width: " << windows[i]->width()
-    //        << " height: " << windows[i]->height()
-    //                << endl;
-    //    }
+//        for ( int i = 0 ; i < windows.count()  ; i++ )
+//        {
+//            //        auto wsk = (windows[i] );
+//            //wsk->resize( 400,100);
+//            cout << " x: " << windows[i]->x()
+//            << " y: " << windows[i]->y()
+//            << " width: " << windows[i]->width()
+//            << " height: " << windows[i]->height()
+//                    << endl;
+//        }
+#endif
 }
 //********************************************************************
 void appl_form::on_actionCascade_triggered()
@@ -1858,7 +1881,7 @@ void appl_form::on_incrementer_managerAction_triggered()
 //********************************************************************************************
 void appl_form::on_active_stopper_munich_Action_triggered()
 {
-#if FINAL
+#ifdef FINAL
     Tactive_stopper_munich_dlg  * dlg = new Tactive_stopper_munich_dlg;
     int result = dlg->exec() ;
     delete dlg;
@@ -1870,7 +1893,7 @@ void appl_form::on_active_stopper_munich_Action_triggered()
 //*******************************************************************************
 void appl_form::adjust_program_to_experiment_type()
 {
-#if NIGDY
+#ifdef NIGDY
     ifstream plik ( ( path.options + "/experiment_version.dat" ).c_str() );
     if ( !plik )
     {
@@ -3673,4 +3696,26 @@ void appl_form::on_actionGood_signals_from_KRATTA_element_triggered()
 {
     T4good_kratta_dlg  dlg ;
     dlg.exec() ;
+}
+//**************************************************************************************************
+void appl_form::on_actionSystem_tile_Creation_order_0_triggered()
+{
+    ws->setActivationOrder(QMdiArea::CreationOrder);  // 0
+
+    ws->tileSubWindows();
+}
+//**************************************************************************************************
+void appl_form::on_actionSystem_tile_Stacking_order_1_triggered()
+{
+    ws->setActivationOrder(QMdiArea::StackingOrder);  // 1
+    ws->tileSubWindows();
+}
+//**************************************************************************************************
+void appl_form::on_actionSystemTile_activation_history_order_2_triggered()
+{
+    // this seam to work, but I do not understand the proprer rules.
+    // anyway, this system tile in not good for spectra. When there are 8 on a screen
+    // it tiles them not  2x4 but in some akward way
+    ws->setActivationOrder(QMdiArea::ActivationHistoryOrder);  // 2
+    ws->tileSubWindows();
 }

@@ -200,7 +200,7 @@ string label_second_threshold;
 
     void edit_calib_factors(int nr);
 public:
-    bool give_enable(int nr) { return enables[nr]; }
+    bool give_enable(unsigned int nr) { return enables[nr]; }
 
 };
 

@@ -26,7 +26,8 @@ public:
     explicit Tplate_spectrum ( QMdiArea *parent = 0 );
     //explicit Tplate_spectrum(QMdiArea *ws, QString nazwa);
     ~Tplate_spectrum();
-
+    Tplate_spectrum(const Tplate_spectrum&) = delete;
+    Tplate_spectrum& operator=(const Tplate_spectrum&) = delete;
 
 
     static bool flag_white_black;

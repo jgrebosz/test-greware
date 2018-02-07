@@ -21,8 +21,11 @@ using TSG = Tselfgate_type ;
 #include "t4selfgate_agata_psa_dlg.h"
 #include "t4selfgate_ge_crystal_galileo.h"
 #include "t4selfgate_selector.h"
-#include "t4selfgate_kratta_dlg.h"
+#include "t4selfgate_kratta_2dlg.h"
 #include "Tself_gate_kratta_descr.h"
+                            // NO! so far for paris sg dialog we use hector dialog
+#include "t4selfgate_paris_dlg.h"
+#include "Tself_gate_paris_descr_simple.h"
 
 using namespace std;
 
@@ -775,7 +778,7 @@ void T4user_spectrum_wizard::called_creator_self_gate(QTableWidget *table, bool 
       break;
   case TSG::Types::kratta :
     {
-      T4selfgate_kratta_dlg dlg;
+      T4selfgate_kratta_2dlg dlg;
       Tself_gate_kratta_descr desc ;
       if(!creation) {
           string sg_name = select_sg_name_from_disk(Tselfgate_type(choice));
@@ -792,6 +795,26 @@ void T4user_spectrum_wizard::called_creator_self_gate(QTableWidget *table, bool 
 
     }
     break;
+
+      case TSG::Types::paris :
+        {
+          T4selfgate_paris_dlg dlg;
+          Tself_gate_paris_descr desc ;
+          if(!creation) {
+              string sg_name = select_sg_name_from_disk(Tselfgate_type(choice));
+              if(sg_name.empty()) return;
+              desc.read_definition_from(path.conditions + sg_name);
+            }
+          dlg.set_parameters( &desc ); // cheating
+          if (dlg.exec() == QDialog::Accepted )
+            {
+              dlg.get_parameters(&desc );
+              desc.write_definitions(path.conditions);
+              if(creation)selfgate_succesfully_created(desc.name, table);
+            }
+
+        }
+        break;
 
 
     default:
@@ -1232,7 +1255,7 @@ Tselfgate_type::Types  T4user_spectrum_wizard::selfgate_type_for_this_type_of_in
   // in the incrementers name some patterns - like "cluster_crys", "hector" "miniball"
 
 
-  // The new style reqires that the spy prepares the list of inkrementers together with the codes
+  // The new style reqires that the spy prepares the list of incrementers together with the codes
   // (enum) describing the type of selfgate (code = 0 means NO selgate can be used for this incrementer)
 
   // look at the name of the incrementer

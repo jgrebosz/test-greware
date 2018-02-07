@@ -47,6 +47,10 @@ private slots:
 
     void on_pushButton_picture_clicked();
 
+    void on_push_banana_clicked();
+
+    void on_checkBox_fast_slow_banana_clicked(bool checked);
+
 private:
     Ui::T4selfgate_hec_dlg *ui;
 };

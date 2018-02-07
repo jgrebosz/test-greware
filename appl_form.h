@@ -33,6 +33,8 @@ class appl_form : public QMainWindow
 
 public:
     appl_form(QWidget *parent = 0);
+    appl_form(const appl_form&) = delete;
+    appl_form& operator=(const appl_form&) = delete;
     ~appl_form();
     time_t  give_time_of_zeroing_spectrum (std::string name);
     //void pusta_funkcja() {}
@@ -51,7 +53,7 @@ public:
     void if_needed_apply_to_other_spectra(){
         if(flag_act_on_all_spectra) apply_to_other_spectra();
     }
-
+      QMdiArea * give_workspace() { return ws;}
 
 private slots:
     void on_actionSelecting_the_spectra_triggered();
@@ -215,6 +217,12 @@ private slots:
     void on_actionNeutronwall_signals_enabling_triggered();
 
     void on_actionGood_signals_from_KRATTA_element_triggered();
+
+    void on_actionSystem_tile_Creation_order_0_triggered();
+
+    void on_actionSystem_tile_Stacking_order_1_triggered();
+
+    void on_actionSystemTile_activation_history_order_2_triggered();
 
 private:
     Ui::appl_form *ui;

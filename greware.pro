@@ -1,4 +1,3 @@
-
 #-------------------------------------------------
 #
 # Project created by QtCreator 2010-12-17 T12:19:05
@@ -10,16 +9,28 @@ TEMPLATE = app
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant
-#CONFIG  += warn_on  static release
-#static is probably for pictures (loaded into program)
+# when DEBUG ----
+CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant (1)
+QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug  (2)
 
-QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug
+#when RELEASE
+#CONFIG  += warn_on  static release
+
+#    (static is probably for pictures (loaded into program))
+
+
 
 QMAKE_CXXFLAGS += -std=c++11
+#QMAKE_CXXFLAGS += -pedantic -Wall -Wextra -Wcast-align -Wcast-qual
+QMAKE_CXXFLAGS +=  -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op
+#QMAKE_CXXFLAGS +=   -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept
+#QMAKE_CXXFLAGS +=-Wold-style-cast
+#QMAKE_CXXFLAGS +=-Woverloaded-virtual -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused
 
-target.path = ./grewareGUI/
-INSTALLS += target
+# -Weffc++
+
+#target.path = ./grewareGUI/
+#INSTALLS += target
 
 SOURCES += main.cxx\
         appl_form.cxx \
@@ -75,15 +86,17 @@ SOURCES += main.cxx\
     t4user_incrementer_wizard.cpp \
     Tself_gate_abstract_descr.cpp \
     Tself_gate_ger_descr.cpp \
+    Tself_gate_paris_descr.cpp \
     t4options_visibility.cpp \
     t4selfgate_ger_dlg.cpp \
     t4selfgate_choice_dlg.cpp \
     t4picture_angle.cpp \
     tselfgate_type.cxx \
     t4selfgate_hec_dlg.cpp \
-    t4selfgate_kratta_dlg.cpp \
+    t4selfgate_paris_dlg.cpp \
+   t4selfgate_kratta_2dlg.cpp \
     Tself_gate_mib_descr.cpp \
-    Tself_gate_hec_descr.cpp \
+	 Tself_gate_hec_descr_simple.cpp \
     Tself_gate_kratta_descr.cpp \
     Tself_gate_ger_addback_descr.cpp \
     Tself_gate_agata_psa_descr.cxx \
@@ -101,7 +114,8 @@ SOURCES += main.cxx\
     tgalileo_signals_dlg.cpp \
     tcalibration_factors_dlg.cpp \
     Tfile_line_det_cal_lookup.cpp \
-    t4good_kratta_dlg.cpp
+    t4good_kratta_dlg.cpp \
+    t4general_selector.cpp
 
 HEADERS  += appl_form.h \
     options.h \
@@ -155,15 +169,17 @@ HEADERS  += appl_form.h \
     t4user_incrementer_wizard.h \
     Tself_gate_abstract_descr.h \
     Tself_gate_ger_descr.h \
+    Tself_gate_paris_descr.h \
     t4options_visibility.h \
     t4selfgate_ger_dlg.h \
     t4selfgate_choice_dlg.h \
     t4picture_angle.h \
     tselfgate_type.h \
     t4selfgate_hec_dlg.h \
-    t4selfgate_kratta_dlg.h \
+    t4selfgate_paris_dlg.h \
+    t4selfgate_kratta_2dlg.h \
     Tself_gate_mib_descr.h \
-    Tself_gate_hec_descr.h \
+	 Tself_gate_hec_descr_simple.h \
     Tself_gate_kratta_descr.h \
     Tself_gate_ger_addback_descr.h \
     Tself_gate_agata_psa_descr.h \
@@ -181,8 +197,8 @@ HEADERS  += appl_form.h \
     tgalileo_signals_dlg.h \
     tcalibration_factors_dlg.h \
     Tfile_line_det_cal_lookup.h \
-    t4good_kratta_dlg.h
-
+    t4good_kratta_dlg.h \
+    t4general_selector.h
 
 FORMS    += appl_form.ui \
     tplate_spectrum.ui \
@@ -223,6 +239,7 @@ FORMS    += appl_form.ui \
     t4selfgate_choice_dlg.ui \
     t4picture_angle.ui \
     t4selfgate_hec_dlg.ui \
+    t4selfgate_paris_dlg.ui \
     t4selfgate_miniball_dlg.ui \
     t4selfgate_geraddback_dlg.ui \
     t4selfgate_agata_psa_dlg.ui \
@@ -235,46 +252,9 @@ FORMS    += appl_form.ui \
     t4selfgate_ge_crystal_galileo.ui \
     tgalileo_signals_dlg.ui \
     tcalibration_factors_dlg.ui \
-    t4selfgate_kratta_dlg.ui \
-    t4good_kratta_dlg.ui
-
-#IMAGES	= images/tracking2.jpeg \
-#        images/zarowka.png \
-#        images/literaK.png \
-#        images/krakow.jpg \
-#        images/strzala_prawo_all.png \
-#        images/strzala_prawo.png \
-#        images/strzala_lewo.png \
-#        images/print.png \
-#        images/fileopen.png \
-#        images/filesave.png \
-#        images/filenew.png \
-#        images/bananas.png \
-#        images/clone.png \
-#        images/user_spec_wizard.png \
-#        images/cond_manager.png \
-#        images/spectra_manager.png \
-#        images/lupa.png \
-#        images/matching.png \
-#        images/undo.png \
-#        images/print_ps.png \
-#        images/user_spec_manager.png \
-#        images/rising_doppler.jpeg \
-#        images/1d_binning.png \
-#        images/do_apply_to_all.png \
-#        images/select_spectra.png \
-#        images/expand.xpm \
-#        images/all_spectrum.xpm \
-##        images/all_graph.png \
-#        images/projection.png \
-#        images/draw_scale.png \
-##        images/logo_krak005.jpg \
-##        images/logo_krak005_25proc.jpg \
-##        images/logo_krak007_z_napisami.jpg \
-##        images/start_stop.png \
-##        images/start_stop_small.png
-
-
+    t4selfgate_kratta_2dlg.ui \
+    t4good_kratta_dlg.ui \
+    t4general_selector.ui
 
 OTHER_FILES +=
 

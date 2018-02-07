@@ -105,14 +105,24 @@
             </font>
            </property>
            <property name="styleSheet">
-            <string notr="true">background-color: qconicalgradient(cx:0, cy:0, angle:135, stop:0 rgba(255, 255, 0, 69), stop:0.375 rgba(255, 255, 0, 69), stop:0.423533 rgba(251, 255, 0, 145), stop:0.45 rgba(247, 255, 0, 208), stop:0.477581 rgba(255, 244, 71, 130), stop:0.518717 rgba(255, 218, 71, 130), stop:0.55 rgba(255, 255, 0, 255), stop:0.57754 rgba(255, 203, 0, 130), stop:0.625 rgba(255, 255, 0, 69), stop:1 rgba(255, 255, 0, 69));
-
+            <string notr="true">background-color: rgb(254, 255, 183);
+alternate-background-color: rgb(254, 255, 173);
 selection-background-color: rgb(176, 76, 4);</string>
            </property>
-           <property name="columnCount">
-            <number>3</number>
+           <property name="alternatingRowColors">
+            <bool>false</bool>
            </property>
-           <column/>
+           <property name="rowCount">
+            <number>2</number>
+           </property>
+           <property name="columnCount">
+            <number>2</number>
+           </property>
+           <attribute name="verticalHeaderHighlightSections">
+            <bool>true</bool>
+           </attribute>
+           <row/>
+           <row/>
            <column/>
            <column/>
           </widget>
@@ -399,9 +409,19 @@ selection-background-color: rgb(176, 76, 4);</string>
        </item>
        <item>
         <widget class="QTableWidget" name="review">
+         <property name="alternatingRowColors">
+          <bool>false</bool>
+         </property>
+         <property name="rowCount">
+          <number>4</number>
+         </property>
          <property name="columnCount">
           <number>19</number>
          </property>
+         <row/>
+         <row/>
+         <row/>
+         <row/>
          <column/>
          <column/>
          <column/>

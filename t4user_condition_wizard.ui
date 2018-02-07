@@ -851,7 +851,9 @@
        <bool>false</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0 rgba(255, 231, 232, 255), stop:1 rgba(255, 255, 255, 255));</string>
+       <string notr="true">background-color: rgb(255, 217, 199);
+
+</string>
       </property>
       <property name="rowCount">
        <number>3</number>
@@ -1151,7 +1153,8 @@ color: rgb(255, 255, 0);</string>
        <bool>false</bool>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(220, 255, 220, 255), stop:1 rgba(240, 255, 240, 255));</string>
+       <string notr="true">background-color: rgba(220, 255, 220, 255);
+</string>
       </property>
       <property name="rowCount">
        <number>2</number>
@@ -1417,8 +1420,7 @@ color: rgb(255, 255, 0);</string>
        </font>
       </property>
       <property name="styleSheet">
-       <string notr="true">
-background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:0, y2:1, stop:0 rgba(255, 230, 230, 255), stop:1 rgba(255, 245, 245, 255));</string>
+       <string notr="true">background-color: rgba(255, 230, 230, 255);</string>
       </property>
       <property name="rowCount">
        <number>3</number>
@@ -1785,7 +1787,16 @@ color: rgb(255, 255, 255);</string>
              <property name="spacing">
               <number>6</number>
              </property>
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -1899,7 +1910,16 @@ following conditions is true</string>
              <property name="spacing">
               <number>6</number>
              </property>
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>
@@ -2004,7 +2024,16 @@ color: rgb(255, 255, 255);</string>
              <number>3</number>
             </property>
             <layout class="QVBoxLayout" name="verticalLayout_23">
-             <property name="margin">
+             <property name="leftMargin">
+              <number>0</number>
+             </property>
+             <property name="topMargin">
+              <number>0</number>
+             </property>
+             <property name="rightMargin">
+              <number>0</number>
+             </property>
+             <property name="bottomMargin">
               <number>0</number>
              </property>
              <item>

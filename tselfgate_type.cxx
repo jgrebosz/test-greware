@@ -22,6 +22,7 @@ Tselfgate_type::Tselfgate_type(Types t):my_type(t)
         selfgate_types_map[agata_psa] = {"agata_psa", ".self_gate_agata_psa", "AGATA germanium detectors - for pulse shape analysis"} ;
         selfgate_types_map[galileo_ge] = {"Germanium_galileo", ".self_gate_galileo_ge", "GALILEO germanium detectors"} ;
         selfgate_types_map[kratta] = { "kratta", ".self_gate_kratta_crystal", "KRATTA detector " };
+        selfgate_types_map[paris] = { "paris", ".self_gate_paris_phoswich", "PARIS Phoswich detector" };
 
     }
 }

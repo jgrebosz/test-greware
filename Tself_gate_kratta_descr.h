@@ -15,6 +15,7 @@ using namespace std;
 
 #include "Tself_gate_abstract_descr.h"
 
+// This is GUI, simplified version
 
 /**Text file which describes the gate on kratta crystal
   *@author dr. Jerzy Grebosz, IFJ Krakow, Poland
@@ -33,6 +34,18 @@ public:
   bool enable_pd2_cal_gate ;
   double pd2_cal_gate[2];
 
+
+  // two polygons
+
+  // ---------------- for polygon gate on energy vs time (one of  three times)
+  bool  enable_pd0_vs_pd1_polygon_gate;
+  string name_pd0_vs_pd1_polygon_gate;
+  // TjurekPolyCond * polygon ;  <--- it is only needed in Spy
+
+  // ---------------- for polygon gate on energy vs time (one of  three times)
+  bool  enable_pd1_vs_pd2_polygon_gate;
+  string name_pd1_vs_pd2_polygon_gate;
+  // TjurekPolyCond * polygon ;  <--- it is only needed in Spy
 
   bool enable_pd0_time_cal_gate ;
   double pd0_time_cal_gate[2];

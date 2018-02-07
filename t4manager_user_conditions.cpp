@@ -61,8 +61,11 @@ T4manager_user_conditions::T4manager_user_conditions(QWidget *parent) :
     ui->review->resizeColumnsToContents ();
 
 
-    // colors of left label
-    ui->table->verticalHeader()->setStyleSheet( "background-color:rgb(155, 144, 71, 30);");
+
+
+	// colors of left vertical label
+	// does not work properly. Makes it black!
+	//ui->table->verticalHeader()->setStyleSheet( "background-color:rgba(155, 144, 71, 30);");
 
 
     // from init()-------------------------------
@@ -74,6 +77,7 @@ T4manager_user_conditions::T4manager_user_conditions(QWidget *parent) :
     ui->table->setColumnCount ( 3);
 
     // column 0 is editable, but others - no:
+		ui->table->setAlternatingRowColors(true);
 
     update_the_table() ;
 
@@ -523,15 +527,22 @@ void T4manager_user_conditions::check_statistics()
 //*************************************************************************************
 void T4manager_user_conditions::update_review()
 {
+
     QApplication::setOverrideCursor( QCursor(Qt::WaitCursor) );
 
     ui->review->setRowCount (0);
     unsigned int nr_rows =vec_cond_descr.size();
     ui->review->setRowCount ( nr_rows );
 
+
+	//ui->review->setStyleSheet( "background-color: rgb(255, 255, 190);   selection-color: rgb(255, 198, 171);");
+
+
+
     unsigned int current_line = 0 ;
     for (unsigned int j = 0; j < nr_rows; ++j, current_line++ )
     {
+
 
         make_new_row_in_review_if_needed(current_line);
 
@@ -589,6 +600,7 @@ void T4manager_user_conditions::update_review()
         } //
         //        COTO ;
         //   cout << "    item_2D_AND.size() = " << vec_cond_descr[j].item_2D_AND.size() << endl;
+
         for (unsigned int r = 0; r < vec_cond_descr[j].item_2D_AND.size(); ++r)
         {
             if(r)
@@ -687,8 +699,8 @@ void T4manager_user_conditions::update_review()
         make_new_row_in_review_if_needed(current_line+ extra_lines+1);
         for(unsigned r = 0 ; r < 19 ; r++)   // <--- 19 columns of the text
         {
-            ui->review->item(current_line+ extra_lines+1, r)->setText("***" );
-            ui->review->item(current_line+ extra_lines+1, r)->setBackgroundColor(QColor(70,70,70));
+			ui->review->item(current_line+ extra_lines+1, r)->setBackgroundColor(QColor(220,220,220));
+			ui->review->item(current_line+ extra_lines+1, r)->setText("***" );
         }
 
         current_line += extra_lines +1 ;

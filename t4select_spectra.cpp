@@ -190,7 +190,7 @@ void T4select_spectra::show_chosen_spectra()
 {
     //cout << "F. T4select_spectra::show_chosen_spectra()" << endl ;
 
-    // here we could close existing windows - or not
+    // 1. here we close existing windows - or not
     QList <QMdiSubWindow*> windows = arch_ws->subWindowList();
 
     if ( !ui->Check_add_overwrite->isChecked() )
@@ -210,7 +210,7 @@ void T4select_spectra::show_chosen_spectra()
     qApp->processEvents ();
 
 
-    // Perhaps too many of them ?  ---------------------------------------------------------
+    // Perhaps too many spectra  ?  ---------------------------------------------------------
     if ( ui->ListBox_chosen->count() > 100 )
     {
         QString list_of_spectra= QString ( "You asked to show %1"
@@ -230,15 +230,20 @@ void T4select_spectra::show_chosen_spectra()
     current_options.set_how_many_spectra_on_the_screen_now ( ui->ListBox_chosen->count() );
 
     // adding the new spectra windows ------------------------------------------------
-    for ( int i = 0 ;  i < ( int ) ui->ListBox_chosen->count() ;  ++i )
+#define INVERTED_ORDER false
+
+#if INVERTED_ORDER
+//    cout << "Inverting the order of spectra" << endl;
+    for ( int  i = (int) ui->ListBox_chosen->count()-1 ; i >= 0  ;  --i )
+#else
+    for ( int i = 0 ;  i < (int) ui->ListBox_chosen->count() ;  ++i )
+#endif
     {
         string spectrum_filename ;
         spectrum_filename =  ui->ListBox_chosen->item(i)->text ().toStdString () ;
         QString fn =  ui->ListBox_chosen->item(i)->text () ;
 
-        //        cout   << "spectrum name = " << spectrum_filename << endl;
-
-        // Tplate_spectrum * s = new Tplate_spectrum(arch_ws, spectrum_filename );
+//                cout   << "spectrum name = " << spectrum_filename << endl;
 
         Tplate_spectrum * s = 0 ;
 
@@ -255,7 +260,7 @@ void T4select_spectra::show_chosen_spectra()
             s = new spectrum_2D ( arch_ws, fn );
         }
 
-        if ( s )
+        if (s)
         {
             appl_form_ptr->addSubWindow(s, Qt::Window);
             // the name is taken form t
@@ -272,7 +277,6 @@ void T4select_spectra::show_chosen_spectra()
             moment = time ( 0 ) ; // now more often
         }
     }
-    //appl_form_ptr->on_actionTile_triggered() ;   //arch_ws->tileSubWindows() ;
 
 }
 //********************************************************************************

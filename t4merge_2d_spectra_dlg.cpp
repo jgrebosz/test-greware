@@ -11,8 +11,9 @@ using namespace std;
 #include <QFileDialog>
 #include <cmath>
 #include "tplate_spectrum.h"
+#include "appl_form.h"
 
-
+extern appl_form  *appl_form_ptr;
 //************************************************************************************************
 T4merge_2d_spectra_dlg::T4merge_2d_spectra_dlg ( QWidget *parent ) :
     QDialog ( parent ),
@@ -25,7 +26,7 @@ T4merge_2d_spectra_dlg::T4merge_2d_spectra_dlg ( QWidget *parent ) :
     QStringList labels;
     labels << "Spectrum name" << "Factor" ;
     ui->table1->setHorizontalHeaderLabels ( labels );
-        ui->table1->resizeColumnsToContents ();
+    ui->table1->resizeColumnsToContents ();
 
     //ui->table1->horizontalHeader()->  setResizeMode(QHeaderView::Stretch);
     //ui->table1->verticalHeader()->setResizeMode(QHeaderView::Stretch);
@@ -59,7 +60,7 @@ void T4merge_2d_spectra_dlg::on_pushButton_remove_row_released()
                                 QMessageBox::Yes,
                                 QMessageBox::No,
                                 QMessageBox::Cancel )
-            == QMessageBox::Yes )
+         == QMessageBox::Yes )
     {
         // remove it
         ui->table1->removeRow ( nr );
@@ -103,7 +104,7 @@ void T4merge_2d_spectra_dlg::on_table1_cellDoubleClicked ( int row, int column )
     bool ok;
     double res = QInputDialog::getDouble ( this, "Adding factor",
                                            QString ( "Enter a new value of the factor for spectrum %1" ).arg ( ui->table1->item ( row, 0 )->text()
-                                                                                                             ),
+                                                                                                               ),
                                            old_value, -10000,
                                            10000, 8, &ok);
     if ( ok )
@@ -154,8 +155,8 @@ void T4merge_2d_spectra_dlg::on_buttonOk_clicked()   // this is a button EXECUTE
 
             if( read_in_file ( spec_name, input_spectrum ) == false)
             {
-                  cout << "Error while reading input spectrum, do something" << endl;
-                  return;
+                cout << "Error while reading input spectrum, do something" << endl;
+                return;
             }
             if ( nr == 0 )
             {
@@ -171,11 +172,11 @@ void T4merge_2d_spectra_dlg::on_buttonOk_clicked()   // this is a button EXECUTE
                 //         cout << "Next spectrum has " << endl;
                 // compare binning
                 if ( fabs ( binning.bin ) != fabs ( binning_sum.bin )   ||
-                        binning.beg != binning_sum.beg     ||
-                        binning.end != binning_sum.end     ||
-                        binning.bin_y != binning_sum.bin_y   ||
-                        binning.beg_y != binning_sum.beg_y     ||
-                        binning.end_y != binning_sum.end_y )
+                     binning.beg != binning_sum.beg     ||
+                     binning.end != binning_sum.end     ||
+                     binning.bin_y != binning_sum.bin_y   ||
+                     binning.beg_y != binning_sum.beg_y     ||
+                     binning.end_y != binning_sum.end_y )
                 {
                     ostringstream s;
                     s << "Impossible. You may add only the 2D spectra with the same binning. \nThe binning of the spectrum named "
@@ -193,7 +194,7 @@ void T4merge_2d_spectra_dlg::on_buttonOk_clicked()   // this is a button EXECUTE
                       << ", Y bins= " <<  binning_sum.bin_y
                       << ", Y begin= " <<  binning_sum.beg_y
                       << ", Y end = " <<  binning_sum.end_y ;
-                      throw s.str();
+                    throw s.str();
                 }
             }
 
@@ -217,14 +218,14 @@ void T4merge_2d_spectra_dlg::on_buttonOk_clicked()   // this is a button EXECUTE
         // asking for a output name
 
         QString filter;
-         Tplate_spectrum::flag_repainting_allowed = false;
+        Tplate_spectrum::flag_repainting_allowed = false;
         QString fileName = QFileDialog::getSaveFileName ( this,
-                           tr ( "Type the name of the output spectrum" ),
-                           path.Qspectra(),
-                           tr ( "2D spectrum from spy-Greware  (*.mat)" ),
-                           &filter
-                                                        );
- Tplate_spectrum::flag_repainting_allowed = true;
+                                                          tr ( "Type the name of the output spectrum" ),
+                                                          path.Qspectra(),
+                                                          tr ( "2D spectrum from spy-Greware  (*.mat)" ),
+                                                          &filter
+                                                          );
+        Tplate_spectrum::flag_repainting_allowed = true;
 
 #ifdef NIGDY
 
@@ -316,14 +317,14 @@ void T4merge_2d_spectra_dlg::on_buttonOk_clicked()   // this is a button EXECUTE
         // asking for a output name
 
         QString filter;
-         Tplate_spectrum::flag_repainting_allowed = false;
+        Tplate_spectrum::flag_repainting_allowed = false;
         QString fileName = QFileDialog::getSaveFileName ( this,
-                           tr ( "Type the name of the output spectrum" ),
-                           path.Qspectra(),
-                           tr ( "2D spectrum from spy-Greware  (*.mat)" ),
-                           &filter
-                                                        );
- Tplate_spectrum::flag_repainting_allowed = true;
+                                                          tr ( "Type the name of the output spectrum" ),
+                                                          path.Qspectra(),
+                                                          tr ( "2D spectrum from spy-Greware  (*.mat)" ),
+                                                          &filter
+                                                          );
+        Tplate_spectrum::flag_repainting_allowed = true;
 
 #ifdef NIGDY
 
@@ -383,18 +384,19 @@ void T4merge_2d_spectra_dlg::on_button_add_clicked()   // add_another line with 
     //  cout << "T4merge_2d_spectra_dlg::add_spectrum_name()" << endl;
     // dialog to choose the name and the format
 
-
+#define OLD false
+#if OLD == true
     QString fileName = "nazwa";
 
-     Tplate_spectrum::flag_repainting_allowed = false;
+    Tplate_spectrum::flag_repainting_allowed = false;
     QString filter;
-    fileName = QFileDialog::getOpenFileName ( this,
-               tr ( "Select a 2D spectrum file to be merged" ),
-               path.Qspectra(),
-               tr ( "names of Greware matrices names  (*.mat)" ),
-               &filter
-                                            );
- Tplate_spectrum::flag_repainting_allowed = true;
+    fileName = QFileDialog::getOpenFileName( this,
+                                             tr ( "Select a 2D spectrum file to be merged" ),
+                                             path.Qspectra(),
+                                             tr ( "names of Greware matrices names  (*.mat)" ),
+                                             &filter
+                                             );
+    Tplate_spectrum::flag_repainting_allowed = true;
 
     if ( fileName.isEmpty() == false )
     {
@@ -411,6 +413,43 @@ void T4merge_2d_spectra_dlg::on_button_add_clicked()   // add_another line with 
 
         ui->table1->resizeColumnsToContents ();
     }
+#else
+    QStringList list;
+    QString onefileName = "nazwa";
+
+    Tplate_spectrum::flag_repainting_allowed = false;
+    QString filter;
+    list = QFileDialog::getOpenFileNames( this,
+                                          tr ( "Select a 2D spectrum file to be merged" ),
+                                          path.Qspectra(),
+                                          tr ( "names of Greware matrices names  (*.mat)" ),
+                                          &filter
+                                          );
+    Tplate_spectrum::flag_repainting_allowed = true;
+
+    QStringList::Iterator it = list.begin();
+    while(it != list.end()) {
+        onefileName = (*it);
+        ++it;
+
+
+        if ( onefileName.isEmpty() == false )
+        {
+            int nr = ui->table1->rowCount();
+            ui->table1->setRowCount ( nr+1 );
+
+            QTableWidgetItem *newItem = new QTableWidgetItem ( onefileName );
+            newItem->setFlags ( Qt::ItemIsEnabled );
+            ui->table1->setItem ( nr, 0, newItem );
+
+            QTableWidgetItem *newItem2 = new QTableWidgetItem ( "1" ); //  addinf factor 1
+            newItem2->setFlags ( Qt::ItemIsEnabled );
+            ui->table1->setItem ( nr, 1, newItem2 );
+
+            ui->table1->resizeColumnsToContents ();
+        }
+    }
+#endif
 }
 //************************************************************************************************************************
 // this code is almost literally cut and paste from the class spectrum_2D
@@ -451,14 +490,14 @@ bool T4merge_2d_spectra_dlg::read_in_file ( string fname, vector< int >& spectru
             binning.beg = tab[1];
             binning.end = tab[2];
 
-          
+
 
             // ------ Y
             binning.bin_y =  tab[3];
             binning.beg_y = tab[4];
             binning.end_y = tab[5];
 
-          
+
 
             
             //             cout << "binning -------111111111111111111111111111111111111111111111111\n" ;
@@ -515,7 +554,7 @@ bool T4merge_2d_spectra_dlg::read_in_file ( string fname, vector< int >& spectru
                          << "  sizeof(short int) = " << sizeof(short int)
                          << "  sizeof(long) = " << sizeof(long)
                          << endl;
-                      
+
                         // now
                         cout << " read  spectrum , ile= "<< ile << endl ;
 
@@ -577,12 +616,12 @@ bool T4merge_2d_spectra_dlg::read_in_file ( string fname, vector< int >& spectru
         }
         else   // if ( ! plik)   // error while opening the file
         {
-//             if ( timer_refresh )
-//             {
-//                 timer_refresh->stop(); // 20 seconds
-//                 delete timer_refresh ;
-//                 timer_refresh = 0 ;
-//             }
+            //             if ( timer_refresh )
+            //             {
+            //                 timer_refresh->stop(); // 20 seconds
+            //                 delete timer_refresh ;
+            //                 timer_refresh = 0 ;
+            //             }
             //cout << " Error while opening a spectrum " << path_filename << endl ;
             string mess =  "Matrix \n";
             mess += fname ;
@@ -601,10 +640,10 @@ bool T4merge_2d_spectra_dlg::read_in_file ( string fname, vector< int >& spectru
             too_short = false ; // <--- no more tries
 
         }
- 
+
     } // end of for (too short read)
 
-return  !too_short;
+    return  !too_short;
 }
 //###################################################################################
 void T4merge_2d_spectra_dlg::on_pushButton_restore_the_list_clicked()
@@ -715,7 +754,7 @@ void T4merge_2d_spectra_dlg::on_pushButton_add_to_automate_list_clicked()
     Tplate_spectrum::flag_repainting_allowed = false;
     QString fileName = QFileDialog::getOpenFileName ( this,
                                                       tr ( "Select a name for this list to be saved" ),
-                                                    path.Quser_def_spectra(),
+                                                      path.Quser_def_spectra(),
                                                       tr ( "name of recepit file name  (*.2dsum_txt)" ),
                                                       &filter
                                                       );
@@ -728,11 +767,11 @@ void T4merge_2d_spectra_dlg::on_pushButton_add_to_automate_list_clicked()
         //            fileName += ".2dsum_txt";
         //        }
 
-//        ifstream plik(fileName.toStdString());
-//        if(!plik)
-//        {
-//            throw string ( "Error while opening the file for a recepit of the sum" ) + fileName.toStdString()+ " for writing " ;
-//        }
+        //        ifstream plik(fileName.toStdString());
+        //        if(!plik)
+        //        {
+        //            throw string ( "Error while opening the file for a recepit of the sum" ) + fileName.toStdString()+ " for writing " ;
+        //        }
 
 
         ui->listWidget_add_periodically->addItem(fileName);
@@ -829,96 +868,96 @@ bool T4merge_2d_spectra_dlg::restore_periodic_list_from_disk( )
     return true;
 }
 //************************************************************************************
- bool T4merge_2d_spectra_dlg::execute_periodic_summings()
- {
-     // 0. Open the periodic_list_file
-     string pat_name = path.commands + periodic_list_file.toStdString();
-     ifstream file(pat_name);
-     if(!file){
-         cout << "Error while opening periodic summing list file "<< endl;
-         return false; // perhaps it was never created yet
-     }
+bool T4merge_2d_spectra_dlg::execute_periodic_summings()
+{
+    // 0. Open the periodic_list_file
+    string pat_name = path.commands + periodic_list_file.toStdString();
+    ifstream file(pat_name);
+    if(!file){
+        cout << "Error while opening periodic summing list file "<< endl;
+        return false; // perhaps it was never created yet
+    }
 
-     vector<string>   periodic_list;
-     string   result_spectra;
+    vector<string>   periodic_list;
+    string   result_spectra;
 
-     // 1. read int the periodic list of summings into one vector
-     // read the contents of the file
-     for(int i = 0 ;  ;++i)
-     {
-         string name;
-         file >> name;
-         if(!file) break;
+    // 1. read int the periodic list of summings into one vector
+    // read the contents of the file
+    for(int i = 0 ;  ;++i)
+    {
+        string name;
+        file >> name;
+        if(!file) break;
 
-         periodic_list.push_back(name);
-         // cout << tmp << endl;
-     }
-     file.close();
-
-
-     // scan through it ----------------------
-     for( auto sum_list : periodic_list)
-     {
-         // open this sum_list
-         ifstream list_file(sum_list);
-         if(!list_file){
-             cout << "Error while opening the file " << sum_list << endl;
-             exit(2);
-         }
-
-         string output_spectrum = sum_list ;
-         // removing a path, and replacing with "spectra"
-         string::size_type kon_sciezki = output_spectrum.rfind('/');
-         if(kon_sciezki != string::npos)
-         {
-             output_spectrum.erase(0, kon_sciezki+1);
-         }
-         output_spectrum = path.spectra + output_spectrum;
+        periodic_list.push_back(name);
+        // cout << tmp << endl;
+    }
+    file.close();
 
 
-         string::size_type kropka =  output_spectrum.rfind(".");
-         if(kropka != string::npos)
-         {    output_spectrum.erase(kropka);}
+    // scan through it ----------------------
+    for( auto sum_list : periodic_list)
+    {
+        // open this sum_list
+        ifstream list_file(sum_list);
+        if(!list_file){
+            cout << "Error while opening the file " << sum_list << endl;
+            exit(2);
+        }
 
-         output_spectrum += ".mat";
+        string output_spectrum = sum_list ;
+        // removing a path, and replacing with "spectra"
+        string::size_type kon_sciezki = output_spectrum.rfind('/');
+        if(kon_sciezki != string::npos)
+        {
+            output_spectrum.erase(0, kon_sciezki+1);
+        }
+        output_spectrum = path.spectra + output_spectrum;
 
-         result_spectra += output_spectrum + "\n";
 
-         vector<int> sum_spectrum;
-         for(int f = 0 ; ; ++f){
-             // read the particular file name
-             // read his factor of summing
-             string spec_name;
-             double factor;
-             list_file >> spec_name >> factor ;
-             if(!list_file)
-                 break;
-             cout   << "Spectrum " << spec_name << " should be added with a factor "
-                    << factor << endl;
+        string::size_type kropka =  output_spectrum.rfind(".");
+        if(kropka != string::npos)
+        {    output_spectrum.erase(kropka);}
 
-             // runn the procedure of summing
-             calculations(f, spec_name, factor, sum_spectrum);
+        output_spectrum += ".mat";
 
-         }
-         // save the result under the name sum_list.mat
-         cout << "saving the result matrix as a file: " << output_spectrum << endl;
-         save_result2D_spectrum(output_spectrum, sum_spectrum);
-     }
-     cout << "Finished with all periodic summing" << endl;
+        result_spectra += output_spectrum + "\n";
 
-     string txt = "Successfully created the following 2D sum spectra:\n" + result_spectra +
-     "\nNow you may watch them as all usual greware matrices ";
-     QMessageBox::information ( this,
-                                "Merging the 2D spectra",
-                                QString(txt.c_str()),
-                                QMessageBox::Ok | QMessageBox::Default,
-                                QMessageBox::NoButton,
-                                QMessageBox::NoButton ); // no error
+        vector<int> sum_spectrum;
+        for(int f = 0 ; ; ++f){
+            // read the particular file name
+            // read his factor of summing
+            string spec_name;
+            double factor;
+            list_file >> spec_name >> factor ;
+            if(!list_file)
+                break;
+            cout   << "Spectrum " << spec_name << " should be added with a factor "
+                   << factor << endl;
 
-     QDialog::accept();
+            // runn the procedure of summing
+            calculations(f, spec_name, factor, sum_spectrum);
 
-     return true;
- }
+        }
+        // save the result under the name sum_list.mat
+        cout << "saving the result matrix as a file: " << output_spectrum << endl;
+        save_result2D_spectrum(output_spectrum, sum_spectrum);
+    }
+    cout << "Finished with all periodic summing" << endl;
+
+    string txt = "Successfully created the following 2D sum spectra:\n" + result_spectra +
+            "\nNow you may watch them as all usual greware matrices ";
+    QMessageBox::information ( this,
+                               "Merging the 2D spectra",
+                               QString(txt.c_str()),
+                               QMessageBox::Ok | QMessageBox::Default,
+                               QMessageBox::NoButton,
+                               QMessageBox::NoButton ); // no error
+
+    QDialog::accept();
+
+    return true;
+}
 //##########################################################################################
 void T4merge_2d_spectra_dlg::on_pushButton_exec_periodic_manually_clicked()
 {
@@ -1059,4 +1098,44 @@ bool T4merge_2d_spectra_dlg::save_result2D_spectrum(string fileName, vector<int>
         return true;
     }
     return false;
+}
+//******************************************************************************************
+void T4merge_2d_spectra_dlg::on_pushButton_screen_spectra_clicked()
+{
+
+
+    QList <QMdiSubWindow*> windows = appl_form_ptr->give_workspace()->subWindowList();
+
+    Tplate_spectrum * dokument   = NULL ;
+
+    for(int nr_dok = 0 ; nr_dok < windows.count() ; nr_dok++)
+    {
+        dokument  = dynamic_cast< Tplate_spectrum * >( windows[nr_dok]->widget() ) ;
+        if(!dokument) break;
+
+        string pathed_name {  path.spectra + dokument->give_spectrum_name().c_str() };
+        QString onefileName {  pathed_name.c_str() };
+
+        //ui->ListBox_chosen->addItem ( name.c_str()   );
+
+
+        if ( onefileName.isEmpty() == false )
+        {
+            int nr = ui->table1->rowCount();
+            ui->table1->setRowCount ( nr+1 );
+
+            QTableWidgetItem *newItem = new QTableWidgetItem ( onefileName );
+            newItem->setFlags ( Qt::ItemIsEnabled );
+            ui->table1->setItem ( nr, 0, newItem );
+
+            QTableWidgetItem *newItem2 = new QTableWidgetItem ( "1" ); //  addinf factor 1
+            newItem2->setFlags ( Qt::ItemIsEnabled );
+            ui->table1->setItem ( nr, 1, newItem2 );
+
+            ui->table1->resizeColumnsToContents ();
+        }
+    }
+
+
+
 }

@@ -149,7 +149,7 @@ void box_of_matrix::paintEvent ( QPaintEvent * )
 //*****************************************************************************************
 void box_of_matrix::draw_all ( QPainter * pior )
 {
-    //    cout << "box_of_matrix::  Enterenig function draw_all() " << endl;
+    //    cout << "box_of_matrix::  Entering function draw_all() " << endl;
 
     static int now_working;
 
@@ -457,7 +457,10 @@ void box_of_matrix::draw_all ( QPainter * pior )
                 for ( int i = first_drawn_channel ; i <= last_drawn_channel ; i ++ )
                 {
 
-                    //cout << "Darwing pixel [" << row << "][" << i << "]" << endl ;
+//                    cout << "Darwing pixel [" << row << "][" << i << "]";   //  << endl ;
+//                    cout << "colour comes from widmo["<< (( int ) ( row * row_length ) + i) << "]"
+//                         << ", while widmo.size = " << widmo.size() << endl;
+
                     int color = widmo[ ( int ) ( row * row_length ) + i ] - ( minZthreshold-1 );
                     if ( color > 0 )
                     {
@@ -913,11 +916,12 @@ void  box_of_matrix::mouseMoveEvent ( QMouseEvent * e )
             //             QString wydruk ;
             //             wydruk=
             appl_form_ptr->send_to_statusbar(
-                        QString ( "Matrix  X: %1  Y: %2  cnt: %3 " ).
+                        QString ( "Matrix  X: %1  Y: %2  cnt: %3    %4" ).
                         arg ( real_x, 10 )
                         .arg ( real_y, 10 )
-                        .arg ( contents,10 ).toStdString()
-                        ,    10*1000 ); //  seconds on the screen
+                        .arg ( contents,10 )
+                        .arg( parent->give_spectrum_name().c_str() ).toStdString(),
+                            10*1000 ); //  seconds on the screen
         }
     }
 

@@ -10,6 +10,7 @@
 #include "t4incrementer_selector.h"
 #include "Tcondition_description_cracow.h"
 #include "t4addline_1d_wizard.h"
+#include "t4general_selector.h"
 
 //********************************************************************************************
 T4user_condition_wizard::T4user_condition_wizard(QWidget *parent) :
@@ -363,6 +364,11 @@ void T4user_condition_wizard::change_polygon_AND(unsigned int row)
     QStringList lst = katalog.entryList ( QStringList("*.poly") ) ;
     //QStringList lst;
     //lst << "First" << "Second" << "Third" << "Fourth" << "Fifth";
+
+#if 0
+    T4general_selector dlg;
+    dlg.exec();
+#endif
     bool ok;
     QString res = QInputDialog::getItem(this,
                                         "Avaliable polygon gates", "Select a polygon:", lst, 1, true, &ok);
@@ -690,6 +696,14 @@ void T4user_condition_wizard::change_polygon_OR(unsigned int row)
     QStringList lst = katalog.entryList (QStringList("*.poly") ) ;
     //QStringList lst;
     //lst << "First" << "Second" << "Third" << "Fourth" << "Fifth";
+
+
+#if 0
+    T4general_selector dlg;
+    dlg.exec();
+#endif
+
+
     bool ok;
     QString res = QInputDialog::getItem(this,
                                         "Avaliable polygon gates", "Select a polygon:", lst, 1, true, &ok);

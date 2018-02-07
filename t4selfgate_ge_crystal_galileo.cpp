@@ -266,50 +266,50 @@ void T4selfgate_ge_galileo::change_text_of_time( bool state )
 void T4selfgate_ge_galileo::choosing_banana()
 {
 
-  Tplate_spectrum::flag_repainting_allowed = false;
-  QString filter;
-  QString fileName =
-      QFileDialog::getOpenFileName
-      (  this,
-         tr ( "Dialog for selecting the polygon for selfgate - what is it?" ),
-         path.polygons.c_str(),
-         tr ( "polygon gate  (*.poly)" ),
-         &filter
-         );
-  Tplate_spectrum::flag_repainting_allowed = true;
-  //cout << "Nazwa " << fileName << endl ;
-  if(fileName.isEmpty() == false)
-    {
-      // we want to remove the path
-      string naked_name = fileName.toStdString();
-      string::size_type pos_slash = naked_name.rfind("/");
-      if(pos_slash !=string::npos)
-        {
-          naked_name.erase(0, pos_slash + 1);
-        }
-      ui->push_banana->setText(naked_name.c_str() );
-    }
-  else{
+    Tplate_spectrum::flag_repainting_allowed = false;
+    QString filter;
+    QString fileName =
+        QFileDialog::getOpenFileName
+        (  this,
+           tr ( "Dialog for selecting the polygon for selfgate - what is it?" ),
+           path.polygons.c_str(),
+           tr ( "polygon gate  (*.poly)" ),
+           &filter
+           );
+    Tplate_spectrum::flag_repainting_allowed = true;
+    //cout << "Nazwa " << fileName << endl ;
+    if(fileName.isEmpty() == false)
+      {
+        // we want to remove the path
+        string naked_name = fileName.toStdString();
+        string::size_type pos_slash = naked_name.rfind("/");
+        if(pos_slash !=string::npos)
+          {
+            naked_name.erase(0, pos_slash + 1);
+          }
+        ui->push_banana->setText(naked_name.c_str() );
+      }
+    else{
 
 
-      switch ( QMessageBox::information ( this,
-                                          "You pressed: Cancel",
-                                          "Do you want to set 'no_polygon' situation?",
+        switch ( QMessageBox::information ( this,
+                                            "You pressed: Cancel",
+                                            "Do you want to set 'no_polygon' situation?",
 
-                                          //"( Yes => all, No => only the one selected)",
-                                          " no_polygon ",  // QMessageBox::Yes | QMessageBox::Default,
-                                          "Leave it as it was previously",   // QMessageBox::No,
-                                          "Cancel", 1 ) )
-        {
-        case 0 : // Yes
-          ui->push_banana->setText("no_polygon");
-          break ;
-        case 1:   // No
-          break ;
-        default:
-          return ;
-        }
-    }
+                                            //"( Yes => all, No => only the one selected)",
+                                            " no_polygon ",  // QMessageBox::Yes | QMessageBox::Default,
+                                            "Leave it as it was previously",   // QMessageBox::No,
+                                            "Cancel", 1 ) )
+          {
+          case 0 : // Yes
+            ui->push_banana->setText("no_polygon");
+            break ;
+          case 1:   // No
+            break ;
+          default:
+            return ;
+          }
+      }
 }
 //************************************************************************************
 void T4selfgate_ge_galileo::on_checkBox_en4_clicked()

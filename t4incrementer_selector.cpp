@@ -51,12 +51,8 @@ T4incrementer_selector::T4incrementer_selector(QWidget *parent) :
             ui->listBox_filtered->addItem( one_name.c_str()) ;
         }
     };
-
-
     add_all_user_incrementers_to_the_list() ;
     //**  put all on the list
-
-
     filter_changed();
 }
 //***********************************************************************************************

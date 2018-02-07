@@ -9,7 +9,7 @@
 #include "Tself_gate_kratta_descr.h"
 #include "Tfile_helper.h"
 #include <iostream>
-
+// This is GUI, simplified version
 #define fif(x,y) Nfile_helper::find_in_file((x),(y))
 
 //********************************************************************
@@ -29,6 +29,14 @@ Tself_gate_kratta_descr::Tself_gate_kratta_descr()
     enable_pd2_cal_gate = false ;
     pd2_cal_gate[0] = 0 ;
     pd2_cal_gate[1] = 4000;
+    // ---------------- for polygon gate on pd0 vs pd1
+    enable_pd0_vs_pd1_polygon_gate = false;
+    name_pd0_vs_pd1_polygon_gate = "no_polygon";
+
+    // ---------------- for polygon gate on pd0 vs pd1
+    enable_pd1_vs_pd2_polygon_gate = false;
+    name_pd1_vs_pd2_polygon_gate = "no_polygon";
+
 
     enable_pd0_time_cal_gate = false ;
     pd0_time_cal_gate[0] = 0 ;
@@ -109,7 +117,74 @@ void Tself_gate_kratta_descr::read_definition_from(string pathed_name)
         pd2_cal_gate[0] = fif(plik, "pd2_cal_gate_low");
         pd2_cal_gate[1] = fif(plik, "pd2_cal_gate_high");
 
-       // times
+
+        try    // because this may not exist in old selfgates
+        {
+            enable_pd0_vs_pd1_polygon_gate = fif(plik, "enable_pd0_vs_pd1_polygon_gate");
+            enable_pd1_vs_pd2_polygon_gate = fif(plik, "enable_pd1_vs_pd2_polygon_gate");
+            // for banana  on energy vs time
+            try
+            {
+                if(enable_pd0_vs_pd1_polygon_gate)
+                {
+                    FH::spot_in_file(plik, "name_pd0_vs_pd1_polygon_gate");
+                    plik >> name_pd0_vs_pd1_polygon_gate;
+                    if(name_pd0_vs_pd1_polygon_gate == "no_polygon")
+                    {
+                        throw "nic";
+                    }
+//                    // reading the polygon
+//                    if(!read_banana(name_fast_vs_slow_polygon_gate,   &polygon))
+//                    {
+//                        cout << "During Reading-in the self gate named "
+//                             << name
+//                             << "\n  [B] Impossible to read polygon gate: " << name_fast_vs_slow_polygon_gate
+//                             << "\nMost probably it does not exist (anymore?)"
+//                             << endl;
+//                        exit(1);
+//                    }
+                }
+                if(enable_pd1_vs_pd2_polygon_gate)
+                {
+                    FH::spot_in_file(plik, "name_pd1_vs_pd2_polygon_gate");
+                    plik >> name_pd1_vs_pd2_polygon_gate;
+                    if(name_pd1_vs_pd2_polygon_gate == "no_polygon")
+                    {
+                        throw "nic";
+                    }
+//                    // reading the polygon
+//                    if(!read_banana(name_fast_vs_slow_polygon_gate,   &polygon))
+//                    {
+//                        cout << "During Reading-in the self gate named "
+//                             << name
+//                             << "\n  [B] Impossible to read polygon gate: " << name_fast_vs_slow_polygon_gate
+//                             << "\nMost probably it does not exist (anymore?)"
+//                             << endl;
+//                        exit(1);
+//                    }
+                }
+
+
+
+            }
+            catch(...)
+            {
+            }
+        }
+        catch(Tno_keyword_exception & ex)
+        {
+            // defaults are used
+            enable_pd0_vs_pd1_polygon_gate  = false;
+            name_pd0_vs_pd1_polygon_gate = "no_polygon";
+            enable_pd1_vs_pd2_polygon_gate  = false;
+            name_pd1_vs_pd2_polygon_gate = "no_polygon";
+            FH::repair_the_stream(plik);
+        }
+
+
+
+
+       // times----------------------------
 
         enable_pd0_time_cal_gate = (bool) Nfile_helper::find_in_file(plik, "enable_pd0_time_cal_gate");
         pd0_time_cal_gate[0] = fif(plik, "pd0_time_cal_gate_low");
@@ -199,6 +274,13 @@ void Tself_gate_kratta_descr::write_definitions(string path_only)
             << "enable_pd2_cal_gate\t\t" << enable_pd2_cal_gate
             << "\tpd2_cal_gate_low\t"  << pd2_cal_gate[0]
             << "\tpd2_cal_gate_high\t" << pd2_cal_gate[1] << "\n"
+
+            << "enable_pd0_vs_pd1_polygon_gate\t" << enable_pd0_vs_pd1_polygon_gate  << "\n"
+            << "\tname_pd0_vs_pd1_polygon_gate\t" << name_pd0_vs_pd1_polygon_gate  << "\n"
+
+            << "enable_pd1_vs_pd2_polygon_gate\t" << enable_pd1_vs_pd2_polygon_gate  << "\n"
+            << "\tname_pd1_vs_pd2_polygon_gate\t" << name_pd1_vs_pd2_polygon_gate  << "\n"
+
 
 
             << "enable_pd0_time_cal_gate\t\t" << enable_pd0_time_cal_gate

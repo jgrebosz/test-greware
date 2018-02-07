@@ -28,13 +28,13 @@ public:
     waga_y;
 
     // to prevent warnings,  lets make the intialisaqtion
-    spectrum_descr()
+    spectrum_descr() :bin(0), beg(0), end(0), waga(0), bin_y(0), beg_y(0), end_y(0), waga_y(0)
     {
-        bin = 0;
-        beg = end = waga = 0;
-        // for matrices only
-        bin_y = 0 ;
-        beg_y  = end_y = waga_y = 0;
+//        bin = 0;
+//        beg = end = waga = 0;
+//        // for matrices only
+//        bin_y = 0 ;
+//        beg_y  = end_y = waga_y = 0;
     }
 
     friend
@@ -62,41 +62,43 @@ const int scrollbar_poziomy_mnoznik = 1000 ;    // 100
 #define COTO cout << "In the file " << __FILE__ << ", function: "<< __func__ << " line " << __LINE__ << endl ;
 
 
-#define ZAOKR(x) ((int) (x+0.5))
+#define ZAOKR(x) (static_cast<int> (x+0.5))
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class swiatek
 {
 protected:
 
     int
-    lewy_bok_dev,
-    gorny_bok_dev,
-    dolny_bok_dev,
-    rozm_xdev ,
-    rozm_ydev  ;
+    lewy_bok_dev {0},
+    gorny_bok_dev {0},
+    dolny_bok_dev{100},
+    rozm_xdev{0} ,
+    rozm_ydev{0} ;
 
     double
-    rozm_xwor,              // rozmiar we wspolrzednych swiatowych
-    rozm_ywor ,
-    scaler_x ,
-    scaler_y ;
+    rozm_xwor{0},              // rozmiar we wspolrzednych swiatowych
+    rozm_ywor{0} ,
+    scaler_x {0},
+    scaler_y {0};
 
     double
-    worldLeft ,             // wpolrzedne swiatowe
-    worldBottom ,
-    worldRight ,
-    worldTop ;
+    worldLeft {0},             // wpolrzedne swiatowe
+    worldBottom {0},
+    worldRight {0},
+    worldTop {0};
 public:
 
-    int pozycja_x, pozycja_y ;      /* poz pixelowa na ekranie */
-    double pozycja_xw, pozycja_yw ;   /* poz we wsp world */
+    int pozycja_x {0},
+    pozycja_y {0};      /* poz pixelowa na ekranie */
+    double pozycja_xw {0},
+    pozycja_yw {0};   /* poz we wsp world */
 
 public:
-    swiatek() {
-
+    swiatek()
+    {
         ustaw_swiat(0, 0, 100, 100,   // dane pikselowe
                     0, 100, 100, 0);
-    } ;
+   } ;
 
     swiatek(int left, int top, int right, int bottom,   // dane pikselowe
             double xleft, double yt, double xr, double yb)
@@ -115,18 +117,18 @@ public:
     /*--------------------------------------------------------------------*/
     int wx(double  x)     /* zamiana x wsp world  na pixelowa */
     {
-        return (int) ( ((x- worldLeft) * scaler_x) /*+ lewy_bok_dev*/ +0.5 );
+        return static_cast<int> ( ((x- worldLeft) * scaler_x) /*+ lewy_bok_dev*/ +0.5 );
     }
     //---------------------------------------------------------------------
-    int wx(int x) { return wx( (double) x); }
+    int wx(int x) { return wx( static_cast<double>( x) ); }
     //int wx(double x) { return wx( (double) x); }
     /*--------------------------------------------------------------------*/
     int wy(double y)      /* zamiana y wsp world  na pixelowa */
     {
-        return(int) ( dolny_bok_dev - ((y-worldBottom) * scaler_y) - 0.5);
+        return static_cast<int> ( dolny_bok_dev - ((y-worldBottom) * scaler_y) - 0.5);
     }
     //---------------------------------------------------------------------
-    int wy(int y) { return wy( (double) y) ;}
+    int wy(int y) { return wy( static_cast<double>(y) ) ;}
     //int wy(double y) { return wy( (double) y) ;}
     /*____________________________________________________________________*/
     // przydaje sie tez przyrostowo, czyli ile pikseli ma odcinek, ktorego
@@ -134,12 +136,12 @@ public:
     /*--------------------------------------------------------------------*/
     int relx(double x)
     {
-        return(int) ( ((x) * scaler_x) +0.5);
+        return static_cast<int> (  ((x) * scaler_x) +0.5);
     }
     /*____________________________________________________________________*/
     int rely(double y)
     {
-        return(int) ( ((y) * scaler_y) + 0.5 );
+        return static_cast<int> ( ((y) * scaler_y) + 0.5 );
     }
     //======================================================================
     void pozycje(double x, double y)           /* zapamietanie pozycji pix i world

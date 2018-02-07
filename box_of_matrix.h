@@ -60,7 +60,7 @@ private:
 
 
     bool flag_banana_creating_mode;  // while user clicks verices of the new banana
-    vector<QPoint> new_banana_points;;
+    vector<QPoint> new_banana_points;
 
     // we remember how far was the place of clicking from the center of the vertex
     // then during moving - we can correct the movement
@@ -179,12 +179,12 @@ public:
 
     void set_spectrum_pointer ( vector<int> * ptr, spectrum_descr * desc );
 
-    void 	change_region_of_spectrum ( typ_x a, typ_x b, typ_x c, typ_x d )
+    void 	change_region_of_spectrum ( typ_x a, typ_x b, typ_x cc, typ_x d )
     {
 
         minX = a;
         maxY = b;
-        maxX = c;
+        maxX = cc;
         minY = d;
         //cout << "max Y changed into =" << maxY << endl;
     }

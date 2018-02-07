@@ -45,6 +45,8 @@ private slots:
 
     void on_pushButton_exec_periodic_manually_clicked();
 
+    void on_pushButton_screen_spectra_clicked();
+
 protected:
     bool  read_in_file ( std::string fname, std::vector<int> & spec )  ;
     binning_2D binning ;            // nr of bins, np. 1024 (are double!!!)

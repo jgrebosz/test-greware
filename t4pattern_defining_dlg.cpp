@@ -24,7 +24,7 @@ T4pattern_defining_dlg::T4pattern_defining_dlg(QWidget *parent) :
     flag_second_pattern = false;
 
     ui->lineEdit_pattern2->setVisible( flag_second_pattern);
-    ui->lineEdit_two->setVisible( flag_second_pattern);
+    //ui->lineEdit_two->setVisible( flag_second_pattern);
     ui->lineEdit_two->setEnabled(flag_second_pattern);
 
     ui->groupBox_pattern_found->setVisible(false);
@@ -57,6 +57,9 @@ void T4pattern_defining_dlg::set_parameters(std::string specname,
     //pattern = pattern1;
     find_patterns_and_make_skeleton_with_procents(original_specname);
     show_spectra_names();
+
+    ui->groupBox_pattern_found->setVisible(false);
+    ui->groupBox_results->setVisible(false);
 }
 //*******************************************************************
 string T4pattern_defining_dlg::find_patterns_and_make_skeleton_with_procents(string text)
@@ -71,13 +74,14 @@ string T4pattern_defining_dlg::find_patterns_and_make_skeleton_with_procents(str
         for(string::size_type i = skeleton.size() -1;  ; --i)
         {
             loc = skeleton.rfind(pattern1, i);
-            if( loc == string::npos )
+            if( loc == string::npos)
             {
                 break; // not found
             }
 
             zapisek.push_back( loc);
             i = loc;
+            if(i == 0) break;
         }
         for(unsigned int i = 0 ; i< zapisek.size(); ++i)
         {
@@ -126,11 +130,13 @@ string T4pattern_defining_dlg::find_patterns_and_make_skeleton_with_procents(str
     if(!flag_some_pattern_found){
 
         skeleton = "";
-
+        ui->groupBox_pattern_found->setVisible(false);
+        ui->groupBox_results->setVisible(false);
     }
-
-    ui->groupBox_pattern_found->setVisible(flag_some_pattern_found);
-    ui->groupBox_results->setVisible(flag_some_pattern_found);
+    else{
+        ui->groupBox_pattern_found->setVisible(true);
+        ui->groupBox_results->setVisible(true);
+    }
     return skeleton;
 
 }
@@ -285,11 +291,13 @@ string T4pattern_defining_dlg::make_a_clone_from_skeleton_using_kombination(stri
 void T4pattern_defining_dlg::on_lineEdit_one_textChanged(const QString &  /* arg1*/)
 {
     show_spectra_names();
+    prepare_file_contents_skeleton();
 }
 //********************************************************************************
 void T4pattern_defining_dlg::on_lineEdit_two_textChanged(const QString & /*arg1*/ )
 {
     show_spectra_names();
+    prepare_file_contents_skeleton();
 }
 //********************************************************************************
 
@@ -298,7 +306,7 @@ void T4pattern_defining_dlg::on_checkBox_pattern2_clicked(bool checked)
     // cout << "checked = " << checked << endl;
     flag_second_pattern = checked;
     ui->lineEdit_pattern2  ->setVisible(checked);  //  ->setEnabled(checked);
-    ui->lineEdit_two->setVisible(checked);
+    //ui->lineEdit_two->setVisible(checked);
     ui->lineEdit_two->setEnabled(checked);
     prepare_filename_skeleton();
     show_spectra_names();
