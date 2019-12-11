@@ -127,7 +127,7 @@ appl_form::appl_form ( QWidget *parent_w )
     flag_log_scale = false ;
     flag_show_polygons = true ;
     flag_show_filenames_of_gates = false ;
-    printer_call_line = "ksnapshot &" ;
+    printer_call_line = "spectacle &" ;
     printer_call_line = current_options.give_snapshot_program().c_str();
 
     if(path.read_from_disk() == false)
@@ -254,7 +254,7 @@ void appl_form::on_actionSelecting_the_spectra_triggered()
     // to have only one copy of the dialog on the screen...
     ui->actionSelecting_the_spectra->setEnabled ( false );
 
-    T4select_spectra * dlg  = new T4select_spectra ( this );
+    T4select_spectra * dlg  = new T4select_spectra ( this);
     dlg->set_parameters ( ws );
     dlg->set_filter ( last_filters );
     dlg->set_listbox_chosen ( last_selections ) ;
@@ -3259,7 +3259,11 @@ void appl_form::on_actionChoose_relevant_dialog_windows_triggered()
         ui->actionDefinition_of_Good_CATE_data,
         ui->actionDefinition_of_Good_Hector_BaF_data,
         ui->actionDefinition_of_good_Miniball_data,
-        ui->actionGalileo_signals_enabling
+        ui->actionGalileo_signals_enabling,
+        ui->actionGood_signals_from_KRATTA_element,
+        ui->action_Good_Galileo_Germanium_data,
+        ui->actionEuclides_signals_enabling,
+        ui->actionNeutronwall_signals_enabling
     };
 
     T4options_visibility dlg;

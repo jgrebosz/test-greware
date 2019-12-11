@@ -130,9 +130,13 @@ private slots:
     void on_lineEdit_anti_filter_textChanged(const QString &arg1);
 
     void on_checkBox_anti_toggled(bool checked);
-    void on_ComboBox_filter_editTextChanged(const QString);
+	void on_ComboBox_filter_editTextChanged(const QString);
     //void on_ComboBox_filter_currentTextChanged(QString arg1);
       //void on_ComboBox_filter_textChanged(const QString &arg1);
+
+	//void on_ListBox_available_activated(const QModelIndex &index);
+
+	void on_ComboBox_filter_activated(const QString &arg1);
 
 private:
     Ui::T4select_spectra *ui;

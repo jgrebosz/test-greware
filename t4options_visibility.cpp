@@ -33,7 +33,6 @@ T4options_visibility::~T4options_visibility()
 
 void T4options_visibility::set_parameters(std::vector<QAction *> vec, int /*nr_experiment*/)
 {
-
     //        std::cout << "Bedzie rzedow" << vec.size() << endl;
     vec_of_actions = vec;
     ui->table->setRowCount(vec.size());
@@ -50,10 +49,7 @@ void T4options_visibility::set_parameters(std::vector<QAction *> vec, int /*nr_e
         ui->table->setItem ( row, 1, new QTableWidgetItem (name));
         //        ui->table->setItem ( row, 1, new QTableWidgetItem ("rzad" , Qt::ItemIsEnabled ) );
         ui->table->item( row, 1)->setFlags(stan ? (Qt::ItemIsEnabled | Qt::ItemIsSelectable): (Qt::NoItemFlags| Qt::ItemIsSelectable) ) ;   // name
-
     }
-
-
 }
 //***********************************************************************************************
 void T4options_visibility::on_buttonBox_accepted()

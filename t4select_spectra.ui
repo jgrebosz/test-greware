@@ -11,7 +11,10 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Dialog for selecting spectra to be displayed</string>
+  </property>
+  <property name="sizeGripEnabled">
+   <bool>true</bool>
   </property>
   <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="9,0,9">
    <item>
@@ -113,7 +116,7 @@
         </font>
        </property>
        <property name="text">
-        <string>&quot;Text filter&quot; for spectra names listed above</string>
+        <string>Instant &quot;Text filter&quot; for spectra names listed above</string>
        </property>
        <property name="wordWrap">
         <bool>false</bool>
@@ -156,34 +159,24 @@
           <string>Filter dialog</string>
          </property>
          <property name="default">
-          <bool>true</bool>
+          <bool>false</bool>
          </property>
         </widget>
        </item>
       </layout>
      </item>
      <item>
-      <layout class="QHBoxLayout" name="horizontalLayout_2">
-       <item>
-        <spacer name="horizontalSpacer_2">
-         <property name="orientation">
-          <enum>Qt::Horizontal</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>40</width>
-           <height>20</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
+      <layout class="QHBoxLayout" name="horizontalLayout_2" stretch="3,3,2">
        <item>
         <widget class="QCheckBox" name="checkBox_anti">
+         <property name="toolTip">
+          <string>typr pattern which you do NOT want</string>
+         </property>
          <property name="whatsThis">
           <string>You can also specify pattern which will filter-OUT some names of spectra. Anti-filter is used together with the normal filter</string>
          </property>
          <property name="text">
-          <string>anti-filter</string>
+          <string extracomment="typr pattern which you do NOT want">apply the negative-filter</string>
          </property>
         </widget>
        </item>
@@ -198,6 +191,19 @@ background-color: rgb(221, 247, 255);
 alternate-background-color: rgb(160, 160, 160);</string>
          </property>
         </widget>
+       </item>
+       <item>
+        <spacer name="horizontalSpacer_2">
+         <property name="orientation">
+          <enum>Qt::Horizontal</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>30</width>
+           <height>20</height>
+          </size>
+         </property>
+        </spacer>
        </item>
       </layout>
      </item>
@@ -603,7 +609,7 @@ color: rgb(255, 255, 255);</string>
             <string>You can make a spectrum which is a sum of some other spectra. The suming is updated every 60 seconds.</string>
            </property>
            <property name="text">
-            <string>SUM spectrum ...</string>
+            <string>create SUM spectrum ...</string>
            </property>
           </widget>
          </item>
@@ -629,7 +635,7 @@ color: rgb(255, 255, 255);</string>
             <string>You can make a spectrum with many existin spectra one over the other. Here you can define which spectra should participate in such a plot.</string>
            </property>
            <property name="text">
-            <string>OVERLAY spectrum...</string>
+            <string>create OVERLAY spectrum...</string>
            </property>
            <property name="autoDefault">
             <bool>false</bool>
@@ -672,7 +678,7 @@ color: rgb(255, 255, 255);</string>
           <string>If you check this item - the old contents of your screen will be preserved, only the new chosen spectra will be added to them.</string>
          </property>
          <property name="text">
-          <string>Add chosen spectra to the spectra 
+          <string>Add chosen spectra to the set of spectra 
 which are already on the screen</string>
          </property>
         </widget>
@@ -1159,6 +1165,33 @@ which are already on the screen</string>
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>Button_show_exit</tabstop>
+  <tabstop>ListBox_available</tabstop>
+  <tabstop>ComboBox_filter</tabstop>
+  <tabstop>pushButton_filter_dialog</tabstop>
+  <tabstop>lineEdit_anti_filter</tabstop>
+  <tabstop>push_zero_all_all</tabstop>
+  <tabstop>PushButton_choose_ALL</tabstop>
+  <tabstop>checkBox_anti</tabstop>
+  <tabstop>toolButton_shift_up</tabstop>
+  <tabstop>toolButton_shift_down</tabstop>
+  <tabstop>PushButton_deselect</tabstop>
+  <tabstop>PushButton_deselect_all</tabstop>
+  <tabstop>Combo_groups</tabstop>
+  <tabstop>PushButton_Delete_group</tabstop>
+  <tabstop>push_add_from_screen</tabstop>
+  <tabstop>ListBox_chosen</tabstop>
+  <tabstop>Button_group</tabstop>
+  <tabstop>pushButton_sum</tabstop>
+  <tabstop>pushButton_overlay</tabstop>
+  <tabstop>pushButton_zeroing</tabstop>
+  <tabstop>push_save_as_ascii</tabstop>
+  <tabstop>Check_add_overwrite</tabstop>
+  <tabstop>Push_B_OK</tabstop>
+  <tabstop>checkBox2</tabstop>
+  <tabstop>PushButton_choose</tabstop>
+ </tabstops>
  <resources>
   <include location="greware_icons.qrc"/>
  </resources>

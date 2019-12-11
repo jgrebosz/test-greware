@@ -23,7 +23,7 @@
       <enum>QFrame::Plain</enum>
      </property>
      <property name="text">
-      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:medium;&quot;&gt;N-tuple is a kind of &amp;quot;event by event&amp;quot; file, which later can be analysed by using ROOT.&lt;br/&gt;The SPY can create such a file from your currently analysed *.lmd file. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:medium;&quot;&gt;N-tuple is a kind of &amp;quot;event by event&amp;quot; file, which later can be analysed by using ROOT.&lt;br/&gt;The SPY can create such a file from your currently analysed event-by-event data file. &lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignVCenter</set>
@@ -84,10 +84,10 @@
           <enum>QFrame::Plain</enum>
          </property>
          <property name="text">
-          <string>1. RAW - just raw data after unpacking and the gain matching. 
-   (As the result the *_RAW.lmd is produced).
+          <string>1. RAW - just raw data after unpacking. 
+   (As the result the *_RAW.root is produced).
 2. CAL - after the analysis
-    (As the result the *_CAL.lmd is produced).
+    (As the result the *_CAL.root is produced).
 </string>
          </property>
          <property name="wordWrap">
@@ -180,7 +180,7 @@
              </font>
             </property>
             <property name="text">
-             <string>Collect the RAW  N-tuple (tree) for ROOT</string>
+             <string>Collect the RAW  N-tuple   (ROOT tree)</string>
             </property>
            </widget>
           </item>
@@ -318,7 +318,7 @@
         </font>
        </property>
        <property name="text">
-        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;Inside the 'CAL' ntuple (tree) are the following data.&lt;br/&gt;mw41 position; mw42 position; tof; sci21 position; &lt;br/&gt;CATE positions, CATE dE, E &lt;br/&gt;and &lt;br/&gt;- Germanium crystals energy/time calibrated (for all 105 crystals)&lt;br/&gt;- Hector BaF energy slow, and time (for all 8 crystals) &lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;What kind of data is going to your ntuple (tree) *.root data - depends of your spy. &lt;br/&gt;Here you can only decide if you want to activate this procedure or not.&lt;br/&gt;&lt;br/&gt;Note: Producing a *.root file takes some time, so it makes your analysis slower.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
        <property name="wordWrap">
         <bool>false</bool>
@@ -368,7 +368,16 @@
      <property name="spacing">
       <number>6</number>
      </property>
-     <property name="margin">
+     <property name="leftMargin">
+      <number>0</number>
+     </property>
+     <property name="topMargin">
+      <number>0</number>
+     </property>
+     <property name="rightMargin">
+      <number>0</number>
+     </property>
+     <property name="bottomMargin">
       <number>0</number>
      </property>
      <item>
@@ -432,18 +441,9 @@
     </layout>
    </item>
   </layout>
-
   <zorder>textLabel1</zorder>
   <zorder>textLabel1_2_3</zorder>
   <zorder>textLabel1_2</zorder>
-  <zorder>frame1</zorder>
-
-  <zorder>Frame22</zorder>
-  <zorder>label</zorder>
-  <zorder>label_2</zorder>
-  <zorder>textLabel1_2_2</zorder>
-
-
  </widget>
  <tabstops>
   <tabstop>check_create_raw_ntuple</tabstop>

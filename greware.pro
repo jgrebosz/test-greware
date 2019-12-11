@@ -9,15 +9,14 @@ TEMPLATE = app
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
-# when DEBUG ----
-CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant (1)
-QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug  (2)
+# when DEBUG ---- uncomment this below 
+#CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant (1)
+#QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug  (2)
 
 #when RELEASE
-#CONFIG  += warn_on  static release
+CONFIG  += warn_on  static release
 
 #    (static is probably for pictures (loaded into program))
-
 
 
 QMAKE_CXXFLAGS += -std=c++11

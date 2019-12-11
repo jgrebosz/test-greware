@@ -4,6 +4,11 @@
 #include <string>
 #include <iostream> // cout
 #include <fstream>
+#include <stdio.h>
+
+#include <QMessageBox>
+#include <QInputDialog>
+
 using namespace std;
 #include <sstream>
 #include "paths.h"
@@ -392,4 +397,95 @@ void T4pattern_defining_dlg::prepare_file_contents_skeleton()
             rt += result;
 
     ui->textEdit_contents_of_cloned_file->setText(rt.c_str());
+}
+//*****************************************************************************************************
+void T4pattern_defining_dlg::on_pushButton_give_numbers_clicked()
+{
+
+    // asking question
+    // starting number
+    string message { "Type starting number, stoping number and 'C format'\n"
+                     "for example: if you type\n   7  9 _%02d_\n    you will get:\n _07_  _08_  _09_"};
+
+    static string sugestion ;
+    bool ok;
+    QString res = QInputDialog::getText(this,
+                                        "Make me row of numbers",
+                                        QString ( message.c_str() ), // label
+
+                                        QLineEdit::Normal,
+                                        sugestion.c_str(),
+                                        &ok);
+    sugestion = res.toStdString();
+    if(ok)
+    {
+        // user selected an item and pressed OK
+
+        int pocz = 0;
+        int kon = 0;
+        string format_txt;
+
+        char buforek[40];
+        istringstream s(res.toStdString());
+        s >> pocz >> kon >> format_txt;
+
+
+        string rezultat;
+        for (int i = pocz ; i <= kon ; ++i)
+        {
+           sprintf(buforek, format_txt.c_str(), i);// warning, but OK
+           rezultat += (string(buforek) + " ");
+        }
+
+
+        rezultat = "if you are satisfied with result, copy it and paste it - where you want\n" + rezultat;
+        QMessageBox::question ( this,
+                                             "Result ", rezultat.c_str()
+                                        );
+    }
+}
+//*********************************************************************************************************
+void T4pattern_defining_dlg::on_pushButton_clicked()
+{
+    // asking question
+    // starting number
+    string message { "Type starting Character, stoping character and 'C-format'\n"
+                     "for example: if you type\n   B D  _%c_\n    you will get:\n _B_  _C_  _D_ "};
+
+    static string sugestion ;
+    bool ok;
+    QString res = QInputDialog::getText(this,
+                                        "Make me row of characters",
+                                        QString ( message.c_str() ), // label
+
+                                        QLineEdit::Normal,
+                                        sugestion.c_str(),
+                                        &ok);
+    sugestion = res.toStdString();
+    if(ok)
+    {
+        // user selected an item and pressed OK
+
+        char pocz = 0;
+        char kon = 0;
+        string format_txt;
+
+        char buforek[40];
+        istringstream s(res.toStdString());
+        s >> pocz >> kon >> format_txt;
+
+
+        string rezultat;
+        for (int i = pocz ; i <= kon ; ++i)
+        {
+           sprintf(buforek, format_txt.c_str(), i);  // warning, but OK
+           rezultat += (string(buforek) + " ");
+        }
+
+
+        rezultat = "if you are satisfied with result, copy it and paste it - where you want\n" + rezultat;
+        QMessageBox::question ( this,
+                                             "Result ", rezultat.c_str()
+                                        );
+    }
 }

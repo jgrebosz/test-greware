@@ -18,17 +18,17 @@ Tself_gate_kratta_descr::Tself_gate_kratta_descr()
 
     sg_type =  Tselfgate_type::kratta ; // this is kratta
 
-    enable_pd0_cal_gate = false ;
-    pd0_cal_gate[0] = 0 ;
-    pd0_cal_gate[1] = 4000;
+    enable_pd0_amplitude_cal_gate = false ;
+    pd0_amplitude_cal_gate[0] = 0 ;
+    pd0_amplitude_cal_gate[1] = 4000;
 
-    enable_pd1_cal_gate = false ;
-    pd1_cal_gate[0] = 0 ;
-    pd1_cal_gate[1] = 4000;
+    enable_pd1_amplitude_cal_gate = false ;
+    pd1_amplitude_cal_gate[0] = 0 ;
+    pd1_amplitude_cal_gate[1] = 4000;
 
-    enable_pd2_cal_gate = false ;
-    pd2_cal_gate[0] = 0 ;
-    pd2_cal_gate[1] = 4000;
+    enable_pd2_amplitude_cal_gate = false ;
+    pd2_amplitude_cal_gate[0] = 0 ;
+    pd2_amplitude_cal_gate[1] = 4000;
     // ---------------- for polygon gate on pd0 vs pd1
     enable_pd0_vs_pd1_polygon_gate = false;
     name_pd0_vs_pd1_polygon_gate = "no_polygon";
@@ -105,17 +105,17 @@ void Tself_gate_kratta_descr::read_definition_from(string pathed_name)
         //      name += ".self_gate_kratta_crystal" ;
         //    }
 
-        enable_pd0_cal_gate = (bool) Nfile_helper::find_in_file(plik, "enable_pd0_cal_gate");
-        pd0_cal_gate[0] = fif(plik, "pd0_cal_gate_low");
-        pd0_cal_gate[1] = fif(plik, "pd0_cal_gate_high");
+        enable_pd0_amplitude_cal_gate = (bool) Nfile_helper::find_in_file(plik, "enable_pd0_amplitude_cal_gate");
+        pd0_amplitude_cal_gate[0] = fif(plik, "pd0_amplitude_cal_gate_low");
+        pd0_amplitude_cal_gate[1] = fif(plik, "pd0_amplitude_cal_gate_high");
 
-        enable_pd1_cal_gate = (bool) Nfile_helper::find_in_file(plik, "enable_pd1_cal_gate");
-        pd1_cal_gate[0] = fif(plik, "pd1_cal_gate_low");
-        pd1_cal_gate[1] = fif(plik, "pd1_cal_gate_high");
+        enable_pd1_amplitude_cal_gate = (bool) Nfile_helper::find_in_file(plik, "enable_pd1_amplitude_cal_gate");
+        pd1_amplitude_cal_gate[0] = fif(plik, "pd1_amplitude_cal_gate_low");
+        pd1_amplitude_cal_gate[1] = fif(plik, "pd1_amplitude_cal_gate_high");
 
-        enable_pd2_cal_gate = (bool) Nfile_helper::find_in_file(plik, "enable_pd2_cal_gate");
-        pd2_cal_gate[0] = fif(plik, "pd2_cal_gate_low");
-        pd2_cal_gate[1] = fif(plik, "pd2_cal_gate_high");
+        enable_pd2_amplitude_cal_gate = (bool) Nfile_helper::find_in_file(plik, "enable_pd2_amplitude_cal_gate");
+        pd2_amplitude_cal_gate[0] = fif(plik, "pd2_amplitude_cal_gate_low");
+        pd2_amplitude_cal_gate[1] = fif(plik, "pd2_amplitude_cal_gate_high");
 
 
         try    // because this may not exist in old selfgates
@@ -263,17 +263,17 @@ void Tself_gate_kratta_descr::write_definitions(string path_only)
             << "\n\n"
 
 
-            << "enable_pd0_cal_gate\t\t" << enable_pd0_cal_gate
-            << "\tpd0_cal_gate_low\t"  << pd0_cal_gate[0]
-            << "\tpd0_cal_gate_high\t" << pd0_cal_gate[1] << "\n"
+            << "enable_pd0_amplitude_cal_gate\t\t" << enable_pd0_amplitude_cal_gate
+            << "\tpd0_amplitude_cal_gate_low\t"  << pd0_amplitude_cal_gate[0]
+            << "\tpd0_amplitude_cal_gate_high\t" << pd0_amplitude_cal_gate[1] << "\n"
 
-            << "enable_pd1_cal_gate\t\t" << enable_pd1_cal_gate
-            << "\tpd1_cal_gate_low\t"  << pd1_cal_gate[0]
-            << "\tpd1_cal_gate_high\t" << pd1_cal_gate[1] << "\n"
+            << "enable_pd1_amplitude_cal_gate\t\t" << enable_pd1_amplitude_cal_gate
+            << "\tpd1_amplitude_cal_gate_low\t"  << pd1_amplitude_cal_gate[0]
+            << "\tpd1_amplitude_cal_gate_high\t" << pd1_amplitude_cal_gate[1] << "\n"
 
-            << "enable_pd2_cal_gate\t\t" << enable_pd2_cal_gate
-            << "\tpd2_cal_gate_low\t"  << pd2_cal_gate[0]
-            << "\tpd2_cal_gate_high\t" << pd2_cal_gate[1] << "\n"
+            << "enable_pd2_amplitude_cal_gate\t\t" << enable_pd2_amplitude_cal_gate
+            << "\tpd2_amplitude_cal_gate_low\t"  << pd2_amplitude_cal_gate[0]
+            << "\tpd2_amplitude_cal_gate_high\t" << pd2_amplitude_cal_gate[1] << "\n"
 
             << "enable_pd0_vs_pd1_polygon_gate\t" << enable_pd0_vs_pd1_polygon_gate  << "\n"
             << "\tname_pd0_vs_pd1_polygon_gate\t" << name_pd0_vs_pd1_polygon_gate  << "\n"

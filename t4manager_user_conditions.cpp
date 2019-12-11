@@ -1214,7 +1214,7 @@ void T4manager_user_conditions::on_push_A_1_cloning_clicked()
 
 
         string condname = vec_cond_descr[nr].name ;
-        string::size_type loc ;
+        // string::size_type loc ;
 
         string pattern1 = "_00_";
         string pattern2  = "";

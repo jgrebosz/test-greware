@@ -21,16 +21,32 @@ extern appl_form  *appl_form_ptr;
 //#include <Q3ListBox>
 #include <QMdiArea>
 #include <QTableWidgetSelectionRange>
+#include <QCompleter>
 
 #include "t4sum_spectra_dialog.h"
 #include <stack>
 
+#define WHERE  //  cout << __func__ << " in line " << __LINE__ << endl;
+
 //***********************************************************************
 
 T4select_spectra::T4select_spectra(QWidget *parent) :
+//    QDialog(parent, Qt::WindowSystemMenuHint | Qt::WindowMinMaxButtonsHint | Qt::WindowContextHelpButtonHint | Qt::WindowCloseButtonHint),
     QDialog(parent),
     ui(new Ui::T4select_spectra)
 {
+//  auto previous = windowFlags ();
+
+//  setWindowFlags(
+//        Qt::CustomizeWindowHint |
+//        Qt::WindowTitleHint |
+//        Qt::WindowSystemMenuHint |
+//                  Qt::WindowMinMaxButtonsHint |
+//                  Qt::WindowContextHelpButtonHint |
+
+//                 // Qt::WindowCloseButtonHint |
+//              previous
+//                );
     ui->setupUi(this);
     init();
     ui->Button_show_exit-> setStyleSheet( "background-color:darkGreen ;"
@@ -55,6 +71,10 @@ void T4select_spectra::init()
      */
     //     ui->ComboBox_filter->setInsertionPolicy ( QComboBox::BeforeCurrent );
 
+	 ui->ComboBox_filter->completer()-> setCaseSensitivity(Qt::CaseSensitive) ;
+
+
+
     // setting the  enabled options
     extended_selection_mode ( false ) ;
 
@@ -66,7 +86,6 @@ void T4select_spectra::init()
 
     ui->lineEdit_anti_filter->setEnabled(false);
     ui->lineEdit_anti_filter->setHidden(true);
-
 }
 //****************************************************************************
 void T4select_spectra::set_parameters ( QMdiArea  * ws )
@@ -86,9 +105,6 @@ void T4select_spectra::set_parameters ( QMdiArea  * ws )
                                0,
                                how_many_items,
                                this);
-
-
-
 
     //    QProgressDialog progress("Copying files...",
     //                             "Abort Copy",
@@ -161,6 +177,7 @@ void T4select_spectra::set_parameters ( QMdiArea  * ws )
 void T4select_spectra::select_one_pressed()
 {
 
+	// WHERE;
     QList<QListWidgetItem*>  lista = ui->ListBox_available->selectedItems();
     int nr = 0;
     for (  QList<QListWidgetItem*>::Iterator it = lista.begin() ; it != lista.end() ;  ++it, nr++ )
@@ -282,6 +299,7 @@ void T4select_spectra::show_chosen_spectra()
 //********************************************************************************
 void T4select_spectra::remove_highlighted()
 {
+	// WHERE;
     //cout << "remove_highlighted() z " << ui->ListBox_chosen-> count() << endl ;
 
     QList<QListWidgetItem *> list_to_remove  = ui->ListBox_chosen->selectedItems ();
@@ -408,6 +426,7 @@ void T4select_spectra::show_choosen_and_exit()
 void T4select_spectra::selected_filter()
 {
 
+	// WHERE;
     // we do not react for typing filter more often than every 2 secondes
     // (because in case of 2000 spectra it is slowing down our typing)
 
@@ -416,9 +435,25 @@ void T4select_spectra::selected_filter()
     //   while((time(0) - last) < 1) ;
     //   last = time(0) ;
 
+	QString filtr ;
+//	int nr = ui->ComboBox_filter->currentIndex();
+//	cout << "AT FIRST  Current text is [" << ui->ComboBox_filter->currentText ().toStdString() << "]" << endl;
+//	cout << "           Current index is " << nr << endl;
 
-    QString filtr = ui->ComboBox_filter->currentText ();
 
+
+//	cout << "List of " << ui->ComboBox_filter->count() << "  items in history:\n" ;
+
+//	for ( int i = 0 ; i < ui->ComboBox_filter->count() ; i++ )
+//	{
+//		filtr = ui->ComboBox_filter-> itemText (i);
+//		cout << "History  text nr [" << i << "] is : " << filtr.toStdString() << endl;
+//	 }
+
+//	if(nr >-1)
+//		ui->ComboBox_filter->setCurrentIndex (nr);
+	filtr = ui->ComboBox_filter->currentText ();
+	//cout << "current   filter text  is now: [" << filtr.toStdString() << "]" << endl;
     ui->ListBox_available->clear();
 
     QStringList found = all_spectra_names.filter ( QRegExp ( filtr, Qt::CaseSensitive,QRegExp::Wildcard ) );
@@ -443,6 +478,7 @@ void T4select_spectra::selected_filter()
     //-------------------------------------------
 
     ui->ListBox_available->insertItems(0, found ) ;
+
 
 }
 //***********************************************************************************
@@ -522,6 +558,8 @@ void T4select_spectra::refresh_defined_groups()
 //***************************************************************************
 QStringList T4select_spectra::give_last_filter()
 {
+
+	// WHERE;
     //return ui->ComboBox_filter->currentText ();
 
     QStringList all ;
@@ -539,6 +577,8 @@ QStringList T4select_spectra::give_last_filter()
 //************************************************************************
 void T4select_spectra::set_filter ( QStringList fff )
 {
+
+	// WHERE;
     //  ui->ComboBox_filter->setCurrentText (fff);
     if ( fff.isEmpty() )
         return ;
@@ -1020,25 +1060,37 @@ void T4select_spectra::extended_selection_mode ( bool extended )
 //*********************************************************************
 void T4select_spectra::add_to_history ( QString s )
 {
-//    cout << __func__ << " the text: " << s.toStdString() << endl;
 
-    // checking if such a string already is on the list`
+
+//	WHERE;
+//	cout << "-----------------------------------------\n"
+//		 << __func__ << "    need to add  the text: " << s.toStdString() << endl;
+
+//	cout << " CHECKING if such a string already is on the list" << endl;
+
     for ( int i = 0 ; i < ui->ComboBox_filter->count(); i++ )
     {
 //        if ( i == ui->ComboBox_filter->currentIndex () ) // current is new
 //            continue ;
 
-        if ( s == ui->ComboBox_filter->itemText(i) )
+		if ( s == ui->ComboBox_filter->itemText(i) ){
+//			cout << " !!!! tekst " << s.toStdString() << " is already in a fliter as "
+//				 << ui->ComboBox_filter->itemText(i).toStdString() << endl;
             return ; // because it was already there
+		}
     }
+
+	// cout << "It is NOT yet on the history list\n";
     // if it is not on the list yet...
 
     // now, rearrange - to put always on Top
 
-//    for ( int i = ui->ComboBox_filter->count() -1 ; i >0 ; i-- )
-//    {
-//        ui->ComboBox_filter->itemText ( i ) = ui->ComboBox_filter->itemText ( i-1 );
-//    }
+//	for ( int i = ui->ComboBox_filter->count() -1 ; i >0 ; i-- )
+//	{
+//		ui->ComboBox_filter->itemText ( i ) = ui->ComboBox_filter->itemText ( i-1 );
+//	}
+
+
     ui->ComboBox_filter->insertItem ( 0, s) ; // -- add on the top
 
 
@@ -1046,13 +1098,14 @@ void T4select_spectra::add_to_history ( QString s )
 
     //  ui->ComboBox_filter->addItem(s) ;
 
-    // contents of the history
-//       for(int i = 0 ; i < ui->ComboBox_filter->count(); i++ )
-//       {
-//         cout << i << ") " <<  ui->ComboBox_filter->  itemText(i).toStdString() << "   " ;
-//       }
-//       cout << endl;
+//	cout << " At the end of the function here is contents of the history: \n";
+//	   for(int i = 0 ; i < ui->ComboBox_filter->count(); i++ )
+//	   {
+//		 cout << i << ") " <<  ui->ComboBox_filter->  itemText(i).toStdString() << "   " ;
+//	   }
+//	   cout << endl;
 
+//cout << __func__ << "--------------------------------------- END of history function \n ";
 }
 //*********************************************************************
 void T4select_spectra::select_chosen_as_ascii()
@@ -1789,7 +1842,9 @@ void T4select_spectra::on_checkBox_anti_toggled(bool checked)
 //*********************************************************************************************************************
 void T4select_spectra::on_ComboBox_filter_editTextChanged(const QString /*arg1*/)
 {
-       //cout << __func__ << "   arg1 =" << arg1.toStdString() << endl;
+	//WHERE;
+	  // cout << __func__ << "   arg1 =" << arg1.toStdString() << endl;
+	   //cout << "   then  is calling function:    selected_filnter()  " << endl;
         selected_filter();
 }
 //*********************************************************************************************************************
@@ -1797,3 +1852,10 @@ void T4select_spectra::on_ComboBox_filter_editTextChanged(const QString /*arg1*/
 //{
 //// empty?
 //}
+
+void T4select_spectra::on_ComboBox_filter_activated(const QString & /*arg1*/)
+{
+	// This function is essential when we type filter "F" and "f" - they are distinguished properly.
+
+	//cout << "Combo activqted with " << arg1.toStdString() << endl;
+}

@@ -754,10 +754,10 @@ void   box_of_matrix::mousePressEvent ( QMouseEvent * e )
 
     if ( e->type() ==QEvent::MouseButtonDblClick )
     {
-        cout << "  - to byl doubleclick " << endl ;
 
         if ( flag_banana_creating_mode )
         {
+            cout << "  - This was doubleclick for finishing banana" << endl ;
             finish_drawing_new_banana();
             flag_mouse_just_pressed = false;
             e->accept();
@@ -766,7 +766,7 @@ void   box_of_matrix::mousePressEvent ( QMouseEvent * e )
         //cout << " Instant  zoom " << endl ;
 
 
-#if 0   // My SUSE behaves strange recognising wrongly DOUBLE CLICK
+#if 1   // My SUSE behaves strange recognising wrongly DOUBLE CLICK
         // so, for now - I blocked this
 
         QPoint p1 = e->pos();
@@ -1267,38 +1267,45 @@ void box_of_matrix::construct_lupa_cursor_bitmaps()
 
     //cout << "constructing bitmaps for lupa coursor " << endl ;
 
-    lupa_plus = QBitmap ( 32, 32   /*, true*/  ); // true - clear contents
+    constexpr int sizemap = 32;
+    constexpr int line_width = 3;
+    constexpr int inner_line_width = 1;
+
+    lupa_plus = QBitmap ( sizemap, sizemap); //QBitmap ( 32, 32);
+    lupa_plus.clear();
 
     // lupa_plus_maska =  lupa_plus ;
     lupa_minus = lupa_minus_maska = lupa_plus_maska = lupa_plus ;
 
     //################################################################
-    draw_lupa ( lupa_plus, Qt::color1, 5, '+' ); // to bedzie mialo kolor czarny
+    draw_lupa ( lupa_plus, Qt::color1, line_width, '+' ); // to bedzie mialo kolor czarny
     //------ zeby miec srodek kursora bialy a obwodke czarno
-    draw_lupa ( lupa_plus, Qt::color0, 3, '+' ); // teraz zerujemy srodek, bedzie bialy
+
+     draw_lupa ( lupa_plus, Qt::color0, inner_line_width, '+' ); // teraz zerujemy srodek, bedzie bialy
 
     // drawing mask --------------------------------
-    draw_lupa ( lupa_plus_maska, Qt::color1, 5, '+' );
+    draw_lupa ( lupa_plus_maska, Qt::color1, line_width, '+' );
 
 
     // the same for minus cursor #############################################
-    draw_lupa ( lupa_minus, Qt::color1, 5, '-' );
+    draw_lupa ( lupa_minus, Qt::color1, line_width, '-' );
 
     //------ zeby miec srodek kursora bialy a obwodke czarno
     draw_lupa ( lupa_minus, Qt::color0, 1, '-' );
 
     // drawing mask --------------------------------
-    draw_lupa ( lupa_minus_maska, Qt::color1, 5, '-' );
+    draw_lupa ( lupa_minus_maska, Qt::color1, line_width, '-' );
 
 }
 //******************************************************************************
 void box_of_matrix::draw_lupa ( QBitmap &bitmapa, QColor color, int width, char plus_minus )
 {
-    // dla narysowania plusa
-    const int os_pionowa = 14 ;
-    const int os_pozioma = 14 ;
-    const int dlug_ramion = 7 ; // beter when is impair
-
+    // dla narysowania plus
+    int scale = bitmapa.size().rheight()    /32;
+    const int os_pionowa = (14*scale) ;
+    const int os_pozioma = (14*scale) ;
+    const int dlug_ramion = 7*scale ; // beter when is impair
+    width *= scale;
 
     QPoint
             p1 ( os_pozioma -dlug_ramion , os_pionowa ),
@@ -1309,10 +1316,14 @@ void box_of_matrix::draw_lupa ( QBitmap &bitmapa, QColor color, int width, char 
             p4 ( os_pozioma, os_pionowa + dlug_ramion ) ; // pion plusa
 
     QPainter p ( &bitmapa );
+    p.setPen ( QPen ( color, 2*width ) );
+
+    p.drawLine ( 24*scale, 24*scale, 32*scale, 32*scale );// raczka_lupy
+
     p.setPen ( QPen ( color, width ) );
 
-    p.drawLine ( 22, 22, 32, 32 );
-    p.drawArc ( 3, 3, 23, 23, 0, 360*160 ) ;
+    p.drawArc ( (3*scale), (3*scale), 23*scale, 23*scale, 0, 360*160 ) ; // obręcz lupy
+
     // narysowanie plusa w lupie
     p.drawLine ( p1, p2 );
     if ( plus_minus == '+' ) p.drawLine ( p3, p4 );
@@ -1340,12 +1351,9 @@ void box_of_matrix::draw_lupa ( QBitmap &bitmapa, QColor color, int width, char 
 //****************************************************************************
 void  box_of_matrix::select_nearest_vertex ( QMouseEvent *e )
 {
-
     //   cout << "select_nearest_vertex(QMouseEvent *e )" << endl;
-
     if ( parent->give_flag_show_polygons() )
     {
-
         bool deselect_other_vertices = ! ( e->modifiers ()  & Qt::ShiftModifier ) ;
 
         vector<polygon_gate>&  banana = parent->give_vector_of_polygons();

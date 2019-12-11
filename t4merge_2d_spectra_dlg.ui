@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>585</width>
+    <width>626</width>
     <height>531</height>
    </rect>
   </property>
@@ -17,7 +17,7 @@
    </sizepolicy>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Tool for summing matrices (2D spectra) in bulk</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout_2">
    <item>

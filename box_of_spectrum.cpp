@@ -934,7 +934,7 @@ void   box_of_spectrum::mousePressEvent ( QMouseEvent * e )
     {
         e->accept () ;
         flag_was_mouse_click = false;
-        // cout << "double click in box_spectrum" << endl;
+         //cout << "double click in box_spectrum" << endl;
         //COTO;
         parent->expand_double_click ( x_mouse_click, y_mouse_click, ( e->modifiers ()  & Qt::ShiftModifier ) ) ;
         // cout << "Afer expand function " << endl ;

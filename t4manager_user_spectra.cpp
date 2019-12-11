@@ -439,7 +439,7 @@ bool flag_any_change = false;
                 // cout << "Yes, so removing " << fname << ", name taken from the memory, (not from table)" << endl;
 
                 // create 'removed'subdirectrory (if it does not exists) ---------------
-                string remdir = path.Qspectra().toStdString() + "removed/" ;
+                string remdir = path.Quser_def_spectra().toStdString() + "removed/" ;
 
                 QDir dir(remdir.c_str() );
                 if(dir.exists() == false)
@@ -782,7 +782,7 @@ void T4manager_user_spectra::on_push_A_1_clone_clicked()
 
 
 
-        string::size_type loc ;
+        // string::size_type loc ;
         string pattern1 = "_00_";
         string pattern2  = "";
         string one = "B C";

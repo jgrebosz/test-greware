@@ -52,7 +52,7 @@ void T4results_of_integration::on_pushButton_save_to_file_clicked()
 //         fileName = fd->selectedFile();
 //     }
     //cout << "Nazwa " << fileName << endl ;
-    if(fileName.endsWith ( ".txt") == -1)
+    if(fileName.endsWith ( ".txt") == false)
     {
         fileName.append(".txt");
     }

@@ -100,18 +100,18 @@ void T4selfgate_kratta_2dlg::set_parameters( const Tself_gate_kratta_descr *d )
     ui->lineEdit_name->setText(nnn.c_str());
     ui->label_extension->setText(ext.c_str() );
 
-    ui->checkBox_energy_pd0->setChecked(d->enable_pd0_cal_gate) ;
-    ui->lineEdit_pd0_low->setText(QString::number(d->pd0_cal_gate [0]));
-    ui->lineEdit_pd0_high->setText(QString::number(d->pd0_cal_gate [1]));
+    ui->checkBox_energy_pd0->setChecked(d->enable_pd0_amplitude_cal_gate) ;
+    ui->lineEdit_pd0_low->setText(QString::number(d->pd0_amplitude_cal_gate [0]));
+    ui->lineEdit_pd0_high->setText(QString::number(d->pd0_amplitude_cal_gate [1]));
 
 
-    ui->checkBox_energy_pd1->setChecked(d->enable_pd1_cal_gate) ;
-    ui->lineEdit_pd1_low->setText(QString::number(d->pd1_cal_gate [0]));
-    ui->lineEdit_pd1_high->setText(QString::number(d->pd1_cal_gate [1]));
+    ui->checkBox_energy_pd1->setChecked(d->enable_pd1_amplitude_cal_gate) ;
+    ui->lineEdit_pd1_low->setText(QString::number(d->pd1_amplitude_cal_gate [0]));
+    ui->lineEdit_pd1_high->setText(QString::number(d->pd1_amplitude_cal_gate [1]));
 
-    ui->checkBox_energy_pd2->setChecked(d->enable_pd2_cal_gate) ;
-    ui->lineEdit_pd2_low->setText(QString::number(d->pd2_cal_gate [0]));
-    ui->lineEdit_pd2_high->setText(QString::number(d->pd2_cal_gate [1]));
+    ui->checkBox_energy_pd2->setChecked(d->enable_pd2_amplitude_cal_gate) ;
+    ui->lineEdit_pd2_low->setText(QString::number(d->pd2_amplitude_cal_gate [0]));
+    ui->lineEdit_pd2_high->setText(QString::number(d->pd2_amplitude_cal_gate [1]));
 
 
     ui->checkBox_pd0_pd1_banana->setChecked(d->enable_pd0_vs_pd1_polygon_gate);
@@ -173,17 +173,17 @@ void T4selfgate_kratta_2dlg::get_parameters( Tself_gate_kratta_descr * d )
         d->name += ext;
     }
 
-    d->enable_pd0_cal_gate = ui->checkBox_energy_pd0->isChecked() ;
-    d-> pd0_cal_gate[0] = ui->lineEdit_pd0_low->text().toDouble();
-    d-> pd0_cal_gate[1] = ui->lineEdit_pd0_high->text().toDouble();
+    d->enable_pd0_amplitude_cal_gate = ui->checkBox_energy_pd0->isChecked() ;
+    d-> pd0_amplitude_cal_gate[0] = ui->lineEdit_pd0_low->text().toDouble();
+    d-> pd0_amplitude_cal_gate[1] = ui->lineEdit_pd0_high->text().toDouble();
 
-    d->enable_pd1_cal_gate = ui->checkBox_energy_pd1->isChecked() ;
-    d-> pd1_cal_gate[0] = ui->lineEdit_pd1_low->text().toDouble();
-    d-> pd1_cal_gate[1] = ui->lineEdit_pd1_high->text().toDouble();
+    d->enable_pd1_amplitude_cal_gate = ui->checkBox_energy_pd1->isChecked() ;
+    d-> pd1_amplitude_cal_gate[0] = ui->lineEdit_pd1_low->text().toDouble();
+    d-> pd1_amplitude_cal_gate[1] = ui->lineEdit_pd1_high->text().toDouble();
 
-    d->enable_pd2_cal_gate = ui->checkBox_energy_pd2->isChecked() ;
-    d-> pd2_cal_gate[0] = ui->lineEdit_pd2_low->text().toDouble();
-    d-> pd2_cal_gate[1] = ui->lineEdit_pd2_high->text().toDouble();
+    d->enable_pd2_amplitude_cal_gate = ui->checkBox_energy_pd2->isChecked() ;
+    d-> pd2_amplitude_cal_gate[0] = ui->lineEdit_pd2_low->text().toDouble();
+    d-> pd2_amplitude_cal_gate[1] = ui->lineEdit_pd2_high->text().toDouble();
 
 
     d->enable_pd0_vs_pd1_polygon_gate = ui->checkBox_pd0_pd1_banana->isChecked();

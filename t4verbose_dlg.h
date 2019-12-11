@@ -23,6 +23,8 @@ private slots:
 
     void on_buttonHelp_clicked();
 
+    void on_buttonCancel_clicked();
+
 private:
     Ui::T4verbose_dlg *ui;
     void init();

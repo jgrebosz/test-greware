@@ -1574,8 +1574,9 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
 
 
 	bool too_short = true ;
+    const int how_many_tries = 900;
 	// loop to repeat 'too-short' read (when spy writes this matrix just now
-	for ( int n_try = 0 ; n_try < 6 && too_short ; n_try++ ) //
+    for ( int n_try = 0 ; n_try < how_many_tries && too_short ; n_try++ ) //
 	{
 
 		//             cout << "Function: Read in file, parameter " << name << endl ;
@@ -1584,7 +1585,7 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
 		string path_filename = path.spectra + name ;
 		ifstream plik ( path_filename.c_str(), ios::binary );
 
-		if ( plik )
+        if ( plik && (n_try < (how_many_tries -2)) )
 		{
 			int ile = 0 ;
 
@@ -1742,7 +1743,7 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
 			//cout << " Error while opening a spectrum " << path_filename << endl ;
 			string mess =  "Matrix \n";
 			mess += name ;
-			mess += "\nwas not found \n" ;
+            mess += "\nwas not found or read error\nTry to call this spectrum again" ;
 			QMessageBox::information ( this, "Error while opening file", mess.c_str() );
 
 			spectrum_table.push_back ( 0 ) ;
@@ -1775,7 +1776,7 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
 			string mess =  "Matrix \n";
 			mess += name ;
 			mess += "\nis very big, so 'automatic refreshing' it on the screen would take too much time\n"
-					"Cracow viewer suggest not to refresh is automatically. \n"
+                    "Cracow viewer suggest not to re-read is automatically. \n"
 					"(You  can always  refresh it manually - just by recalling it again)"
 					"\n\nNOTE you can avoid this question by unchecking an option in: \n"
 					"      Cracow_preferences->Setting times of Refreshing-->ask questions about...";

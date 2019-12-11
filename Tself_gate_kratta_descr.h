@@ -25,14 +25,14 @@ class Tself_gate_kratta_descr : public Tself_gate_abstract_descr
 {
 public:
 
-  bool enable_pd0_cal_gate ;
-  double pd0_cal_gate[2];
+  bool enable_pd0_amplitude_cal_gate ;
+  double pd0_amplitude_cal_gate[2];
 
-  bool enable_pd1_cal_gate ;
-  double pd1_cal_gate[2];
+  bool enable_pd1_amplitude_cal_gate ;
+  double pd1_amplitude_cal_gate[2];
 
-  bool enable_pd2_cal_gate ;
-  double pd2_cal_gate[2];
+  bool enable_pd2_amplitude_cal_gate ;
+  double pd2_amplitude_cal_gate[2];
 
 
   // two polygons

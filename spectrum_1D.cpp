@@ -1539,7 +1539,7 @@ void spectrum_1D::save_as(string prefix)
 
 		Tplate_spectrum::flag_repainting_allowed = true;
 		//        cout << "Nazwa " << fileName.toStdString() << endl ;
-		if(fileName.endsWith ( ".spc") == -1)
+        if(fileName.endsWith ( ".spc") == false && fileName.endsWith ( ".asc") == false )
 		{
 			fileName.append(".spc");
 		}

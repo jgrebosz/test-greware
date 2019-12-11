@@ -76,7 +76,6 @@ void T4verbose_dlg::show_help()
                               "(for example because the mw41_x was not OK)."
                               );
 
-
 }
 //**********************************************************************************************
 void T4verbose_dlg::init()
@@ -85,7 +84,6 @@ void T4verbose_dlg::init()
     ui->checkBox_enable_verbose->setChecked(0);
     ui->lineEdit_start_event->setText("0");
     ui->lineEdit2_how_many_events->setText("0");
-
 
     string nazwa = path.commands + "verbose_mode.command" ;
     ifstream plik(nazwa.c_str() );
@@ -99,7 +97,6 @@ void T4verbose_dlg::init()
             ui->lineEdit_start_event->setValidator( new QIntValidator( ui->lineEdit_start_event ));
             ui->lineEdit_start_event->setText(QString::number(value));
 
-
             value =  (int) Nfile_helper::find_in_file(plik,
                                                       "verbose_how_many_events" );
             ui->lineEdit2_how_many_events->setValidator( new QIntValidator( ui->lineEdit_start_event ));
@@ -107,8 +104,6 @@ void T4verbose_dlg::init()
 
             value =  (int) Nfile_helper::find_in_file(plik, "verbose_mode_enabled");
             ui->checkBox_enable_verbose->setChecked( (value ==1) ? true : false);
-
-
         }
         catch(Tfile_helper_exception &m)
         {
@@ -117,23 +112,24 @@ void T4verbose_dlg::init()
             // continue, bec this is not so important
             exit(20);
         }
-
     }
     // depending of the state of enable
-
-
     ui->groupBox_verbose_parameters->
             setEnabled( ui->checkBox_enable_verbose->isChecked() );
 
 }
 //**********************************************************************************************
-
 void T4verbose_dlg::on_checkBox_enable_verbose_clicked(bool checked)
 {
     ui->groupBox_verbose_parameters-> setEnabled( checked);
 }
-
+//**********************************************************************************************
 void T4verbose_dlg::on_buttonHelp_clicked()
 {
     show_help();
+}
+//**********************************************************************************************
+void T4verbose_dlg::on_buttonCancel_clicked()
+{
+    QDialog::reject();
 }

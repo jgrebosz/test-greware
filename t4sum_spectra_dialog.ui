@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Dialog</string>
+   <string>Sum many spectra</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
@@ -124,11 +124,8 @@
     </layout>
    </item>
   </layout>
-  <zorder>pushButton_remove_row</zorder>
-  <zorder>buttonCancel</zorder>
   <zorder>textLabel1</zorder>
   <zorder>textLabel1_2</zorder>
-  <zorder>buttonOk</zorder>
   <zorder>tableWidget1</zorder>
  </widget>
  <resources/>

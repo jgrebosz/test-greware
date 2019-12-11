@@ -42,6 +42,10 @@ private slots:
     void on_lineEdit_pattern2_textChanged(const QString &arg1);
 
 
+    void on_pushButton_clicked();
+
+    void on_pushButton_give_numbers_clicked();
+
 private:
     Ui::T4pattern_defining_dlg *ui;
     void show_spectra_names();
