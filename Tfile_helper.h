@@ -44,11 +44,10 @@ namespace File_helper   // was Tfile_helper - see using declaration at the end
   /* This function searches (in the given file) a keyword and then reads the
   value which follows it. Then returns this value as the result.  */
 
-  double find_in_file(ifstream& s, string slowo) throw(
-			  Tno_keyword_exception,Treading_value_exception);
+  double find_in_file(ifstream& s, string slowo) ;
 
   /* find a keyword, - just for positioning cursor  */
-  void spot_in_file(ifstream& s, string slowo)throw( Tno_keyword_exception);
+  void spot_in_file(ifstream& s, string slowo);
   void repair_the_stream(ifstream& s)  ;
 
 }

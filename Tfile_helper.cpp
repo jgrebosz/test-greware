@@ -12,18 +12,20 @@
 
 #include "Tfile_helper.h"
 #include <algorithm>
+#include <cctype>
 
 #include <iostream>
 
 //****************************************************************************
-void File_helper::spot_in_file(ifstream& s, string slowo)throw(Tno_keyword_exception)
+void File_helper::spot_in_file(ifstream& s, string slowo)
 {
   s.seekg(0) ; // rewind
 
   string arch_s = slowo ; // to have oryginal case for error message
 
   // to be independent of lower/upper case of keywords...
-  for(unsigned i = 0 ; i < slowo.size() ; i++) slowo[i] = tolower(slowo[i]);
+  for(unsigned i = 0 ; i < slowo.size() ; i++)
+      slowo[i] = (char) (std::tolower(slowo[i]));
   
   //cout << "Keyword to find is " << slowo << endl ;
 
@@ -34,7 +36,8 @@ void File_helper::spot_in_file(ifstream& s, string slowo)throw(Tno_keyword_excep
     {
 
       s >> zjedz >> word ;
-      for(unsigned i = 0 ; i < word.size() ; i++) word[i] = tolower(word[i]);
+      for(unsigned i = 0 ; i < word.size() ; i++)
+          word[i] = (char) tolower(word[i]);
   
       // cout << "found word " << word << endl ;
       if(word == slowo) break ;
@@ -72,14 +75,14 @@ void File_helper::spot_in_file(ifstream& s, string slowo)throw(Tno_keyword_excep
 //****************************************************************************
 /** This function searches (in the given file) a keyword and then reads the
     value which follows it. Then returns this value as the result.  */
-double File_helper::find_in_file(ifstream& s, string slowo) throw(
-			  Tno_keyword_exception, Treading_value_exception)
+double File_helper::find_in_file(ifstream& s, string slowo)
 {
   s.seekg(0) ; // rewind
   string arch_s = slowo ; // to have oryginal case for error message
 
   // to be independent of lower/upper case of keywords...
-  for(unsigned i = 0 ; i < slowo.size() ; i++) slowo[i] = tolower(slowo[i]);
+  for(unsigned i = 0 ; i < slowo.size() ; i++)
+      slowo[i] = (char) tolower(slowo[i]);
   
   //cout << "Keyword to find is " << slowo << endl ;
   string word ;
@@ -87,7 +90,8 @@ double File_helper::find_in_file(ifstream& s, string slowo) throw(
   while(s)
     {
       s >> zjedz >> word ;
-      for(unsigned i = 0 ; i < word.size() ; i++) word[i] = tolower(word[i]);
+      for(unsigned i = 0 ; i < word.size() ; i++)
+          word[i] = (char) tolower(word[i]);
       //cout << "found word " << word << endl ;
       if(word == slowo) break ;
     }

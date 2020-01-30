@@ -10,21 +10,22 @@ TEMPLATE = app
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 # when DEBUG ---- uncomment this below 
-#CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant (1)
-#QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug  (2)
+CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant (1)
+QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug  (2)
 
 #when RELEASE
-CONFIG  += warn_on  static release
+#CONFIG  += warn_on  static release
 
 #    (static is probably for pictures (loaded into program))
 
 
-QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++17
 #QMAKE_CXXFLAGS += -pedantic -Wall -Wextra -Wcast-align -Wcast-qual
 QMAKE_CXXFLAGS +=  -Wctor-dtor-privacy -Wdisabled-optimization -Wformat=2 -Winit-self -Wlogical-op
 #QMAKE_CXXFLAGS +=   -Wmissing-declarations -Wmissing-include-dirs -Wnoexcept
-#QMAKE_CXXFLAGS +=-Wold-style-cast
+#QMAKE_CXXFLAGS += -Wold-style-cast
 #QMAKE_CXXFLAGS +=-Woverloaded-virtual -Wredundant-decls -Wshadow -Wsign-conversion -Wsign-promo -Wstrict-null-sentinel -Wstrict-overflow=5 -Wswitch-default -Wundef -Werror -Wno-unused
+QMAKE_CXXFLAGS += -Wno-format-nonliteral
 
 # -Weffc++
 

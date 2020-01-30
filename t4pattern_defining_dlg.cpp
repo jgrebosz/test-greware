@@ -4,6 +4,8 @@
 #include <string>
 #include <iostream> // cout
 #include <fstream>
+//#include <format> // c++20
+
 #include <stdio.h>
 
 #include <QMessageBox>
@@ -430,6 +432,9 @@ void T4pattern_defining_dlg::on_pushButton_give_numbers_clicked()
         s >> pocz >> kon >> format_txt;
 
 
+//#pragma clang diagnostic push
+//#pragma clang diagnostic ignored "-Wformat-nonliteral"
+
         string rezultat;
         for (int i = pocz ; i <= kon ; ++i)
         {
@@ -437,6 +442,7 @@ void T4pattern_defining_dlg::on_pushButton_give_numbers_clicked()
            rezultat += (string(buforek) + " ");
         }
 
+//#pragma clang diagnostic pop
 
         rezultat = "if you are satisfied with result, copy it and paste it - where you want\n" + rezultat;
         QMessageBox::question ( this,
