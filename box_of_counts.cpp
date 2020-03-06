@@ -27,6 +27,9 @@ box_of_counts::box_of_counts(QWidget *a_parent, bool flag_rainbow, string name)
 void box_of_counts::draw_all(QPainter * piorko)
 {
 
+//	static int counter;
+//	cout << __PRETTY_FUNCTION__ << " update box_counts  " << (counter++) << endl;
+
     static int level = 0 ;
     Tplate_spectrum *p = dynamic_cast<Tplate_spectrum*>(parent); // for
     if(!p->give_flag_draw_scales()) return;
@@ -114,15 +117,16 @@ void box_of_counts::mouseMoveEvent ( QMouseEvent * event )
 
 
     setCursor ( QCursor (Qt::SizeVerCursor) ) ;
-    if(last_dragged_y != now_y)
+	int moved_pixels = last_dragged_y - now_y;
+	if(moved_pixels)
     {
-        double diff =   pix2worY(last_dragged_y) - pix2worY(now_y) ;
+		 double diff =   pix2worY(last_dragged_y) - pix2worY(now_y) ;
 
         //   // if it was moved really
-        //    cout<< "box of channels, mouse move  event moved by "
-        //        << - (now_x - last_dragged_x) << " pixels "
-        //        << " in word coordinates it is  = " << diff
-        //        << endl;
+//			cout<< "box of counts, mouse move  event moved by "
+//				<< - (now_y - last_dragged_y) << " pixels "
+//				<< " in word coordinates diff is  = " << diff
+//				<< endl;
 
         last_dragged_y = now_y ;
 
@@ -130,14 +134,32 @@ void box_of_counts::mouseMoveEvent ( QMouseEvent * event )
         spectrum_descr sd;
         parent->give_parameters(&min_ch, &max_co, & max_ch, & min_co, &sd);
 
-        if( (max_co + diff > sd.end_y)          // if too much to the right
+		bool flag_impossible_more = false;
+
+		if( (max_co + diff > sd.end_y)          // if too much to the right
                 ||
-                (min_co + diff < sd.beg_y) )    //    too much to the left
-        {
+		 (min_co + diff < sd.beg_y) )    //    too much to the left
+		{
+			// if( parent->give_dimension() == 2)  // do not do int for matrices?
+				flag_impossible_more = true;   // always block going outside boundaries
+		}
+
+//		cout << "Imposible--> max_co + diff = " << (max_co + diff)
+//			 << " > sd.end_y = " << sd.end_y
+//			 << " lub < sd.beg_y " << sd.beg_y << endl;
+
+		if(flag_impossible_more )
+		{
+//			cout << "max_co + diff = " << (max_co + diff)
+//				 << " > sd.end_y = " << sd.end_y
+//				 << " lub < sd.beg_y " << sd.beg_y << endl;
+
+
             //forbidden coursor
             setCursor ( QCursor (Qt::ForbiddenCursor ) ) ;
             appl_form_ptr->send_to_statusbar(
                         "Dragging more in this direction - is not possible (OUT OF LIMITS of the spectrum)",  5*1000   ); //  seconds on the screen
+
         }
         else{
             setCursor ( QCursor (Qt::OpenHandCursor ) ) ;
@@ -149,6 +171,7 @@ void box_of_counts::mouseMoveEvent ( QMouseEvent * event )
     {
         //       cout << "no move now_y ="   << now_y << endl;
     }
+	//parent ->flag_repaint_spectrum_box = true;
 }
 //******************************************************************************************
 void box_of_counts:: mousePressEvent ( QMouseEvent * event )
@@ -177,7 +200,7 @@ void box_of_counts:: wheelEvent ( QWheelEvent * e )   // expanding spectrum arou
 
     if(parent->give_dimension() == 1)    // Normal spectrum 1D ========================
     {
-        //       cout << "this is a wheel event  in spectrum 1D::" << __func__ << " , delta = "<<  e->delta() << endl ;
+			//  cout << "this is a Counts wheel event  in spectrum 1D::" << __func__ << " , delta = "<<  e->delta() << endl ;
 
         if ( e->delta() < 0 )
         {
@@ -258,6 +281,7 @@ void box_of_counts:: wheelEvent ( QWheelEvent * e )   // expanding spectrum arou
          appl_form_ptr->if_needed_apply_to_other_spectra();
 
     } // endif 2D
+
 
 }
 //*******************************************************************************************************************

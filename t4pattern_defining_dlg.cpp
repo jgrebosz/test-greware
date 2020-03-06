@@ -15,6 +15,8 @@ using namespace std;
 #include <sstream>
 #include "paths.h"
 
+//char znak = '#';
+
 //************************************************************************************
 T4pattern_defining_dlg::T4pattern_defining_dlg(QWidget *parent) :
     QDialog(parent),
@@ -25,7 +27,7 @@ T4pattern_defining_dlg::T4pattern_defining_dlg(QWidget *parent) :
 
     czerw_pocz = "<span style=\"  font-weight:600; color:#ff0000;\">";
     kolor_kon = "</span>";
-    pattern1 = "%%";
+	pattern1 = "" ; // "%%";
     ui->lineEdit_pattern1->setText(pattern1.c_str());
 
     flag_second_pattern = false;
@@ -58,6 +60,8 @@ void T4pattern_defining_dlg::set_parameters(std::string specname,
     original_specname = specname ;
     template_file_contents = contents;
 
+	choose_proper_forbidden_character();
+
     // finding the pattern in the name (may be few times)
     ui->label_spectrum_name->setText(specname.c_str());
 
@@ -71,70 +75,32 @@ void T4pattern_defining_dlg::set_parameters(std::string specname,
 //*******************************************************************
 string T4pattern_defining_dlg::find_patterns_and_make_skeleton_with_procents(string text)
 {
+//	if(text.size() > 20) return "";   // for debugging time
+//	cout << __func__ << "with argument (" << text << ")" << endl;
+
     bool flag_some_pattern_found = false;
     string skeleton = text;
-    if(pattern1.empty()== false )
+	string temporary_pattern1(50, forbiden_character);
+
+	if(pattern1.empty() == false )
     {
-        string::size_type loc;
-        // pattern first
-        vector<string::size_type> zapisek;
-        for(string::size_type i = skeleton.size() -1;  ; --i)
-        {
-            loc = skeleton.rfind(pattern1, i);
-            if( loc == string::npos)
-            {
-                break; // not found
-            }
+		// we do not want that pattern2 would penetrate the pattern1 occurences, so at first
+		// we make the replacement with a fake pattern which is build of so called many forbidden characters
+		// The 'forbidden charcter' is the one which
+		//    - is not occuring in a file name
+		//    - is not ocurring in a contents of file
+		//   - and is also not occuring as a firs character in pattern2
 
-            zapisek.push_back( loc);
-            i = loc;
-            if(i == 0) break;
-        }
-        for(unsigned int i = 0 ; i< zapisek.size(); ++i)
-        {
-            skeleton.replace(zapisek.at(i), pattern1.size(),
-                             //"_" + nieb_pocz +
-                             "%1"
-                             //+ kolor_kon
-                             );
-            //            cout << "found at position " << loc << ", after blue_replacement = "
-            //                 << skeleton
-            //                 << endl;
-            flag_some_pattern_found = true;
-
-        }
-        zapisek.clear();
-
-        // pattern second
+		skeleton = find_patterns_and_replace(skeleton, pattern1, temporary_pattern1, flag_some_pattern_found);
+		// pattern second --------------------------------------------------------------------------------
         if(!pattern2.empty() && flag_second_pattern ){
-            for(string::size_type i = skeleton.size() -1;  ; --i)
-            {
-                loc = skeleton.rfind(pattern2, i);
-                if( loc == string::npos )
-                {
-                    break; // not found
-                }
-
-                zapisek.push_back( loc);
-                i = loc;
-            }
-            for(unsigned int i = 0 ; i< zapisek.size(); ++i)
-            {
-                skeleton.replace(zapisek.at(i), pattern2.size(),
-                                 //"_" + czerw_pocz +
-                                 "%2"
-                                 //+ kolor_kon
-                                 );
-                flag_some_pattern_found = true;
-                //                cout << "found at position " << loc << ", after red replacement = "
-                //                     << skeleton
-                //                     << endl;
-
-            }
-        }
-
+			skeleton = find_patterns_and_replace(skeleton, pattern2, "%2", flag_some_pattern_found);
+        }		
+		skeleton = find_patterns_and_replace(skeleton, temporary_pattern1, "%1", flag_some_pattern_found);
     }
-    if(!flag_some_pattern_found){
+
+	if(!flag_some_pattern_found)
+	{
 
         skeleton = "";
         ui->groupBox_pattern_found->setVisible(false);
@@ -146,6 +112,88 @@ string T4pattern_defining_dlg::find_patterns_and_make_skeleton_with_procents(str
     }
     return skeleton;
 
+}
+//************************************************************************************
+string T4pattern_defining_dlg::find_patterns_and_replace(string text, string pattern, string replacement, bool & flag_some_pattern_found)
+{
+	string skeleton = text;
+	string::size_type loc;
+	// pattern first --------------------------------------------------------------------
+	vector<string::size_type> zapisek;
+
+	// finding the places (location) where the pattern1 was found in the text
+	// for(string::size_type i = skeleton.size() -1;  ; --i)
+	for(uint i = 0 ; i < skeleton.size() ; )
+	{
+		//  cout << skeleton << " searching at position " << i << endl;
+		loc = skeleton.find(pattern, i);
+		if( loc == string::npos)
+		{
+			break; // not found
+		}
+
+		zapisek.push_back( loc);
+		i = loc;
+		i += pattern.size();
+		// cout << "pattern1 [" << pattern1 << "] found at loc: " << loc << endl;
+	}
+
+	// now we know where are pattern1
+
+//        for(unsigned int i = 0 ; i< zapisek.size(); ++i)
+	for(int i = zapisek.size()-1; i>=0;  --i)
+	{
+		skeleton.replace(zapisek.at(i),
+						 pattern.size(),
+
+						 replacement   // "%1"    // what to put thee
+
+						 );
+//						cout << "found at position " << loc << ", after blue_replacement = "
+//							 << skeleton
+//							 << endl;
+		flag_some_pattern_found = true;
+
+	}
+	zapisek.clear();
+	return skeleton;
+}
+//************************************************************************************
+/// We try to choose a charcter which does not exist in a filename and contents of the file
+void T4pattern_defining_dlg::choose_proper_forbidden_character()
+{
+
+
+
+	char but_not_this_one { 'x'}; // fake
+	if(ui->checkBox_pattern2->checkState() && pattern2.size())
+	{
+		but_not_this_one = pattern2[0];
+	}
+
+	string set_of_forbidden_characters { "<>;:'$&!^`" };
+	for(uint i = 0 ; i < set_of_forbidden_characters.size() ; ++i)
+	{
+		char znak = set_of_forbidden_characters[i] ;
+
+		if(znak == but_not_this_one){
+			cout << "we skip character " << znak;
+			continue;
+		}
+
+		if(
+				original_specname.find(znak) == string::npos
+				&&
+				template_file_contents.find(znak) == string::npos
+		)
+		{
+			forbiden_character = set_of_forbidden_characters[i];
+			cout << "forbiden_character found as: "<< forbiden_character << endl;
+			return;
+		}
+			cout << "character " << set_of_forbidden_characters[i] << " found in filename ofr contents: " << endl;
+	}
+	cout << "Strange... Forbidden character can not be chosen proprery... Amost impossible" << endl;
 }
 //************************************************************************************
 void T4pattern_defining_dlg::get_parameters(vector<string> * vone, vector<string> * vtwo, vector<string> *filenames)
@@ -163,9 +211,21 @@ void T4pattern_defining_dlg::show_spectra_names()
     bw_spectra_names.clear();
 
     // take the current skeleton
+
+//	cout << "Qstring  Edit_skeleton.txt = "
+//			<<
+//			<< endl;
+
+//	ui->lineEdit_skeleton->text();
+
+
+
     string  skeleton = ui->lineEdit_skeleton->text().toStdString();
-    bool flag_pattern2_in_use = (skeleton.find("%2") != string::npos);
-    // for  %1
+
+	cout << "std::string taken from LIneEdit skeleton = " << skeleton << endl;
+
+	bool flag_pattern2_in_use = (skeleton.find("%2") != string::npos);
+	// for  %1
     istringstream s1(ui->lineEdit_one->text().toStdString());
 
     vec_one.clear();
@@ -178,7 +238,7 @@ void T4pattern_defining_dlg::show_spectra_names()
     }
 
 
-    // for %2
+	// for %2
     if(flag_second_pattern)
     {
         istringstream s2(ui->lineEdit_two->text().toStdString() );
@@ -205,8 +265,8 @@ void T4pattern_defining_dlg::show_spectra_names()
             string result_bw;
 
 
-            //            cout << "cloning skeleton for arguments: [" << vec_one[i1] << "] [" << vec_two[i2]
-            //                 << "], pattern2 = [" << pattern2 << "]"<< endl;
+//			cout << "\n\n,we call cloning skeleton: " << skeleton << ", for arguments: [" << vec_one[i1] << "] [" << vec_two[i2]
+//							 << "], pattern2 = [" << pattern2 << "]"<< endl;
             if( (!flag_second_pattern && i2 > 0) || (i2 > 0 && !flag_pattern2_in_use) ) continue;
             string result = make_a_clone_from_skeleton_using_kombination(skeleton,
                                                                          vec_one[i1], vec_two[i2],
@@ -216,7 +276,7 @@ void T4pattern_defining_dlg::show_spectra_names()
 
 
             if(!flag_any_change) continue;
-            //cout << "result: " << result << endl;
+			//cout << "result: " << result << endl;
             if(flag_second_pattern == false && i2) continue;
             spectra_names.push_back(result);
             text_spectra_names += (result + "<br>") ;
@@ -239,9 +299,15 @@ string T4pattern_defining_dlg::make_a_clone_from_skeleton_using_kombination(stri
     *flag_any_change = false;
     string result = skeleton;
 
+//	cout << __func__
+//		 << "skel = " << skeleton
+//		 << ", proc1= " << proc1
+//		 << ", proc2 = " << proc2
+//		 << endl;
+
     size_t  poz ;
     do{
-        poz = result.find("%1");
+		poz = result.find("%1");
         if(poz != string::npos)
         {
             result.replace(poz, 2, nieb_pocz  +proc1+ kolor_kon );
@@ -252,7 +318,7 @@ string T4pattern_defining_dlg::make_a_clone_from_skeleton_using_kombination(stri
 
     if(proc2 != "")
         do{
-        poz = result.find("%2");
+		poz = result.find("%2");
         if(poz != string::npos)
         {
             result.replace(poz, 2, czerw_pocz  +proc2+ kolor_kon  );
@@ -262,7 +328,7 @@ string T4pattern_defining_dlg::make_a_clone_from_skeleton_using_kombination(stri
 
 
     if(!(*flag_any_change)) return ("");
-    //cout << "result: " << result << endl;
+//	cout << __LINE__ << "result: " << result << endl;
 
     if(flag_second_pattern == false && proc2.size() > 2) return "";
 
@@ -291,12 +357,13 @@ string T4pattern_defining_dlg::make_a_clone_from_skeleton_using_kombination(stri
     bw_spectra_names.push_back(result_bw);
     *result_bw_glob = result_bw;
 
-    //    cout << "Tpattern_defining_dlg::make_a_clone_from_skeleton     BW result =" << result_bw << endl;
+	// cout << __LINE__ << " Tpattern_defining_dlg::make_a_clone_from_skeleton     BW result =" << result_bw << endl;
     return result;
 }
 //********************************************************************************
 void T4pattern_defining_dlg::on_lineEdit_one_textChanged(const QString &  /* arg1*/)
 {
+	cout << "text changed \n\n";
     show_spectra_names();
     prepare_file_contents_skeleton();
 }
@@ -329,12 +396,15 @@ void T4pattern_defining_dlg::on_lineEdit_pattern1_textChanged(const QString &arg
 void T4pattern_defining_dlg::on_lineEdit_pattern2_textChanged(const QString &arg1)
 {
     pattern2 = arg1.toStdString();
+
+
     prepare_filename_skeleton();
     show_spectra_names();
 }
 //********************************************************************************
 void T4pattern_defining_dlg::prepare_filename_skeleton()
 {
+	choose_proper_forbidden_character();
     string skel = find_patterns_and_make_skeleton_with_procents(original_specname);
     // placing in the
     ui->lineEdit_skeleton->setText(skel.c_str() );
@@ -358,7 +428,7 @@ void T4pattern_defining_dlg::prepare_file_contents_skeleton()
 
     //bool flag_any_change = false;
     do{
-        poz = result.find("%1");
+		poz = result.find("%1");
         if(poz != string::npos)
         {
             result.replace(poz, 2, nieb_pocz  +proc1+ kolor_kon );
@@ -372,7 +442,7 @@ void T4pattern_defining_dlg::prepare_file_contents_skeleton()
         string proc2 = vec_two[0] ;
 
         do{
-            poz = result.find("%2");
+			poz = result.find("%2");
             if(poz != string::npos)
             {
                 result.replace(poz, 2, czerw_pocz  +proc2+ kolor_kon);
@@ -406,8 +476,8 @@ void T4pattern_defining_dlg::on_pushButton_give_numbers_clicked()
 
     // asking question
     // starting number
-    string message { "Type starting number, stoping number and 'C format'\n"
-                     "for example: if you type\n   7  9 _%02d_\n    you will get:\n _07_  _08_  _09_"};
+	string message { "Type\n    starting number    stoping number    'C format'\n\n\n"
+					 "For example: if you type:\n \n     7   9  _%02d_\n\nyou will get:\n\n      _07_  _08_  _09_"};
 
     static string sugestion ;
     bool ok;
@@ -455,8 +525,8 @@ void T4pattern_defining_dlg::on_pushButton_clicked()
 {
     // asking question
     // starting number
-    string message { "Type starting Character, stoping character and 'C-format'\n"
-                     "for example: if you type\n   B D  _%c_\n    you will get:\n _B_  _C_  _D_ "};
+	string message { "Type:\n   starting character   stoping character   'C-format'\n\n\n"
+					 "For example: if you type:\n\n      B D  _%c_\n\nyou will get:\n\n      _B_  _C_  _D_ "};
 
     static string sugestion ;
     bool ok;

@@ -18,6 +18,9 @@
   <property name="windowTitle">
    <string>User-defined spectra Manager</string>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <layout class="QVBoxLayout" name="verticalLayout_4">
    <item>
     <widget class="QTabWidget" name="tabWidget2">
@@ -165,7 +168,7 @@
             </size>
            </property>
            <property name="text">
-            <string>&lt;p align=&quot;right&quot;&gt;&lt;font color=&quot;#5555ff&quot;&gt;(Hint: to edit a definition:   just double click on it)&lt;/font&gt;&lt;/p&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; color:#5555ff;&quot;&gt;(Hint: to EDIT a definition: just double click on its name)&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignVCenter</set>
@@ -323,8 +326,12 @@
                <verstretch>0</verstretch>
               </sizepolicy>
              </property>
+             <property name="locale">
+              <locale language="English" country="UnitedStates"/>
+             </property>
              <property name="text">
-              <string>Exit Manager</string>
+              <string>Exit
+the Manager</string>
              </property>
             </widget>
            </item>

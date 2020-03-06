@@ -23,6 +23,12 @@
    <iconset resource="greware_icons.qrc">
     <normaloff>:/images/images/literaG.jpg</normaloff>:/images/images/literaG.jpg</iconset>
   </property>
+  <property name="toolTip">
+   <string notr="true"/>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <widget class="QWidget" name="centralWidget">
    <layout class="QVBoxLayout" name="verticalLayout_2">
     <item>
@@ -376,7 +382,7 @@
      <x>0</x>
      <y>0</y>
      <width>1114</width>
-     <height>20</height>
+     <height>30</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuFile">
@@ -455,7 +461,7 @@
     </property>
     <addaction name="actionAutomatic_calibration_of_germanium_detectors"/>
     <addaction name="actionRead_and_install_the_frs_calibration_factors_from_an_external_file"/>
-    <addaction name="actionMake_tar_file_with_calibatrions_and_lookup_tables"/>
+    <addaction name="actionMake_tar_file_with_calibrations_and_lookup_tables"/>
    </widget>
    <widget class="QMenu" name="menuSpy_actions">
     <property name="title">
@@ -513,9 +519,10 @@
      <string>&amp;Window</string>
     </property>
     <addaction name="actionTile"/>
-    <addaction name="actionTile_with_system_function"/>
+    <addaction name="actionCustom_tiling"/>
     <addaction name="actionCascade"/>
     <addaction name="actionSpectrum_below_spectrum"/>
+    <addaction name="actionTile_with_system_function"/>
    </widget>
    <widget class="QMenu" name="menuAbout">
     <property name="title">
@@ -582,6 +589,7 @@
    <addaction name="lupa_action"/>
    <addaction name="black_white_action"/>
    <addaction name="filePrintAction"/>
+   <addaction name="actionCustom_tiling"/>
    <addaction name="actionMatching_the_MBS_subevents"/>
    <addaction name="separator"/>
    <addaction name="actionSpy_Update_pause_and_run_again"/>
@@ -1252,7 +1260,7 @@
     <bool>false</bool>
    </property>
    <property name="text">
-    <string>&quot;Good&quot; CATE detector data</string>
+    <string>&quot;Good&quot; &amp;CATE detector data</string>
    </property>
   </action>
   <action name="actionDefinition_of_Good_Hector_BaF_data">
@@ -1378,9 +1386,12 @@
     <bool>true</bool>
    </property>
   </action>
-  <action name="actionMake_tar_file_with_calibatrions_and_lookup_tables">
+  <action name="actionMake_tar_file_with_calibrations_and_lookup_tables">
    <property name="text">
-    <string>&amp;Make &quot;*.tar&quot; file with calibatrions and lookup tables</string>
+    <string>&amp;Make &quot;*.tar&quot; file with calibrations and lookup tables</string>
+   </property>
+   <property name="toolTip">
+    <string>Make &quot;*.tar&quot; file with calibrations and lookup tables</string>
    </property>
   </action>
   <action name="actionSpectrum_below_spectrum">
@@ -1415,7 +1426,7 @@
     <string>Tile &amp;with a system tile function</string>
    </property>
    <property name="toolTip">
-    <string>Otrer way of rearanging spectra on screen</string>
+    <string>Other way of rearanging spectra on screen</string>
    </property>
   </action>
   <action name="actionGUI_options">
@@ -1475,6 +1486,18 @@
   <action name="actionSystemTile_activation_history_order_2">
    <property name="text">
     <string>SystemTile_activation_history_order_&amp;2</string>
+   </property>
+  </action>
+  <action name="actionCustom_tiling">
+   <property name="icon">
+    <iconset resource="greware_icons.qrc">
+     <normaloff>:/images/images/custom_tile.png</normaloff>:/images/images/custom_tile.png</iconset>
+   </property>
+   <property name="text">
+    <string>C&amp;ustom tiling of spectra windows</string>
+   </property>
+   <property name="toolTip">
+    <string>Here you can define you custom way of tiling</string>
    </property>
   </action>
  </widget>

@@ -3,13 +3,17 @@ cracow4*
 ui_*
 greware
 moc_*
-greware.pro.user*
+greware.pro.use*
 Makefile
 *.gz
 *.tar
 paths.cnf
 qrc_greware_icons.cpp
 options.cracow
+compile_commands.json
+.qmake.stash
+
+
 
 
 

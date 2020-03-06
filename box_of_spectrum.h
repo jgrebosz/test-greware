@@ -38,9 +38,9 @@ class box_of_spectrum :  public QWidget, public swiatek
 
     // current parameters for drawing
     typ_x minX;
-    int maxY;
     typ_x maxX;
-    int minY ;
+	int maxY;
+	int minY ;
 
     // pointer to the data in the spectrum widget
     spectrum_descr * specif ;            // nr of bins, np. 1024
@@ -95,12 +95,12 @@ public:
     void draw_integration_markers ( QPainter & piorko );
     void draw_background_markers ( QPainter & piorko );
     void draw_1Dgates ( QPainter & piorko );
-    void draw_pinup_notices ( QPainter & piorko );
+    void draw_pinup_notices (QPainter & piorko , int fontsize);
 
 
     void set_spectrum_pointer ( vector<int> * ptr, spectrum_descr * desc );
 
-    void 	change_region_of_spectrum ( typ_x a, int b, typ_x c, int d )
+	void 	change_region_of_spectrum ( typ_x a, typ_x b, typ_x c, typ_x d )
     {
         minX = a;
         maxY = b;

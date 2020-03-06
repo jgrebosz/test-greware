@@ -98,18 +98,18 @@ void spectrum_1D::init()
 	b_spectrum = new box_of_spectrum(this, "spectrum");
 	b_spectrum ->force_new_pixmap(true);
 
-#ifdef RAINBOW_SCALE
-	b_scale =  new box_of_counts (this, true, "scaleZ" );   // true -> with rainbow scale
-#endif
+//#ifdef RAINBOW_SCALE
+//	b_scale =  new box_of_counts (this, true, "scaleZ" );   // true -> with rainbow scale
+//#endif
 
 	layout = nullptr;
 	layout = new QGridLayout;
 	layout->addWidget(b_counts, 0,0);
 	layout->addWidget(b_spectrum, 0,1);
 	layout->addWidget(b_channels, 1,1);
-#ifdef RAINBOW_SCALE
-	layout->addWidget(b_scale, 0,2);
-#endif
+//#ifdef RAINBOW_SCALE
+//	layout->addWidget(b_scale, 0,2);
+//#endif
 	set_layout_normal() ;
 	recalculate_my_geometry() ;
 
@@ -223,7 +223,7 @@ void spectrum_1D::destroy()   // destructor
 	{
 		timer_refresh->stop(); // 20 seconds
 		delete timer_refresh ;
-		timer_refresh = 0 ;
+		timer_refresh = nullptr ;
 	}
 	save_tags_to_disk();
 
@@ -250,15 +250,18 @@ void spectrum_1D::recalculate_my_geometry()
 		set_layout_normal();
 	}
 
-	double pixels5 =   0;
-	if(flag_draw_scales  &&  !flag_impossible_to_draw_scales)
-	{
-		pixels5 = 2;
-	}
+//	double pixels5 =   0;
+//	if(flag_draw_scales  &&  !flag_impossible_to_draw_scales)
+//	{
+//		pixels5 = 2;
+//	}
 
-	return;   // ================================================
+	flag_repaint_spectrum_box = 1;
+	return;
 
+	// ================================================
 
+#if 0
 
 	// calculating the standard boarder
 	// double pixels5 =  flag_draw_scales? 2 :   0;      //1.0 ; //5.0 ;
@@ -327,16 +330,17 @@ void spectrum_1D::recalculate_my_geometry()
 	---*/
 
 	//  b_spectrum->new_factors(Cx, 1-Dy, Dx, 1-Cy);
+#endif  // 0
 
 }
 //**************************************************************************
-int spectrum_1D::give_max_channel_skas()
-{
+//int spectrum_1D::give_max_channel_skas()
+//{
 
-	// return (max_channel) ;
-	return spectrum_table.size() ;
+//	// return (max_channel) ;
+//	return spectrum_table.size() ;
 
-}
+//}
 //***************************************************************************
 // function called from the toolbar (QMdiArea)
 void spectrum_1D::expand()
@@ -362,6 +366,7 @@ void spectrum_1D::expand()
 	//draw_all();
 	// cout << "Expand, in region " << min_x << " to " << max_x << endl ;
 	b_spectrum ->force_new_pixmap(true);
+    flag_repaint_spectrum_box = 1;
 	//draw_all_on_screen();
 	appl_form_ptr->send_to_statusbar(
 				"Tip: You can also expand  quicker:  by setting the second yellow marker with Double Click",
@@ -369,11 +374,11 @@ void spectrum_1D::expand()
 
 }
 //***************************************************************************
-void spectrum_1D::expand_double_click(typ_x pos_x, typ_x  pos_y, bool shift)
+void spectrum_1D::expand_double_click(typ_x pos_x, typ_x  /*pos_y*/, bool shift)
 {
 	remember_for_undo("Expand by double click");
 	//cout << "double click expand function" << endl ;
-	pos_y = pos_y ; // to avoid warnings
+	// pos_y = pos_y ; // to avoid warnings
 
 	// here wa a procedure to expand 50% around the point of clicking.
 	// but finally I decided to expand in classical way.
@@ -951,15 +956,10 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
 		}
 		// cout << endl ;
 
-		if(d == 0)
-		{
-			cout << "d == 0 ?  \a" << flush ;
-		}
-		else
+		if(d >= 0)
 		{
 			bgr_slope  = c / d ;
 			bgr_offset = ys - (bgr_slope * xs) ;
-
 
 			flag_bgr_valid = true ;
 			//    cout << "after calculations:    slope =  "
@@ -968,9 +968,6 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
 			//      <<endl;
 		}
 	}
-
-
-
 
 	int how_many_channels = 0 ;
 	int first_int_channel = (int)((left - specif.beg) / specif.waga)  ;
@@ -1186,7 +1183,7 @@ void spectrum_1D::integrate(T4results_of_integration *ptr)
 			   << " - " << setw(6) << (last_int_channel * specif.waga) + specif.beg + (0.5 * specif.waga)
 			   << "], " << setw(6) << how_many_channels
 			   << " bins.  ; "
-			   << " \(Spc: " << sum
+			   << " / (Spc: " << sum
 			   << ") - (Bgr: " << sum_tla
 			   << ");  ";
 		}
@@ -1250,12 +1247,12 @@ void spectrum_1D::give_parameters(typ_x * min_ch, typ_x * max_co,
 void spectrum_1D::scrollbar_horizontal_moved(int int_left_edge)
 {
 	// to not to store intermediate positions while we drag the scrollbar
-	static time_t last = time(0) ;
-	if(time(0) - last > 2)
+	static time_t last = time(nullptr) ;
+	if(time(nullptr) - last > 2)
 	{
 		remember_for_undo("Scrollbar horizontal moved");
 	}
-	last = time(0) ;
+	last = time(nullptr) ;
 
 
 	// this trick is because sliders do not accept any double numbers
@@ -1319,6 +1316,7 @@ void spectrum_1D::scaleY_by_factor(double  scaling_factor)
 #else
 	// warning: to scaling_factor   0.5, means that the spectrum is geting  2 times smaller
 
+//	flag_repaint_counts_box = true;
 	if ( !flag_log_scale )
 	{
 		if ( scaling_factor > 1 &&  max_counts > 10000000L )
@@ -1349,6 +1347,9 @@ void spectrum_1D::scaleY_by_factor(double  scaling_factor)
 	if ( max_counts < 10 )  // if it would be less then 10 the integer mulitplic 1.1* max_counts_on_map would not work
 		max_counts = 10 ;
 	//     cout << " after max_counts " << max_counts << endl ;
+
+
+
 	b_spectrum ->force_new_pixmap(true);
 	//    draw_all_on_screen();
 
@@ -1464,13 +1465,16 @@ int spectrum_1D::giveCurrentMaxCounts()
 //************************************************************************
 void spectrum_1D::set_parameters(typ_x min_ch, typ_x max_co, typ_x  max_ch, typ_x min_co)
 {
+
+	//cout << __func__ << " !!! max_co = " << max_co << ", max_counts = " << max_counts << endl;
+
 	// to not to store intermediate positions while we drag the scrollbar
-	static time_t last = time(0) ;
-	if(time(0) - last > 2)
+	static time_t last = time(nullptr) ;
+	if(time(nullptr) - last > 2)
 	{
 		remember_for_undo("Changing display region");
 	}
-	last = time(0) ;
+	last = time(nullptr) ;
 
 
 	// this is the function for an application, to learn how to position the sliders and scrollers
@@ -1496,10 +1500,8 @@ void spectrum_1D::set_parameters(typ_x min_ch, typ_x max_co, typ_x  max_ch, typ_
 #endif
 	min_counts = static_cast<int>(min_co) ;
 	max_counts = static_cast<int>(max_co) ;
-	// cout << __func__ << " max_co = " << max_co << ", max_counts = " << max_counts << endl;
 
 	b_spectrum ->force_new_pixmap(true);
-	//    draw_all_on_screen();
 }
 //*************************************************************************
 void spectrum_1D::save()   // virtual function to save spectrum
@@ -1905,7 +1907,7 @@ void spectrum_1D::read_in_file(const char *name, bool this_is_first_time)
 				{
 					timer_refresh->stop();
 					delete timer_refresh ;
-					timer_refresh = 0 ;
+					timer_refresh = nullptr ;
 				}
 
 
@@ -2087,9 +2089,10 @@ typ_x spectrum_1D::justify_to_bin_center(typ_x dana)
 {
 
 	// here we can adjust it to real bin position
-	if(specif.waga == 0)
+	if(!(specif.waga > 0))
 		return dana ;  // often in overlay spectra
-	int binek = (int)((dana - specif.beg) / specif.waga)  ;
+
+	typ_x binek = (int)((dana - specif.beg) / specif.waga)  ;
 	dana = (binek * specif.waga) + specif.beg
 			+
 			0.5 * specif.waga  ; // to be always in the middle of the channel
@@ -2098,20 +2101,18 @@ typ_x spectrum_1D::justify_to_bin_center(typ_x dana)
 //**************************************************************************
 typ_x spectrum_1D::justify_to_bin_left_edge(typ_x dana)
 {
-	if(specif.waga == 0)
+	if(!(specif.waga > 0))
 		return dana ;  // often in overlay spectra
 	// here we can adjust it to real bin position
-	int binek = (int)((dana - specif.beg) / specif.waga)  ;
+	typ_x binek = (int)((dana - specif.beg) / specif.waga)  ;
 	dana = (binek * specif.waga) + specif.beg ;
 	return dana ;
 }
 //*********************************************************************
 int spectrum_1D::typ_x_to_bin(typ_x value)
 {
-
 	return (int)((value - specif.beg) / specif.waga)  ;
 }
-
 //**********************************************************************
 bool spectrum_1D::give_bg_info(double * sl, double *off)
 {
@@ -2125,14 +2126,8 @@ void spectrum_1D::draw_all(QPainter *  /*piorko*/)
 {
 	// cout << "spectrum_1D::draw_all" << endl;
 
-	//      cout << "\n\n..Spectrum_1D Before drawing x "
-	//           <<   min_x << " - " <<  max_x
-	//           <<  "  Y= " << min_counts
-	//           << " - " <<  max_counts
-	//           << endl ;
-
-	int gorka = max_counts ;
-	int doleczek = min_counts  ;
+	typ_x gorka = max_counts ;
+	typ_x doleczek = min_counts  ;
 	if(flag_log_scale)
 	{
 		gorka = (int)log10((double) gorka) + 1 ;
@@ -2145,17 +2140,27 @@ void spectrum_1D::draw_all(QPainter *  /*piorko*/)
 	b_spectrum->change_region_of_spectrum(min_x, gorka, max_x,  doleczek);
 	b_counts->change_region_of_counts(doleczek, gorka);
 	b_channels->change_region_of_channels(min_x, max_x);
-#ifdef RAINBOW_SCALE
-	b_scale->change_region_of_counts(doleczek, gorka);
-#endif
 
+//#ifdef RAINBOW_SCALE
+//	b_scale->change_region_of_counts(doleczek, gorka);
+//#endif
 
-	b_counts->update();
-	b_channels->update();
-	b_spectrum->update();
-#ifdef RAINBOW_SCALE
-	b_scale->update();
-#endif
+	 // cout << "in Spectrum_1D  =  flag_repaint_counts_box =" << flag_repaint_counts_box << endl;
+	 if(flag_repaint_counts_box)
+	 {
+		 b_counts->update();
+		 flag_repaint_counts_box = false;
+	 }
+	 if(flag_repaint_channels_box)
+	 {
+		 b_channels->update();
+		 flag_repaint_channels_box = false;
+	 }
+	if(flag_repaint_spectrum_box)
+    {
+            b_spectrum->update();
+            flag_repaint_spectrum_box = false;
+    }
 
 	//         cout << "spectrum_1D::draw_all finished " << endl;
 
@@ -3388,9 +3393,9 @@ void spectrum_1D::set_layout_normal()
 
 
 #ifdef RAINBOW_SCALE
-	layout->setColumnStretch(0,3);
-	layout->setColumnStretch(1, 90);  // (1,90);
-	layout->setColumnStretch(2,3);          // 3
+//	layout->setColumnStretch(0,3);
+//	layout->setColumnStretch(1, 90);  // (1,90);
+//	layout->setColumnStretch(2,3);          // 3
 #else
 	layout->setColumnStretch(0,20);
 	layout->setColumnStretch(1,980);

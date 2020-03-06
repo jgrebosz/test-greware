@@ -23,7 +23,8 @@ bool Tpaths::read_from_disk()
 
   if(is_it_legal())
     return true;
-  else return false;
+  else
+      return false;
 }
 //***********************************************************
 void Tpaths::save_to_disk()   // this is a main function after choosing from GUI

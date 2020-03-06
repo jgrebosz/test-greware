@@ -38,6 +38,9 @@ void box_of_channels::draw_all( QPainter * piorko )
 
 	//     cout << "box_of_channels::draw_all " << int(time(NULL))  << endl;
 
+//	static int counter;
+//	cout << __PRETTY_FUNCTION__ << " update box_channels  " << (counter++) << endl;
+
 	Tplate_spectrum *p = dynamic_cast<Tplate_spectrum*>(parent); // for
 	if(!p->give_flag_draw_scales())
 	{
@@ -439,7 +442,7 @@ void box_of_channels::mouseMoveEvent ( QMouseEvent * event )
 	if(event->buttons() != Qt::LeftButton) return;
 
 
-	if(last_dragged_x != now_x)
+	if(fabs(last_dragged_x - now_x) > 0)
 	{
 
 		double diff =   pix2worX(last_dragged_x) - pix2worX(now_x) ;
@@ -470,6 +473,7 @@ void box_of_channels::mouseMoveEvent ( QMouseEvent * event )
 			parent->set_parameters(min_ch+diff, max_co, max_ch+diff, min_co);
 			appl_form_ptr->if_needed_apply_to_other_spectra();
 		}
+        parent ->flag_repaint_spectrum_box = true;
 	}else
 	{
 		//       cout << "no move now_x ="   << now_x << endl;
@@ -558,8 +562,11 @@ void box_of_channels:: wheelEvent ( QWheelEvent * e )   // expanding spectrum ar
 	}
 //	cout	<< "wheel wants (" <<pocz_new  << " : " << kon_new << ")"
 //			<< ", vertical (" << min_co << ", " << max_co << ")"  << endl;
+    parent->flag_repaint_spectrum_box = true;
 	parent->set_parameters(pocz_new, max_co, kon_new, min_co);
 	parent->setFocus(); //   activateWindow();
+	parent ->flag_repaint_channels_box = true;
+	parent->update();
 	appl_form_ptr->if_needed_apply_to_other_spectra();
 }
 //******************************************************************************************

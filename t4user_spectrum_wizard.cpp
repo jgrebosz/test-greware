@@ -36,6 +36,13 @@ T4user_spectrum_wizard::T4user_spectrum_wizard(QWidget *parent) :
 {
   ui->setupUi(this);
 
+  // To avoid writing this in Polish
+  setButtonText(QWizard::NextButton, "Next  >" );
+  setButtonText(QWizard::BackButton, "<  Back" );
+  setButtonText(QWizard::CancelButton, "Cancel" );
+  setButtonText(QWizard::FinishButton, "Finish" );
+
+
   szary = 0xcccccc;
   NoSelfGate = "No_self_gate";
 

@@ -43,7 +43,7 @@ extern appl_form  *appl_form_ptr;
 //static
 bool spectrum_2D::flag_ask_if_refresh_the_huge_matrices = true;
 
-
+extern refresh_big_matrices_policy  policy;
 //***********************************************************************
 istream & zjedz ( istream & plik )
 {
@@ -301,7 +301,7 @@ void spectrum_2D::destroy()     // destructor
 	{
 		timer_refresh->stop(); // 20 seconds
 		delete timer_refresh ;
-        timer_refresh = nullptr ;
+		timer_refresh = nullptr ;
 	}
 	//cout << "Destroy of spectrum 2D " << endl;
 	save_tags_to_disk();
@@ -544,7 +544,7 @@ void spectrum_2D::recalculate_my_geometry()
 void spectrum_2D::expand()
 {
 
-    if ( fabs (marker_older - marker_younger) <= 0 )
+	if ( fabs (marker_older - marker_younger) <= 0 )
 	{
 		cout << "rejected expansion\n" << endl ;
 		return ;  // do not expand
@@ -916,10 +916,10 @@ void spectrum_2D::scale_to_maxY()
 	adjust_range_to_legal_values();
 
 
-    int first_drawn_channel = static_cast< int> ( ( min_x - specif.beg ) / specif.waga )  ;
-    int last_drawn_channel  = static_cast< int> ( ( max_x - specif.beg ) / specif.waga ) ;
-    int first_drawn_y = static_cast<int> ( ( min_y - specif.beg_y ) / specif.waga_y )  ;
-    int last_drawn_y  = static_cast<int> ( ( max_y - specif.beg_y ) / specif.waga_y ) ;
+	int first_drawn_channel = static_cast< int> ( ( min_x - specif.beg ) / specif.waga )  ;
+	int last_drawn_channel  = static_cast< int> ( ( max_x - specif.beg ) / specif.waga ) ;
+	int first_drawn_y = static_cast<int> ( ( min_y - specif.beg_y ) / specif.waga_y )  ;
+	int last_drawn_y  = static_cast<int> ( ( max_y - specif.beg_y ) / specif.waga_y ) ;
 
 	// loops goes on real channels !
 	for ( int r = first_drawn_y ; r < last_drawn_y ; r ++ )
@@ -1042,8 +1042,6 @@ void spectrum_2D::integrate ( T4results_of_integration *ptr )
 
 	int first_int_y_channel = ( int ) ( ( min_y - specif.beg_y ) / specif.waga_y )  ;
 	int last_int_y_channel  = ( int ) ( ( max_y - specif.beg_y ) / specif.waga_y ) ;
-
-
 
 	//#ifdef NIGDY
 
@@ -1298,7 +1296,7 @@ void spectrum_2D::set_parameters ( typ_x min_ch,  typ_x max_yy, typ_x  max_ch, t
 	typ_x tmp_max_y = min ( max_yy, specif.end_y );
 
 
-//	if ( ( tmp_min_x != tmp_max_x )  && ( tmp_min_y != tmp_max_y ) )
+	//	if ( ( tmp_min_x != tmp_max_x )  && ( tmp_min_y != tmp_max_y ) )
 	{
 		min_x = tmp_min_x ;
 		max_x = tmp_max_x ;
@@ -1340,7 +1338,7 @@ void spectrum_2D::set_parameters ( typ_x min_ch,  typ_x max_yy, typ_x  max_ch, t
 	//         << " range = " << ( max_yy - min_yy)
 	//         << "\n>>>>>>>>>>>>>>>>>>>>>>>>>" << endl;
 	b_matrix->force_new_pixmap(true);
-
+	update();
 	// draw_all_on_screen();
 }
 //*******************************************************************************
@@ -1435,8 +1433,8 @@ void spectrum_2D::save_as ( string prefix )
 				string kom = "cp " + path.spectra + name_of_spectrum + " ";
 				kom  += fileName.toStdString() ;
 				//       cout << "Komenda =" << kom << "=" <<endl;
-                int answ [[maybe_unused]] = system ( kom.c_str() );
-                // answ = answ;
+				int answ [[maybe_unused]] = system ( kom.c_str() );
+				// answ = answ;
 			}
 			else
 			{
@@ -1462,8 +1460,8 @@ void spectrum_2D::save_as ( string prefix )
 		string kom = "cp " + path.spectra + name_of_spectrum + " ";
 		kom  += ( path.spectra + prefix + name_of_spectrum )   ;
 		//       cout << "Komenda =" << kom << "=" <<endl;
-        int answ2 [[maybe_unused]] = system ( kom.c_str() );
-        // answ2 = answ2;
+		int answ2 [[maybe_unused]] = system ( kom.c_str() );
+		// answ2 = answ2;
 
 	}
 
@@ -1573,10 +1571,13 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
 
 
 
+
+	bool flag_file_opened = false;
+	flag_error_while_reading = false;
 	bool too_short = true ;
-    const int how_many_tries = 900;
+	const int how_many_tries = 900;
 	// loop to repeat 'too-short' read (when spy writes this matrix just now
-    for ( int n_try = 0 ; n_try < how_many_tries && too_short ; n_try++ ) //
+	for ( int n_try = 0 ; n_try < how_many_tries && too_short ; n_try++ ) //
 	{
 
 		//             cout << "Function: Read in file, parameter " << name << endl ;
@@ -1584,8 +1585,9 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
 		// reading from the disk file
 		string path_filename = path.spectra + name ;
 		ifstream plik ( path_filename.c_str(), ios::binary );
+		if(plik) flag_file_opened = true;
 
-        if ( plik && (n_try < (how_many_tries -2)) )
+		if ( plik && (n_try < (how_many_tries -2)) )
 		{
 			int ile = 0 ;
 
@@ -1669,27 +1671,34 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
 				while ( plik ) ;
 			}
 
+			//						 cout << "sizeof(int) = " << sizeof(int)
+			//						 << "  sizeof(short int) = " << sizeof(short int)
+			//						 << "  sizeof(long) = " << sizeof(long)
+			//						 << endl;
+			//						// now
+			//						cout << " read  spectrum , ile= "<< ile << endl ;
 
-//						 cout << "sizeof(int) = " << sizeof(int)
-//						 << "  sizeof(short int) = " << sizeof(short int)
-//						 << "  sizeof(long) = " << sizeof(long)
-//						 << endl;
-//						// now
-//						cout << " read  spectrum , ile= "<< ile << endl ;
+			//                              cout << "spectrum_table.size = " << spectrum_table.size()
+			//                                    << ", sqrt = " <<sqrt(spectrum_table.size()) << endl ;
 
-//                              cout << "spectrum_table.size = " << spectrum_table.size()
-//                                    << ", sqrt = " <<sqrt(spectrum_table.size()) << endl ;
-
-			if ( spectrum_table.size() == ( unsigned ) ( specif.bin * specif.bin_y ) )
+			if ( spectrum_table.size() == ( unsigned ) ( specif.bin * specif.bin_y )
+				 ||
+				 spectrum_table.size() == (( unsigned ) ( specif.bin * specif.bin_y ) *2)  // in case flag_this_is_32bit_cell ???
+				 )
 			{
-                too_short = false ; // <--- no more tries, because GOOD!
+				too_short = false ; // <--- no more tries, because GOOD!
 			}
 			else
 			{
-                static int counter = 0 ;
-                if( !(++counter % 700) ) cout << "problem with reading matrix "
-                                              << path_filename
-                                              << "spec, another try.. " << n_try << endl;
+				static int counter = 0 ;
+				if( !(++counter % 100) ) cout << "problem with reading matrix "
+											  << path_filename
+											  << "should be "
+											  << specif.bin * specif.bin_y
+											  << "pixels, but it was read "
+											  << spectrum_table.size()
+											  << ", another try.. "
+											  << n_try << endl;
 				continue; // another try
 			}
 			//   specif.bin = (int) (sqrt( (double)spectrum_table.size()));
@@ -1741,13 +1750,19 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
 			{
 				timer_refresh->stop(); // 20 seconds
 				delete timer_refresh ;
-                timer_refresh = nullptr ;
+				timer_refresh = nullptr ;
 			}
-			//cout << " Error while opening a spectrum " << path_filename << endl ;
+			flag_error_while_reading = true;
 			string mess =  "Matrix \n";
 			mess += name ;
-            mess += "\nwas not found or read error\nTry to call this spectrum again" ;
-			QMessageBox::information ( this, "Error while opening file", mess.c_str() );
+			if(flag_file_opened == false){
+				mess += "\nwas not found ";
+			}else{
+				mess += "\nhad error during reading";
+			}
+			mess += "\nTry to call this spectrum again" ;
+
+			QMessageBox::information ( this, "Error while reading a file", mess.c_str() );
 
 			spectrum_table.push_back ( 0 ) ;
 			specif.beg = 0 ;
@@ -1765,6 +1780,8 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
 	} // end of for (too short read)
 
 
+
+
 	// if this is too big matrix
 	if ( ( specif.bin_y * specif.bin ) >= ( 2001 * 2000 ) )
 	{
@@ -1776,60 +1793,67 @@ void spectrum_2D::read_in_file ( const char *name, bool this_is_first_time )
 			//      timer_refresh = 0 ;
 
 			//cout << " Error while opening a spectrum " << path_filename << endl ;
-			string mess =  "Matrix \n";
+			string mess =  "Matrix \n   ";
 			mess += name ;
 			mess += "\nis very big, so 'automatic refreshing' it on the screen would take too much time\n"
-                    "Cracow viewer suggest not to re-read is automatically. \n"
-					"(You  can always  refresh it manually - just by recalling it again)"
+					"Greware suggests not to re-read it automatically. \n"
+					"(You  can always refresh it manually - just by recalling it again)"
 					"\n\nNOTE you can avoid this question by unchecking an option in: \n"
-					"      Cracow_preferences->Setting times of Refreshing-->ask questions about...";
-
-			int odp = 2;
-
-            //             cout << "before question   flag_ask_if_refresh_the_huge_matrices="
-			//                  << flag_ask_if_refresh_the_huge_matrices
-			//                  << " preferences current_options.give_flag_ask_about_refreshing_big_matrices() = "
-			//                  << current_options.give_preference_asking_about_refreshing_big_matrices()
-			//                  << endl;
-
+					"      Cracow_preferences->Setting times of Refreshing-->ask questions about...\n\n"
+					"So, decide if you want to skip auto-refresh, or you want to suffer but keep auto-refresh active:";
 
 			if ( current_options.give_preference_asking_about_refreshing_big_matrices() )
-
-
-				if ( flag_ask_if_refresh_the_huge_matrices && !flag_he_wants_to_suffer_so_do_not_ask_more )
+				if ( flag_ask_if_refresh_the_huge_matrices &&
+					 (policy == not_decided || policy == skip_one || policy == refresh_one)
+					 )
 				{
-					odp = QMessageBox::information ( this, "Very big matrix", mess.c_str(),
-													 "Skip automatic refreshing of this matrix",
-													 " I am going to suffer, but I need the refreshing",
-													 //                                                    ,"OK, and don't ask more",
-                                                     nullptr );
+					QMessageBox  mb;
+					mb.setText(mess.c_str());
 
+					mb.addButton("Skip refreshing of this matrix", QMessageBox::YesRole);
+					auto def = mb.addButton("Skip also for all next big matrices", QMessageBox::YesRole );
+					mb.setDefaultButton(def);
+					mb.addButton("I want auto-refreshing for this matrix", QMessageBox::NoRole );
+					mb.addButton("Auto-refresh this matrix, and all next ones", QMessageBox::NoRole );
+
+					auto odp = mb.exec();
 					switch ( odp )
 					{
-						case 0: // OK, stop refreshing
-						default:
-							timer_refresh->stop(); // 20 seconds
-							delete timer_refresh ;
-                            timer_refresh = nullptr ;
+						case 0: // skip this one
+							policy = skip_one;
 							break;
 
-						case 1:  //   Suffer, but make refreshing
+						case 1:  // skip all
+							policy = skip_all;
+							break;
+
+						case 2:   // suffer_one
+							policy = refresh_one;
+							break;
+
+						case 3:   // suffer_all
+							policy = refresh_all;
 							flag_he_wants_to_suffer_so_do_not_ask_more = true;
-							set_new_refreshing_times();
 							break;
-
-							//                     case 2:    // do not make
-							//                         timer_refresh->stop(); // 20 seconds
-							//                         delete timer_refresh ;
-							//                         timer_refresh = 0 ;
-							//                         flag_ask_if_refresh_the_huge_matrices = false;
-							//                         break;
 					}
 				}
-			//       flag_decision_about_refreshing_was_made = true;
+			// so now we react for the answers
+
+			if(policy == skip_one || policy == skip_all)
+			{
+				timer_refresh->stop(); // 20 seconds
+				delete timer_refresh ;
+				timer_refresh = nullptr ;
+
+			}
+			else if(policy == refresh_one || policy == refresh_all){
+				set_new_refreshing_times();
+			}
 		}
+
 	}
 
+	//#################################### post-settings #####################################
 
 	marker_older =  specif.beg ;
 	marker_younger =   specif.end ;
@@ -2007,7 +2031,7 @@ typ_x spectrum_2D::justify_to_bin_center ( typ_x dana )
 {
 
 	// here we can adjust it to real bin position
-    int binek = static_cast<int> ( ( dana - specif.beg ) / specif.waga )  ;
+	int binek = static_cast<int> ( ( dana - specif.beg ) / specif.waga )  ;
 	dana = ( binek * specif.waga ) + specif.beg
 			+
 			0.5 * specif.waga  ; // to be always in the  middle of the channel
@@ -2018,7 +2042,7 @@ typ_x spectrum_2D::justify_to_bin_center ( typ_x dana )
 int spectrum_2D::typ_x_to_bin ( typ_x value )
 {
 
-    return static_cast<int>( ( value - specif.beg ) / specif.waga )  ;
+	return static_cast<int>( ( value - specif.beg ) / specif.waga )  ;
 }
 
 //***************************************************************************
@@ -2075,7 +2099,7 @@ void spectrum_2D::paint_all ( QPainter *  /* piorko*/ )
 	int doleczek = min_counts_on_map  ;
 	if(flag_log_scale)
 	{
-        gorka = static_cast<int> (log10((double) gorka) + 1) ;
+		gorka = static_cast<int> (log10((double) gorka) + 1) ;
 		doleczek = -1 ;
 		//          cout << "in Spectrum_1D gorka = "
 		//           <<   gorka
@@ -2084,14 +2108,30 @@ void spectrum_2D::paint_all ( QPainter *  /* piorko*/ )
 
 	b_scale->change_region_of_counts (doleczek, gorka);
 
-	b_counts->update () ; //update();
-	b_channels->update() ; // update();
-	b_matrix-> update() ; // update();
-	b_scale->update();
+
+	if(flag_repaint_counts_box)
+	{
+		b_counts->update();
+		flag_repaint_counts_box = false;
+	}
+	if(flag_repaint_channels_box)
+	{
+		b_channels->update();
+		flag_repaint_channels_box = false;
+	}
+
+	if(flag_repaint_spectrum_box)
+	{
+		b_matrix-> update() ; // update();
+		flag_repaint_spectrum_box = false;
+	}
+
+	if(flag_repaint_bscale_box){
+		b_scale->update();
+		flag_repaint_bscale_box = false;
+	}
 
 	// here it would be nice to update the scrollbars and sliders
-
-
 
 	//    cout << "$$$ draw_all, przed emisja sygnalu update scrolls,  ["
 	//      << min_x
@@ -2188,11 +2228,11 @@ void spectrum_2D::erase_polygon ( int nr )    // polygon gates
 //*******************************************************************************
 int spectrum_2D::give_value_of_pixel ( typ_x x, typ_x y )
 {
-    int ch_x = static_cast<int > ( ( x - specif.beg ) / specif.waga )  ;
-    int ch_y = static_cast<int > ( ( y - specif.beg_y ) / specif.waga_y )  ;
+	int ch_x = static_cast<int > ( ( x - specif.beg ) / specif.waga )  ;
+	int ch_y = static_cast<int > ( ( y - specif.beg_y ) / specif.waga_y )  ;
 
 	if ( ( ( ch_y * specif.bin ) + ch_x ) < 0 ) return -1;
-    if ( (static_cast<signed int> (spectrum_table.size()) -1 < ( ( ch_y * specif.bin ) + ch_x )) ) return -1;
+	if ( (static_cast<signed int> (spectrum_table.size()) -1 < ( ( ch_y * specif.bin ) + ch_x )) ) return -1;
 	return spectrum_table[ ( ch_y * specif.bin ) + ch_x] ;
 
 }
@@ -2461,7 +2501,7 @@ void spectrum_2D::set_new_refreshing_times()
 string spectrum_2D::projection ( int axis_x )
 {
 
-	polygon_gate * poly_ptr = 0;
+	polygon_gate * poly_ptr = nullptr;
 
 	int how_many_polygons_selected = 0 ;
 	for ( unsigned int i = 0 ; i < banana.size() ; i++ )
@@ -2504,7 +2544,7 @@ string spectrum_2D::projection ( int axis_x )
 					case  0:
 						break;
 					case 1:
-						poly_ptr = 0 ;
+						poly_ptr = nullptr ;
 						break;
 					case 2:
 						return "";
@@ -2798,7 +2838,7 @@ void spectrum_2D::zero_spectrum()
 	//    int *table = new int[number];
 	//    memset(table, 0, number*sizeof(int) );
 
-	int size = spectrum_table.size();
+	auto size = spectrum_table.size();
 	//cout << "size is " << size << " for spectrum " << name_of_spectrum << ", number = " << number << endl;
 	// funny - sometimes size is not equal number
 
@@ -3142,6 +3182,7 @@ void spectrum_2D::add_tag_with_comment ( double x, double y )
 		// user selected an item and pressed OK
 		nalepka.push_back ( Tpinup ( x, y, res.toStdString() ) ) ;
 		lst += res ;
+		flag_repaint_spectrum_box = true;
 	}
 	else
 	{
@@ -3156,10 +3197,11 @@ void spectrum_2D::erase_nearest_tag_with_comment ( double x, double y )
 	//  remember_for_undo("Erase the nearest TAG with comment") ;
 	// cout << "---------- x = " << x << ", y= " << y << endl ;
 
-	if ( nalepka.size() == 0 )
+	if ( nalepka.size() == 0 ) {
 		return ; // no tags at all
+	}
 
-	int nearest = -1 ;
+	uint nearest = 0 ;
 	double minimum = 999999 ;
 	for ( unsigned int i = 0 ; i < nalepka.size() ; i++ )
 	{
@@ -3461,7 +3503,7 @@ void spectrum_2D::slot_remove_vertex ( )
 				// cout<< "The answer was OK" << endl ;
 				// else, we just go down, without break statement
 			}
-        [[fallthrough]];
+			[[fallthrough]];
 		case 1:
 			for ( unsigned int i = 0 ; i < banana.size() ; i++ )
 				banana[i].remove_selected_vertices();
@@ -3499,7 +3541,7 @@ void spectrum_2D::slot_add_vertices ( )
 					break ;
 				// else = no break here
 			}
-            [[fallthrough]];
+			[[fallthrough]];
 
 		case 1:   // ---- one selected vertex -----------
 			for ( unsigned int i = 0 ; i < banana.size() ; i++ )

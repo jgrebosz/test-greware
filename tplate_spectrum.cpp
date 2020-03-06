@@ -297,12 +297,12 @@ void Tplate_spectrum::find_notice_in_description()
 
                 case '}':
                 {
-                    if(flag_loading)  // remove trailing white spaces
-                    {
-                        string::size_type pos = notice.find("\n");
-                        if(pos != string::npos)
-                            notice.erase(pos);
-                    }
+//                    if(flag_loading)  // remove trailing \n  NO!
+//                    {
+//                        //string::size_type pos = notice.find("\n");
+////                        if(pos != string::npos)
+////                            notice.erase(pos);
+//                    }
 
                     // here we may read the list of incrementers
                     if(flag_version_with_incrementers)

@@ -22,6 +22,12 @@ T4auto_calib_wizard::T4auto_calib_wizard(QWidget *parent) :
 {
     ui->setupUi(this);
 
+	// To avoid writing this in Polish
+	setButtonText(QWizard::NextButton, "Next  >" );
+	setButtonText(QWizard::BackButton, "<  Back" );
+	setButtonText(QWizard::CancelButton, "Cancel" );
+	setButtonText(QWizard::FinishButton, "Finish" );
+
 //      ui->helpButton () ->hide();
       ui->pushButton_show_spectra_names->setEnabled(0);
       // // /*  radio_clusters->setChecked(true);

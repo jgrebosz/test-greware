@@ -20,7 +20,7 @@ public:
         refreshing_time_1D_spectra  = 10;
         refreshing_time_2D_spectra  = 30;
         refreshing_time_sum_1D_spectra = 60;
-        snapshot_program = "ksnapshot  &" ;
+        snapshot_program = "gimp  &" ;
         how_many_spectra_on_the_screen_now = 0 ;
         flag_preference_asking_about_refreshing_big_matrices = false;
         restore_options();

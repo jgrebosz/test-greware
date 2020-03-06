@@ -24,7 +24,7 @@ protected:
     void mousePressEvent ( QMouseEvent * e );
     void mouseReleaseEvent( QMouseEvent * e );
 
-    typ_x last_dragged_y ;  // for dragging the scale
+	int last_dragged_y ;  // for dragging the scale
     bool flag_draw_rainbow_scale; // for 2D matrices raibow legend (Z-scale)
     void drawing_rainbow_background_scale(QPainter * piorko);
   void draw_for_1D(QPainter * piorko);

@@ -172,7 +172,7 @@ public:
     void paintEvent ( QPaintEvent * );
 
     void draw_all ( QPainter * piorko );
-    void draw_pinup_infos ( QPainter & piorko );
+    void draw_pinup_infos (QPainter & piorko , int font_size);
     void draw_bananas ( QPainter & piorko );
 
 
@@ -250,10 +250,7 @@ public:
 //        f_right = factor_right;
 //        f_bottom = factor_bottom;
 //    }
-    void force_new_pixmap ( bool b )
-    {
-        make_new_pixmap = b ;
-    }
+    void force_new_pixmap ( bool b );
 
     void	enter_lupa_mode()
     {
@@ -287,6 +284,7 @@ public:
 private:
     void draw_lupa ( QBitmap &bitmapa, QColor color, int width, char plus_minus );
     void  select_nearest_vertex ( QMouseEvent *e );
+    double prepare_font_size();
 
 
     // this function finds the vertex where we clicked. As ther result we need to have

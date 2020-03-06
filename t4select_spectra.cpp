@@ -71,9 +71,10 @@ void T4select_spectra::init()
      */
     //     ui->ComboBox_filter->setInsertionPolicy ( QComboBox::BeforeCurrent );
 
-	 ui->ComboBox_filter->completer()-> setCaseSensitivity(Qt::CaseSensitive) ;
+     ui->ComboBox_filter->completer()-> setCaseSensitivity(
+                 flag_case_sensitive? Qt::CaseSensitive : Qt::CaseInsensitive) ;
 
-
+ ui->checkBox_case_sens->setChecked(flag_case_sensitive);
 
     // setting the  enabled options
     extended_selection_mode ( false ) ;
@@ -86,6 +87,11 @@ void T4select_spectra::init()
 
     ui->lineEdit_anti_filter->setEnabled(false);
     ui->lineEdit_anti_filter->setHidden(true);
+
+	//--------------
+
+  ui->checkBox_enable_drag->setCheckState(Qt::Unchecked);
+
 }
 //****************************************************************************
 void T4select_spectra::set_parameters ( QMdiArea  * ws )
@@ -93,7 +99,7 @@ void T4select_spectra::set_parameters ( QMdiArea  * ws )
     arch_ws = ws ;   // can be used by other member    functions
 
     // As sometimes this take very long - we show progress dialog
-    int how_many_items = 100;
+	int how_many_items = 100;
     QString infor ( "Some shared disk directories are very slow!\n"
                     "If this is your case - consider moving your analysis "
                     "into the /scratch.local direcory\n"
@@ -194,7 +200,7 @@ void T4select_spectra::select_one_pressed()
     if ( ui->ListBox_chosen->count() > 80 )
     {
         QMessageBox::warning
-                ( 0, "A lot of chosen spectra" ,
+				( nullptr, "A lot of chosen spectra" ,
                   QString ( "Warning: Your list of chosen spectra has %1 item now" ).arg ( ui->ListBox_chosen->count() ),
                   QMessageBox::Yes | QMessageBox::Default,
                   QMessageBox::NoButton );
@@ -205,7 +211,7 @@ void T4select_spectra::select_one_pressed()
 //*********************************************************************************************
 void T4select_spectra::show_chosen_spectra()
 {
-    //cout << "F. T4select_spectra::show_chosen_spectra()" << endl ;
+    //cout << "F. " << __PRETTY_FUNCTION__  << endl ;
 
     // 1. here we close existing windows - or not
     QList <QMdiSubWindow*> windows = arch_ws->subWindowList();
@@ -243,10 +249,11 @@ void T4select_spectra::show_chosen_spectra()
         // return ;
     }
 
-    time_t moment = time ( 0 ) ;
+	time_t moment = time ( nullptr ) ;
     current_options.set_how_many_spectra_on_the_screen_now ( ui->ListBox_chosen->count() );
 
     // adding the new spectra windows ------------------------------------------------
+
 #define INVERTED_ORDER false
 
 #if INVERTED_ORDER
@@ -256,13 +263,14 @@ void T4select_spectra::show_chosen_spectra()
     for ( int i = 0 ;  i < (int) ui->ListBox_chosen->count() ;  ++i )
 #endif
     {
+
         string spectrum_filename ;
         spectrum_filename =  ui->ListBox_chosen->item(i)->text ().toStdString () ;
         QString fn =  ui->ListBox_chosen->item(i)->text () ;
 
 //                cout   << "spectrum name = " << spectrum_filename << endl;
 
-        Tplate_spectrum * s = 0 ;
+		Tplate_spectrum * s = nullptr ;
 
         // looking for an extension
         if ( fn.contains ( ".spc", Qt::CaseInsensitive ) ) // <-- false=case insensitife
@@ -287,13 +295,15 @@ void T4select_spectra::show_chosen_spectra()
             s->showNormal();
             //cout << "fileOpen, if(s) true, " << endl ;
         }
-        //
-        if ( time ( 0 ) - moment > 2 ) // for longer times we put something on the screen
+
+        // ???
+		if ( time ( nullptr ) - moment > 2 ) // for longer times we put something on the screen
         {
             qApp->processEvents ();
-            moment = time ( 0 ) ; // now more often
+			moment = time ( nullptr ) ; // now more often
         }
     }
+
 
 }
 //********************************************************************************
@@ -418,8 +428,8 @@ void T4select_spectra::combo_groups_activated( )
 void T4select_spectra::show_choosen_and_exit()
 {
     //cout << " T4select_spectra::show_choosen_and_exit() " << endl;
+    //show_chosen_spectra() ;    
 
-    //show_chosen_spectra() ;
     done ( QDialog::Accepted ) ;
 }
 //*******************************************************************************
@@ -456,7 +466,11 @@ void T4select_spectra::selected_filter()
 	//cout << "current   filter text  is now: [" << filtr.toStdString() << "]" << endl;
     ui->ListBox_available->clear();
 
-    QStringList found = all_spectra_names.filter ( QRegExp ( filtr, Qt::CaseSensitive,QRegExp::Wildcard ) );
+    QStringList found = all_spectra_names.filter (
+                QRegExp ( filtr,
+                          flag_case_sensitive?   Qt::CaseSensitive : Qt::CaseInsensitive,
+                          QRegExp::Wildcard )
+                );
     //    QStringList found = all_spectra_names.filter ( QRegExp ( filtr, Qt::CaseSensitive,QRegExp::RegExp2 ) );
 
 
@@ -468,7 +482,9 @@ void T4select_spectra::selected_filter()
         QStringList antifiltered;
 
         for (auto str: found) {
-            if (str.contains( QRegExp ( antifilter, Qt::CaseSensitive,QRegExp::Wildcard )))
+            if (str.contains( QRegExp ( antifilter,
+                                        flag_case_sensitive?   Qt::CaseSensitive : Qt::CaseInsensitive,
+                                        QRegExp::Wildcard )))
             {    /* result += str;*/ }
             else
                 antifiltered += str;
@@ -712,7 +728,7 @@ void T4select_spectra::select_all()
     if ( ui->ListBox_chosen->count() > 80 )
     {
         QMessageBox::warning
-                ( 0, "A lot of chosen spectra" ,
+				( nullptr, "A lot of chosen spectra" ,
                   QString ( "Warning: Your list of chosen spectra has %1 item now" ).arg ( ui->ListBox_chosen->count() ),
                   QMessageBox::Yes | QMessageBox::Default,
                   QMessageBox::NoButton );
@@ -1612,7 +1628,7 @@ void T4select_spectra::add_spectra_names_currently_displayed()
 
     QList <QMdiSubWindow*> windows = arch_ws->subWindowList();
 
-    Tplate_spectrum * dokument   = NULL ;
+	Tplate_spectrum * dokument   = nullptr ;
 
     for(int nr_dok = 0 ; nr_dok < windows.count() ; nr_dok++)
     {
@@ -1764,7 +1780,7 @@ void T4select_spectra::move_selected_chosen_up_down(bool up)
     if(nr_of_rowsToRemove.empty()) return;
 
     // removing (taking) starting from the highest positions
-    for(int i = nr_of_rowsToRemove.size()-1 ; i >= 0 ; i--  )
+	for(int i = nr_of_rowsToRemove.size()-1 ; i >= 0 ; i--  )
     {
         int pos = nr_of_rowsToRemove[i];
         if(pos <= 0) { pos = 0; }
@@ -1852,10 +1868,58 @@ void T4select_spectra::on_ComboBox_filter_editTextChanged(const QString /*arg1*/
 //{
 //// empty?
 //}
-
+//*********************************************************************************************************************
 void T4select_spectra::on_ComboBox_filter_activated(const QString & /*arg1*/)
 {
 	// This function is essential when we type filter "F" and "f" - they are distinguished properly.
 
 	//cout << "Combo activqted with " << arg1.toStdString() << endl;
+}
+//*********************************************************************************************************************
+void T4select_spectra::on_checkBox_case_sens_clicked(bool checked)
+{
+    // cout << "Case sensitive is now " << checked << endl;
+    flag_case_sensitive = checked;
+    ui->ComboBox_filter->completer()-> setCaseSensitivity(
+                flag_case_sensitive? Qt::CaseSensitive : Qt::CaseInsensitive);
+     selected_filter();
+}
+//*********************************************************************************************************************
+
+void T4select_spectra::on_Button_show_exit_clicked()
+{
+     show_choosen_and_exit();
+}
+//*********************************************************************************************************************
+//void T4select_spectra::on_checkBox_toggled(bool checked)
+//{
+
+//}
+//*********************************************************************************************************************
+
+
+void T4select_spectra::on_checkBox_enable_drag_toggled(bool checked)
+{
+	static QString original_style;
+	if(checked){
+
+	original_style = ui->ListBox_chosen-> 	styleSheet( );
+	ui->ListBox_chosen->setStyleSheet( "background-color: rgb(0, 0, 89);\ncolor: rgb(255, 255, 255);");
+
+	 ui->ListBox_chosen->clearSelection();
+	 ui->ListBox_chosen->setSelectionMode(QAbstractItemView::SingleSelection);
+	 // ui->ListBox_chosen->setSelectionMode(QAbstractItemView::MultiSelection);
+
+	 ui->ListBox_chosen->setDragEnabled(true);
+	 ui->ListBox_chosen->viewport()->setAcceptDrops(true);
+	 ui->ListBox_chosen->setDropIndicatorShown(true);
+	 ui->ListBox_chosen->setDragDropMode(QAbstractItemView::InternalMove);
+	}else {
+		ui->ListBox_chosen->setStyleSheet( original_style);
+		 ui->ListBox_chosen->setSelectionMode(QAbstractItemView::MultiSelection);
+		ui->ListBox_chosen->setDragEnabled(false);
+		ui->ListBox_chosen->viewport()->setAcceptDrops(false);
+		ui->ListBox_chosen->setDropIndicatorShown(false);
+
+	}
 }

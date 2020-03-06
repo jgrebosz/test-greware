@@ -12,8 +12,13 @@ T4addline_1d_wizard::T4addline_1d_wizard(QWidget *parent) :
   ui(new Ui::T4addline_1d_wizard)
 {
   ui->setupUi(this);
+  // To avoid writing this in Polish
+  setButtonText(QWizard::NextButton, "Next  >" );
+  setButtonText(QWizard::BackButton, "<  Back" );
+  setButtonText(QWizard::CancelButton, "Cancel" );
+  setButtonText(QWizard::FinishButton, "Finish" );
 }
-
+//**********************************************************************************************************
 T4addline_1d_wizard::~T4addline_1d_wizard()
 {
   delete ui;

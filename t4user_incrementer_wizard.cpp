@@ -19,6 +19,13 @@ T4user_incrementer_wizard::T4user_incrementer_wizard(QWidget *parent) :
     ui(new Ui::T4user_incrementer_wizard)
 {
     ui->setupUi(this);
+
+	// To avoid writing this in Polish
+	setButtonText(QWizard::NextButton, "Next  >" );
+	setButtonText(QWizard::BackButton, "<  Back" );
+	setButtonText(QWizard::CancelButton, "Cancel" );
+	setButtonText(QWizard::FinishButton, "Finish" );
+
     //    setTitle ("Tytul");
     ui->lineEdit_const_value_green->setText("0");
     ui->lineEdit_const_value_blue->setText("0");

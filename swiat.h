@@ -1,5 +1,5 @@
-#ifndef _SWIAT_H_
-#define _SWIAT_H_
+#ifndef _SWIAT_H__
+#define _SWIAT_H__
 
 /*__________________________________________________________________________*/
 // typedef int typ_x ;
@@ -98,7 +98,7 @@ public:
     {
         ustaw_swiat(0, 0, 100, 100,   // dane pikselowe
                     0, 100, 100, 0);
-   } ;
+   }
 
     swiatek(int left, int top, int right, int bottom,   // dane pikselowe
             double xleft, double yt, double xr, double yb)

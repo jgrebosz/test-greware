@@ -133,7 +133,7 @@ private slots:
 
     void on_actionAutomatic_calibration_of_germanium_detectors_triggered();
 
-    void on_actionMake_tar_file_with_calibatrions_and_lookup_tables_triggered();
+   // void on_actionMake_tar_file_with_calibatrions_and_lookup_tables_triggered();
 
     void on_Combo_app_group_activated(const QString &groupName);
     void check_status_of_spy();
@@ -224,6 +224,10 @@ private slots:
 
     void on_actionSystemTile_activation_history_order_2_triggered();
 
+    void on_actionCustom_tiling_triggered();
+
+	void on_actionMake_tar_file_with_calibrations_and_lookup_tables_triggered();
+
 private:
     Ui::appl_form *ui;
 
@@ -242,6 +246,7 @@ protected:
     void close_document_with_name ( string name );
     void adjust_program_to_experiment_type();
     void set_visibility_of_spy_options_dialogs();
+    void read_last_spectra_selection_after_crash();
     //    void ScrollBar_poziomy_widma_nextPage();
     //    void ScrollBar_poziomy_widma_prevPage() ;
     //    void ScrollBar_poziomy_widma_prevLine();
@@ -279,6 +284,8 @@ void common_galileo_signals_dialog(string input_file,
     QMdiArea *ws;
     //    T4select_spectra * ss;
     bool flag_act_on_all_spectra;
+    bool flag_display_previously_displayed_spectra = false;
+    vector<string> last_spectra_selection ;
 };
 /////////////////////////////////////////////////////////////
 #endif // APPL_FORM_H

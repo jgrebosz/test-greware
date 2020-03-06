@@ -70,9 +70,9 @@ void polygon_gate::add_vertex_after_selected_vertices()
                 it2 = polygon.begin() ;
 
             vertex v(
-                (it->x + it2->x) / 2,
-                (it->y + it2->y) / 2  ,
-                false 	);
+                        (it->x + it2->x) / 2,
+                        (it->y + it2->y) / 2  ,
+                        false 	);
 
             polygon.insert(++it, v) ;
             it-- ;
@@ -108,13 +108,13 @@ void polygon_gate::save_to_disk()
     {
         // here we are jumping through coordinates
         plik
-        << (*it).x   // x
-        << "\t\t"
-        << (*it).y
-        << "\t\t // x, y of the point nr "
-        << nr
-        << "\t polygon: " << screen_name
-        << endl ;
+                << (*it).x   // x
+                << "\t\t"
+                << (*it).y
+                << "\t\t // x, y of the point nr "
+                << nr
+                << "\t polygon: " << screen_name
+                << endl ;
     } // end of for interator
 }
 //********************************************************
@@ -129,9 +129,15 @@ void polygon_gate::remove_from_disk()
     // now we change the taktics - we move this to some subdirectory
     // create 'removed'subdirectrory (if it does not exists) ---------------
     string remdir = path.polygons + "removed/" ;
-    string creating_command = string("mkdir  ") + remdir;
+    string creating_command = string("mkdir  ") + remdir + " > /dev/null 2>&1";
     int result = system(creating_command.c_str());
-    if(result)cout << "No problem!"<< endl;
+
+    // NOTE: expression " > /dev/null 2>&1" means:
+    // The error message (which usually goest to error stream (descriptor 2 means error stream)
+    // should be redirected to normal stream (1)
+    // and this should finally go to null device
+    //------------------------------------------------------------------------------
+    // if(result)cout << "No problem!"<< endl;
 
     // --------- now the moving
     string moving_command = "mv " + path.polygons + disk_name + " ";
@@ -141,13 +147,13 @@ void polygon_gate::remove_from_disk()
     if(result)cout << "Problem with moving the definition, no backup available"<< endl;
 
 
-string  info_to_restore = "Your polygon gate was successfully removed.";
-info_to_restore += string("\n\nNote: It was not destroyed, but just transfered into subdirectory called\n")
-+ remdir 
-+ "\n You may restore this  polygon manually by copying it back into  the directory\n "
-+ path.polygons ;
+    string  info_to_restore = "Your polygon gate was successfully removed.";
+    info_to_restore += string("\n\nNote: It was not destroyed, but just transfered into subdirectory called\n")
+            + remdir
+            + "\n You may restore this  polygon manually by copying it back into  the directory\n "
+            + path.polygons ;
 
-QMessageBox::information( 0, "Successfuly removed", info_to_restore.c_str() );
+    QMessageBox::information( 0, "Successfuly removed", info_to_restore.c_str() );
 
 }
 //*****************************************************************

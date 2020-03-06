@@ -9,12 +9,15 @@ TEMPLATE = app
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
+#=========================================================
 # when DEBUG ---- uncomment this below 
 CONFIG  += warn_on  static debug   # <-- this DEBUG is relevant (1)
 QMAKE_CXXFLAGS += -g        # <-- -g is must be on for debug  (2)
 
-#when RELEASE
+#when RELEASE    ===========================================
 #CONFIG  += warn_on  static release
+
+#=========================================================
 
 #    (static is probably for pictures (loaded into program))
 
@@ -115,7 +118,8 @@ SOURCES += main.cxx\
     tcalibration_factors_dlg.cpp \
     Tfile_line_det_cal_lookup.cpp \
     t4good_kratta_dlg.cpp \
-    t4general_selector.cpp
+    t4general_selector.cpp \
+    t4tiling_marix_dlg.cpp
 
 HEADERS  += appl_form.h \
     options.h \
@@ -198,7 +202,8 @@ HEADERS  += appl_form.h \
     tcalibration_factors_dlg.h \
     Tfile_line_det_cal_lookup.h \
     t4good_kratta_dlg.h \
-    t4general_selector.h
+    t4general_selector.h \
+    t4tiling_marix_dlg.h
 
 FORMS    += appl_form.ui \
     tplate_spectrum.ui \
@@ -254,7 +259,8 @@ FORMS    += appl_form.ui \
     tcalibration_factors_dlg.ui \
     t4selfgate_kratta_2dlg.ui \
     t4good_kratta_dlg.ui \
-    t4general_selector.ui
+    t4general_selector.ui \
+    t4tiling_marix_dlg.ui
 
 OTHER_FILES +=
 

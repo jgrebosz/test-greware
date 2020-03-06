@@ -25,7 +25,7 @@ using namespace std ;
 #include "tundo.h"
 
 
-// #define RAINBOW_SCALE
+
 //////////////////////////////////////////////////////////////////////
 class spectrum_1D : public Tplate_spectrum
 {
@@ -37,7 +37,7 @@ class spectrum_1D : public Tplate_spectrum
 	QGridLayout * layout;
 	bool flag_impossible_to_draw_scales; // because widget is too small
 
-
+    bool flag_spectrum1D_needs_update = true;
 
 public:
 	vector <Tpinup> nalepka ;
@@ -115,8 +115,8 @@ protected:
 	vector<gate_1D> my_gates_1D;
 	string prefix_of_gate_1D_names;
 
-	int min_counts ;
-	int max_counts;
+	int min_counts ;   // was int
+	int max_counts;   // was int
 
 	typ_x min_x;
 	typ_x max_x;
@@ -125,9 +125,9 @@ protected:
 	box_of_counts * b_counts ;
 	box_of_spectrum * b_spectrum ;
 
-#ifdef RAINBOW_SCALE
-	box_of_counts * b_scale ;
-#endif
+//#ifdef RAINBOW_SCALE
+//	box_of_counts * b_scale ;
+//#endif
 
 
 	//int spectrum_length_skas;
@@ -154,7 +154,7 @@ protected:
 			{
 				color = col;
 			}
-		} ;
+		}
 	} ;
 
 	vector< sover > overplot_vector ;
@@ -232,7 +232,7 @@ public slots:
 	// void init();
 	void resizeEvent ( QResizeEvent * );
 	void recalculate_my_geometry();
-	int give_max_channel_skas();
+	// int give_max_channel_skas();
 	void expand();
 	// void mousePressEvent( QMouseEvent * e );
 	void remember_as_marker ( typ_x k );

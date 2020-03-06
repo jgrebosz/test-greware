@@ -33,6 +33,13 @@ public:
     static bool flag_white_black;
 
      static bool flag_repainting_allowed;
+
+	 // To not to repaint all the time, we make flags which allow to update
+     bool flag_repaint_spectrum_box = true;
+	 bool flag_repaint_counts_box= true;
+	 bool flag_repaint_channels_box = true;
+	 bool flag_repaint_bscale_box = true;
+
     virtual string give_spectrum_name();
     virtual void set_new_refreshing_times() = 0;
     virtual void re_read_counter_after_zeroing ( int count );

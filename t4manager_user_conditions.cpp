@@ -258,7 +258,7 @@ void T4manager_user_conditions::on_push_edit_selected_condition_clicked()
         QMessageBox::warning(this,
                              "No condition selected",
                              QString(nr == -1 ?
-                                         "Nothing to edit" :
+										 "No condition was selected to edit" :
                                          "Select the condition by clicking once on its name\n"),
                              QMessageBox::Ok,
                              QMessageBox::NoButton,
@@ -348,7 +348,7 @@ void T4manager_user_conditions::update_the_table()
 
         string name_c = (*it).toStdString() ;
 
-        int pos = name_c.rfind(".") ;
+		auto pos = name_c.rfind(".") ;
         name_c.erase(pos) ;
 
         us.set_name(name_c);
@@ -361,10 +361,10 @@ void T4manager_user_conditions::update_the_table()
     progress.setValue( how_many_items );
 
 
-    int nr_rows =vec_cond_descr.size();
+	auto nr_rows =vec_cond_descr.size();
     ui->table->setRowCount ( nr_rows );
 
-    for (int j = 0; j < nr_rows; ++j )
+	for (int j = 0; j < nr_rows; ++j )
     {
         ui->table->setItem(j, 0, new QTableWidgetItem(vec_cond_descr[j].give_name().c_str()) )  ;
         ui->table->item(j, 0)->setFlags(Qt::ItemIsEnabled | Qt::ItemIsSelectable);

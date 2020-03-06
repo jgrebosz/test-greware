@@ -44,11 +44,7 @@ public:
     s << x << "  " << y << " " << info << endl;
   }
   //---------------------------------------------------------
-  void read_from_disk_file(ifstream & s)
-  {
-    s >> x  >>  y ;
-    getline(s, info);
-  }
+  void read_from_disk_file(ifstream & s);
 };
 
 #endif

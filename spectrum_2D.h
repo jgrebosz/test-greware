@@ -16,6 +16,9 @@
 
 #include "t4results_of_integration.h"
 
+
+enum refresh_big_matrices_policy { not_decided, skip_one =1, skip_all, refresh_one, refresh_all};
+
 #ifdef NIGDY
 /*
     class Tundo_2D
@@ -56,6 +59,7 @@ class spectrum_2D : public Tplate_spectrum
     static bool flag_ask_if_refresh_the_huge_matrices;
     bool flag_he_wants_to_suffer_so_do_not_ask_more;
     QGridLayout * layout;
+    bool flag_error_while_reading;
 
 public:
     spectrum_2D ( QMdiArea *ws, QString nazwa ) : Tplate_spectrum ( ws ) // , nazwa)
@@ -135,6 +139,7 @@ public:
     string  prefix_of_polygon_names ; // what in the disk filename introduces screen_name (= "_polygon_) ;
 
 
+    bool is_flag_error_while_reading() { return flag_error_while_reading;}
     void set_new_refreshing_times();  // virtual
 
     // void white_black( bool on );

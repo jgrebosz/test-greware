@@ -142,6 +142,9 @@ void box_of_matrix::paintEvent ( QPaintEvent * )
     // too often refreshes (3 times are in the beginning)
     // so here we install the cloct tu measure how long time was the last referesh
 
+//	static int counter;
+//	cout << __PRETTY_FUNCTION__ << " update box_matrix  " << (counter++) << endl;
+
     QPainter piorko_ekranowe ( this );
     draw_all ( &piorko_ekranowe );
 
@@ -155,7 +158,7 @@ void box_of_matrix::draw_all ( QPainter * pior )
 
     if ( now_working > 2 )
     {
-        cout << " should be rejected box_of_matrix::paintEvent" << endl;
+        //cout << " should be rejected box_of_matrix::paintEvent" << endl;
         //        return ;
 
     }
@@ -182,6 +185,7 @@ void box_of_matrix::draw_all ( QPainter * pior )
     //bool
     black_white = parent->give_flag_black_white() ;
     //cout << "przed rysowaniem" << endl;
+    if(p->is_flag_error_while_reading() ) return;
 
     QPainter &piorko = *pior ;
 
@@ -457,9 +461,9 @@ void box_of_matrix::draw_all ( QPainter * pior )
                 for ( int i = first_drawn_channel ; i <= last_drawn_channel ; i ++ )
                 {
 
-//                    cout << "Darwing pixel [" << row << "][" << i << "]";   //  << endl ;
-//                    cout << "colour comes from widmo["<< (( int ) ( row * row_length ) + i) << "]"
-//                         << ", while widmo.size = " << widmo.size() << endl;
+                    //                    cout << "Darwing pixel [" << row << "][" << i << "]";   //  << endl ;
+                    //                    cout << "colour comes from widmo["<< (( int ) ( row * row_length ) + i) << "]"
+                    //                         << ", while widmo.size = " << widmo.size() << endl;
 
                     int color = widmo[ ( int ) ( row * row_length ) + i ] - ( minZthreshold-1 );
                     if ( color > 0 )
@@ -523,7 +527,11 @@ void box_of_matrix::draw_all ( QPainter * pior )
     //      << endl ;
 
 
-    draw_pinup_infos ( piorko );
+//    static int counter ;
+//    cout << "Refreshing the specttrum " << p->give_spectrum_name() << "  " << counter ++ << endl;
+    auto font_size = prepare_font_size();
+
+    draw_pinup_infos ( piorko, font_size );
     draw_bananas ( piorko );
 
     // RUBBER -------------
@@ -555,30 +563,37 @@ void box_of_matrix::draw_all ( QPainter * pior )
     // end of RUBBER ------
 
 
+    //    if ( flag_banana_creating_mode ) // while user clicks verices of the new banana
+    //        {
+    //            // draw new banana linear
+    //            draw_lines_of_new_banana();
+    //    }
+
+
     // this below you may see while clicking the right button of the mouse
     // cout << "Integrtion of this part of the picture is : " << integral << endl;
     now_working--;
 
 }
 //***********************************************************************
-void box_of_matrix::draw_pinup_infos ( QPainter & piorko )
+void box_of_matrix::draw_pinup_infos ( QPainter & piorko, int font_size )
 {
     // pinup infos ====================
     // Pinup with the general  info  (about the gates required (dark yellow))
-    
+
+
+
     piorko.setPen ( QPen ( black_white ? Qt::black : Qt::darkYellow, 2, Qt::SolidLine ) ); // preparing the pen
 
-    QFont sansFont ( "Helvetica [Cronyx]" );
+    QFont sansFont ( "Sans", font_size );
     piorko.setFont ( sansFont );
-
 
     // calculating the position of notice
     double x_notice = minX + 0.03 * ( maxX- minX ) ;
     double y_notice = maxY - ( 0.1* ( maxY - minY ) ) ;
 
     parent->nalepka_notice.set_xy ( x_notice,  y_notice );
-    sansFont.setPixelSize ( 12 );
-    piorko.setFont ( sansFont );
+    piorko.setFont ( sansFont);
     parent->nalepka_notice.draw ( this, &piorko, false );
 
 
@@ -601,7 +616,7 @@ void box_of_matrix::draw_pinup_infos ( QPainter & piorko )
     //----------- other - user definied notices -----------------
     piorko.setPen ( QPen ( black_white ? Qt::black :  Qt::cyan, 2, Qt::SolidLine ) ); // preparing the pen
 
-    sansFont.setPixelSize ( 15 );
+    sansFont.setPixelSize ( font_size);  // was: 15
     piorko.setFont ( sansFont );
 
     for ( unsigned int i = 0 ; i < parent->nalepka.size() ; i ++ ) // drawing all infos
@@ -838,6 +853,10 @@ void   box_of_matrix::mousePressEvent ( QMouseEvent * e )
         if (!rubberBand_lupa)
             rubberBand_lupa = new QRubberBand(QRubberBand::Rectangle, this);
 
+        QPalette pal;
+        pal.setBrush(QPalette::Highlight, QBrush(Qt::red));
+        rubberBand_lupa->setPalette(pal);
+
         rubberBand_lupa->setGeometry(QRect(starting_pt, QSize()));
         rubberBand_lupa->show();
 
@@ -845,8 +864,8 @@ void   box_of_matrix::mousePressEvent ( QMouseEvent * e )
     else if ( flag_banana_creating_mode ) // while user clicks verices of the new banana
     {
         new_banana_points.push_back ( e->pos() );
-        // draw new banana linear
-        draw_lines_of_new_banana();
+        // draw new banana linear - can be called from paintEvent (draw_all function)
+        // not from here !  draw_lines_of_new_banana();
     }
     else   // NON LUPA -----------------------------------------
     {
@@ -921,7 +940,7 @@ void  box_of_matrix::mouseMoveEvent ( QMouseEvent * e )
                         .arg ( real_y, 10 )
                         .arg ( contents,10 )
                         .arg( parent->give_spectrum_name().c_str() ).toStdString(),
-                            10*1000 ); //  seconds on the screen
+                        10*1000 ); //  seconds on the screen
         }
     }
 
@@ -949,35 +968,10 @@ void  box_of_matrix::mouseMoveEvent ( QMouseEvent * e )
 
             current_end_pt = e->pos();
 
-#if 0     // Old style of rubberband
-            QPainter p ( this );
-
-            //p.setRasterOp ( Qt::XorROP );   // qt3 atyle
-
-            p.setCompositionMode(QPainter::CompositionMode_Xor);
-            // Erase last drawn rubberband:
-            if ( flag_screen_just_repainted )
-            {
-                previous_end_pt = current_end_pt;
-                // and no need to erasing previous
-            }
-            else
-            {
-                // p.setPen( QPen( backgroundColor(), 3 ) );
-                p.setPen ( QPen ( Qt::white, 1 ) );
-                p.drawRect ( QRect ( starting_pt, previous_end_pt ) );
-            }
-
-            // Draw the new one:
-            p.setPen ( QPen ( Qt::white, 1 ) );
-            p.drawRect ( QRect ( starting_pt, current_end_pt ) );
-            //p.setRasterOp ( Qt::CopyROP );
-            p.setCompositionMode(QPainter::CompositionMode_SourceOver);
-#endif
             previous_end_pt = current_end_pt;
 
         }
-        else //  Not yet RUBBER, we are just positioning cursor to start lupa
+        else //  RUBBER not yet on screen, we are just positioning cursor to start lupa
         {
             // THIS WORKS !!!!!!!!!!!!!!
             // kursory lupy z + lub - sa wazne do momentu wejscia w rubberband mode
@@ -1095,10 +1089,7 @@ void  box_of_matrix::mouseReleaseEvent ( QMouseEvent* )
                              min ( y1, y2 ) ) ;
 
         }
-
         make_new_pixmap = true ;
-
-
         unsetCursor ();
         //setMouseTracking ( false ) ;
         current_cursor = is_usual ;
@@ -1110,7 +1101,6 @@ void  box_of_matrix::mouseReleaseEvent ( QMouseEvent* )
     {
         // not lupa, so perhaps it was moving the vertex
 
-
         if ( rubberband_on && ( flag_move_whole_polygon || flag_move_one_vertex_of_polygon ) )
         {
             //       cout << "This is rubberband " << endl;
@@ -1121,13 +1111,11 @@ void  box_of_matrix::mouseReleaseEvent ( QMouseEvent* )
             rubberband_on = false;
             //setMouseTracking ( false );
 
-
             // here make a reaction for zooming or for moving a vertex of the polygon
 
             // now we can return the coordinates of all the points
             typ_x   x1 = typ_x ( pix2worX ( starting_pt.x() ) );
             typ_x   y1 = typ_x ( pix2worY ( starting_pt.y() ) ) ;
-
 
             // p1 and p3 have the coordinates of the magnifying region
 
@@ -1137,8 +1125,6 @@ void  box_of_matrix::mouseReleaseEvent ( QMouseEvent* )
             //        << x1 << " " << y1
             //        << " new is  = " <<  x2  <<  ", "
             //        <<  y2 << endl;
-
-
 
             vector<polygon_gate>&  banana = parent->give_vector_of_polygons();
 
@@ -1165,9 +1151,9 @@ void  box_of_matrix::mouseReleaseEvent ( QMouseEvent* )
                 typ_x ydiff  = y2 - y1  ;
 
                 //    cout << "Moved by differnc  " << xdiff << " " << ydiff << endl ;
-//                COTO;
+                //                COTO;
                 it_of_moving_vertex = banana[nr_of_moved_polygon].polygon.begin() ;
-//                COTO;
+                //                COTO;
 
                 for ( ; it_of_moving_vertex !=banana[nr_of_moved_polygon].polygon.end() ;  it_of_moving_vertex++ )
                 {
@@ -1262,6 +1248,16 @@ void box_of_matrix::keyReleaseEvent ( QKeyEvent * e )
 
 }
 //**************************************************************************
+void box_of_matrix::force_new_pixmap(bool b)
+{
+    make_new_pixmap = b ;
+    parent->flag_repaint_spectrum_box = 1;
+	 parent->flag_repaint_channels_box = 1;
+	 parent->flag_repaint_counts_box = 1;
+	 parent->flag_repaint_bscale_box = 1;
+	 parent->update();
+}
+//**************************************************************************
 void box_of_matrix::construct_lupa_cursor_bitmaps()
 {
 
@@ -1281,7 +1277,7 @@ void box_of_matrix::construct_lupa_cursor_bitmaps()
     draw_lupa ( lupa_plus, Qt::color1, line_width, '+' ); // to bedzie mialo kolor czarny
     //------ zeby miec srodek kursora bialy a obwodke czarno
 
-     draw_lupa ( lupa_plus, Qt::color0, inner_line_width, '+' ); // teraz zerujemy srodek, bedzie bialy
+    draw_lupa ( lupa_plus, Qt::color0, inner_line_width, '+' ); // teraz zerujemy srodek, bedzie bialy
 
     // drawing mask --------------------------------
     draw_lupa ( lupa_plus_maska, Qt::color1, line_width, '+' );
@@ -1407,6 +1403,11 @@ void  box_of_matrix::select_nearest_vertex ( QMouseEvent *e )
         } // end of drawing all bananas
     }// endof if flag polygons
 
+}
+//***************************************************************************
+double box_of_matrix::prepare_font_size()
+{
+    return rect().width() / 80.0;
 }
 //****************************************************************************
 // this funkction finds the vertex where we clicked. As ther result we need to have
@@ -1566,22 +1567,6 @@ void  box_of_matrix::draw_lines_of_new_banana()
     QPainter p ( this );
     p.setPen ( QPen ( Qt::red, 1 ) );
 
-#if 0
-    // Qt3 style
-    
-    p.moveTo ( new_banana_points[0] ) ;
-    p.lineTo ( new_banana_points[0] + QPoint ( +5, +5 ) );
-    p.lineTo ( new_banana_points[0] + QPoint ( -5, -5 ) );
-    p.moveTo ( new_banana_points[0] + QPoint ( -5, +5 ) ) ;
-    p.lineTo ( new_banana_points[0] + QPoint ( +5, -5 ) );
-
-    for ( unsigned int i = 0 ; i < new_banana_points.size() ; i++ )
-    {
-        p.lineTo ( new_banana_points[i] ) ;
-    }
-
-    //  p.lineTo( new_banana_points[0] + (p2 - p1 /*+ pd*/) );
-#endif 
 
     QPainterPath skok;
     skok.moveTo ( new_banana_points[0] ) ;

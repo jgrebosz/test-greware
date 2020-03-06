@@ -138,6 +138,14 @@ private slots:
 
 	void on_ComboBox_filter_activated(const QString &arg1);
 
+    void on_checkBox_case_sens_clicked(bool checked);
+
+    void on_Button_show_exit_clicked();
+
+	//void on_checkBox_toggled(bool checked);
+
+	void on_checkBox_enable_drag_toggled(bool checked);
+
 private:
     Ui::T4select_spectra *ui;
 
@@ -149,6 +157,7 @@ private:
 
     QString antifilter;
     std::vector<QString>    stos_filtrow;
+    bool flag_case_sensitive = 0;
 };
 
 #endif // T4SELECT_SPECTRA_H

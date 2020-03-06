@@ -92,7 +92,8 @@ void box_of_spectrum::paintEvent ( QPaintEvent * )
     QPainter piorko_ekranowe ( this );
     //    QPainter painter(this->viewport());
     //piorko_ekranowe.begin(parent);
-
+//	static int counter;
+//	cout << __PRETTY_FUNCTION__ << " update box_spectrum  " << (counter++) << endl;
     draw_all ( &piorko_ekranowe );
 }
 //***********************************************************************
@@ -207,12 +208,12 @@ void box_of_spectrum::draw_all ( QPainter * pior )
 
         // drawing a contents -----------------------------
 
-        //          cout << "in box_of_spectrum before World setting  x "
-        //         <<   minX << "-"
-        //         <<  maxX
-        //         <<  "  Y= " << minY
-        //         << "-" <<  maxY
-        //         << endl ;
+		//          cout << "in box_of_spectrum before World setting  x "
+		//         <<   minX << "-"
+		//         <<  maxX
+		//         <<  "  Y= " << minY
+		//         << "-" <<  maxY
+		//         << endl ;
 
         piorko.setPen ( black_white ? Qt::black : Qt::white ); // prepering the pen
 
@@ -602,10 +603,10 @@ void box_of_spectrum::draw_all ( QPainter * pior )
     draw_background_markers ( piorko );
     draw_1Dgates ( piorko );
 
-
-
     // pinup infos ====================
-    draw_pinup_notices(piorko);
+    double fontsiz = rect().width() / 50.0;
+    if(fontsiz > 5)
+        draw_pinup_notices(piorko, fontsiz);
 #if 0 
     // The info about the gates required (dark yellow)
     piorko.setPen ( QPen ( black_white ? Qt::black : Qt::darkYellow, 2, Qt::SolidLine ) ); // preparing the pen
@@ -830,12 +831,12 @@ void box_of_spectrum::draw_1Dgates ( QPainter & piorko )
 
 }
 //******************************************************************************
-void box_of_spectrum::draw_pinup_notices(QPainter & piorko)
+void box_of_spectrum::draw_pinup_notices(QPainter & piorko, int fontsize)
 {
     // The info about the gates required (dark yellow)
     piorko.setPen ( QPen ( black_white ? Qt::black : Qt::darkYellow, 2, Qt::SolidLine ) ); // preparing the pen
 
-    QFont sansFont ( "Helvetica [Cronyx]" );
+    QFont sansFont ( "Sans", fontsize );
     piorko.setFont ( sansFont );
 
 
@@ -849,7 +850,11 @@ void box_of_spectrum::draw_pinup_notices(QPainter & piorko)
 
 
     parent->nalepka_notice.set_xy ( x_notice,  y_notice );
-    sansFont.setPixelSize ( 12 );
+
+
+    sansFont.setPixelSize ( (parent->nalepka_notice.give_info().size()) > 90 ? // for very long notice
+                                0.6 * fontsize : fontsize );
+
     piorko.setFont ( sansFont );
     parent->nalepka_notice.draw ( this, &piorko, parent->give_flag_log_scale() );
 
@@ -875,7 +880,7 @@ void box_of_spectrum::draw_pinup_notices(QPainter & piorko)
     //----------- other user definied notices -----------------
     piorko.setPen ( QPen ( black_white ? Qt::black : Qt::cyan, 2, Qt::SolidLine ) ); // preparing the pen
 
-    sansFont.setPixelSize ( 15 );
+    sansFont.setPixelSize ( fontsize );
     piorko.setFont ( sansFont );
 
     for ( unsigned int i = 0 ; i < parent->nalepka.size() ; i ++ ) // drawing all gates
@@ -968,9 +973,12 @@ void box_of_spectrum::force_new_pixmap ( bool b )
     QPalette palette;
     palette.setColor(backgroundRole(), color);
     setPalette(palette);
+    parent->flag_repaint_spectrum_box = 1;
+	 parent->flag_repaint_counts_box = 1;
+	 parent->flag_repaint_channels_box = 1;
+	 parent->flag_repaint_bscale_box= false;
+	 parent->update();
 
-
-    
 }
 //**************************************************************
 //**************************************************************

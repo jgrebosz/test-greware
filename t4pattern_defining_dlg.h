@@ -16,7 +16,7 @@ class T4pattern_defining_dlg : public QDialog
     Q_OBJECT
 
 public:
-    explicit T4pattern_defining_dlg(QWidget *parent = 0);
+	explicit T4pattern_defining_dlg(QWidget *parent = nullptr);
     ~T4pattern_defining_dlg();
     void set_parameters(std::string specname,
                    std::string pattern1_, string pattern2_,
@@ -24,6 +24,10 @@ public:
                    std::string *two, std::string contents);
     void   get_parameters(vector<string> * vone, vector<string> * vtwo, vector<string> *filenames);
     string find_patterns_and_make_skeleton_with_procents(string text);
+
+	string find_patterns_and_replace(string text, string pattern, string replacement, bool & flag_some_pattern_found);
+
+	void choose_proper_forbidden_character();
 
     string make_a_clone_from_skeleton_using_kombination(string skeleton,
                                                         string proc1,
@@ -71,6 +75,7 @@ private:
     void prepare_file_contents_skeleton();
     string template_file_contents;
 
+	char forbiden_character;   // which we will use for replacing pattern1 purposes
 };
 
 #endif // T4PATTERN_DEFINING_DLG_H

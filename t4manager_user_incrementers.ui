@@ -78,7 +78,7 @@
             </size>
            </property>
            <property name="text">
-            <string>&lt;font color=&quot;#ff0000&quot;&gt;&lt;p align=&quot;right&quot;&gt;to Edit the incrementer - just double click on it&lt;/p&gt;&lt;/font&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;to EDIT the incrementer - just double click on its name&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignVCenter</set>
@@ -160,8 +160,8 @@
                   <string>Add new incrementer</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>../../3kra/gwiazdka.png</normaloff>../../3kra/gwiazdka.png</iconset>
+                  <iconset resource="greware_icons.qrc">
+                   <normaloff>:/images/images/gwiazdka.png</normaloff>:/images/images/gwiazdka.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -171,8 +171,8 @@
                   <string>How to clone the incrementer</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>../../3kra/clone.png</normaloff>../../3kra/clone.png</iconset>
+                  <iconset resource="greware_icons.qrc">
+                   <normaloff>:/images/images/clone.png</normaloff>:/images/images/clone.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -185,8 +185,8 @@
                   <string>Remove selected</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>../../3kra/erase.png</normaloff>../../3kra/erase.png</iconset>
+                  <iconset resource="greware_icons.qrc">
+                   <normaloff>:/images/images/erase.png</normaloff>:/images/images/erase.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -209,8 +209,8 @@
                   <string>Edit selected incrementer</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>../../3kra/pencil.png</normaloff>../../3kra/pencil.png</iconset>
+                  <iconset resource="greware_icons.qrc">
+                   <normaloff>:/images/images/pencil.png</normaloff>:/images/images/pencil.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -226,7 +226,7 @@
                 <bool>true</bool>
                </property>
                <property name="text">
-                <string>&lt;font size=&quot;-1&quot;&gt;&quot;Text filter&quot; for incrementer names listed above&lt;/font&gt;</string>
+                <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:small;&quot;&gt;&amp;quot;Text filter&amp;quot; for user incrementer names listed above&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
                </property>
                <property name="textFormat">
                 <enum>Qt::AutoText</enum>
@@ -257,11 +257,11 @@
                   <bool>false</bool>
                  </property>
                  <property name="text">
-                  <string>Clone &quot;_A_1_&quot;</string>
+                  <string>Smart clone</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>../../3kra/clone.png</normaloff>../../3kra/clone.png</iconset>
+                  <iconset resource="greware_icons.qrc">
+                   <normaloff>:/images/images/clone.png</normaloff>:/images/images/clone.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -296,7 +296,8 @@
             </sizepolicy>
            </property>
            <property name="text">
-            <string>Exit</string>
+            <string>Exit
+the manager</string>
            </property>
           </widget>
          </item>
@@ -414,7 +415,9 @@
    </item>
   </layout>
  </widget>
- <resources/>
+ <resources>
+  <include location="greware_icons.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>push_exit</sender>

@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Wizard for adding a special incrementor</string>
   </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
+  </property>
   <property name="wizardStyle">
    <enum>QWizard::ModernStyle</enum>
   </property>
@@ -36,8 +39,7 @@
     <item>
      <widget class="QLabel" name="textLabel3">
       <property name="text">
-       <string>&quot;&lt;font color=&quot;#ff0000&quot;&gt;&lt;b&gt;WHEN&lt;/b&gt;&lt;/font&gt;&quot; - means that for some events this incrementor may not have the meaningful 
-value.&lt;/font&gt;</string>
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&amp;quot;&lt;span style=&quot; font-weight:600; color:#ff0000;&quot;&gt;WHEN&lt;/span&gt;&amp;quot; - means that for some events this incrementor may not have a meaningful value.&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
       </property>
       <property name="alignment">
        <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>

@@ -23,8 +23,17 @@
   <property name="windowTitle">
    <string>Assistant for creating a condition</string>
   </property>
+  <property name="toolTip">
+   <string notr="true"/>
+  </property>
+  <property name="whatsThis">
+   <string>Tool which helps you to create your condition</string>
+  </property>
   <property name="styleSheet">
    <string notr="true"/>
+  </property>
+  <property name="locale">
+   <locale language="English" country="UnitedStates"/>
   </property>
   <property name="wizardStyle">
    <enum>QWizard::ModernStyle</enum>

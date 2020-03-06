@@ -83,7 +83,7 @@
             </size>
            </property>
            <property name="text">
-            <string>&lt;font color=&quot;#ff0000&quot;&gt;&lt;p align=&quot;right&quot;&gt;to Edit the condition - just double click on it&lt;/p&gt;&lt;/font&gt;</string>
+            <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;right&quot;&gt;&lt;span style=&quot; color:#ff0000;&quot;&gt;to EDIT the condition - just double click on its name&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
            </property>
            <property name="alignment">
             <set>Qt::AlignVCenter</set>
@@ -220,8 +220,8 @@ selection-background-color: rgb(176, 76, 4);</string>
                 <string>Add new condition</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>gwiazdka.png</normaloff>gwiazdka.png</iconset>
+                <iconset resource="greware_icons.qrc">
+                 <normaloff>:/images/images/gwiazdka.png</normaloff>:/images/images/gwiazdka.png</iconset>
                </property>
               </widget>
              </item>
@@ -244,8 +244,11 @@ selection-background-color: rgb(176, 76, 4);</string>
                 <string>Edit selected condition</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>pencil.png</normaloff>pencil.png</iconset>
+                <iconset resource="greware_icons.qrc">
+                 <normaloff>:/images/images/pencil.png</normaloff>:/images/images/pencil.png</iconset>
+               </property>
+               <property name="default">
+                <bool>true</bool>
                </property>
               </widget>
              </item>
@@ -259,11 +262,11 @@ selection-background-color: rgb(176, 76, 4);</string>
                 <bool>true</bool>
                </property>
                <property name="text">
-                <string>Remove selected</string>
+                <string>Remove selected condition(s)</string>
                </property>
                <property name="icon">
-                <iconset>
-                 <normaloff>erase.png</normaloff>erase.png</iconset>
+                <iconset resource="greware_icons.qrc">
+                 <normaloff>:/images/images/erase.png</normaloff>:/images/images/erase.png</iconset>
                </property>
               </widget>
              </item>
@@ -288,6 +291,19 @@ selection-background-color: rgb(176, 76, 4);</string>
           </layout>
          </item>
          <item>
+          <spacer name="horizontalSpacer">
+           <property name="orientation">
+            <enum>Qt::Horizontal</enum>
+           </property>
+           <property name="sizeHint" stdset="0">
+            <size>
+             <width>40</width>
+             <height>20</height>
+            </size>
+           </property>
+          </spacer>
+         </item>
+         <item>
           <layout class="QVBoxLayout" name="verticalLayout_6">
            <item>
             <widget class="QLabel" name="label_statistics">
@@ -308,12 +324,24 @@ selection-background-color: rgb(176, 76, 4);</string>
               <layout class="QVBoxLayout" name="verticalLayout_5">
                <item>
                 <widget class="QPushButton" name="push_How_to_clone">
+                 <property name="toolTip">
+                  <string notr="true"/>
+                 </property>
                  <property name="text">
-                  <string>How to duplicate</string>
+                  <string notr="true">How to duplicate</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>clone.png</normaloff>clone.png</iconset>
+                  <iconset resource="greware_icons.qrc">
+                   <normaloff>:/images/images/clone.png</normaloff>:/images/images/clone.png</iconset>
+                 </property>
+                 <property name="autoDefault">
+                  <bool>false</bool>
+                 </property>
+                 <property name="default">
+                  <bool>false</bool>
+                 </property>
+                 <property name="flat">
+                  <bool>false</bool>
                  </property>
                 </widget>
                </item>
@@ -323,8 +351,8 @@ selection-background-color: rgb(176, 76, 4);</string>
                   <string>Multi-Clone (by pattern)</string>
                  </property>
                  <property name="icon">
-                  <iconset>
-                   <normaloff>clone.png</normaloff>clone.png</iconset>
+                  <iconset resource="greware_icons.qrc">
+                   <normaloff>:/images/images/clone.png</normaloff>:/images/images/clone.png</iconset>
                  </property>
                 </widget>
                </item>
@@ -355,7 +383,8 @@ selection-background-color: rgb(176, 76, 4);</string>
                 </sizepolicy>
                </property>
                <property name="text">
-                <string>Exit</string>
+                <string notr="true">Exit
+the manager</string>
                </property>
               </widget>
              </item>
@@ -490,10 +519,10 @@ selection-background-color: rgb(176, 76, 4);</string>
   </layout>
  </widget>
  <tabstops>
-  <tabstop>push_edit_selected_condition</tabstop>
-  <tabstop>push_create_new</tabstop>
-  <tabstop>push_A_1_cloning</tabstop>
   <tabstop>push_exit</tabstop>
+  <tabstop>push_create_new</tabstop>
+  <tabstop>push_edit_selected_condition</tabstop>
+  <tabstop>table</tabstop>
   <tabstop>ComboBox_filter</tabstop>
   <tabstop>push_exit_2</tabstop>
   <tabstop>push_Save_review_as_file</tabstop>
@@ -501,7 +530,7 @@ selection-background-color: rgb(176, 76, 4);</string>
   <tabstop>tabWidget4</tabstop>
   <tabstop>push_How_to_clone</tabstop>
   <tabstop>push_remove_selected</tabstop>
-  <tabstop>table</tabstop>
+  <tabstop>push_A_1_cloning</tabstop>
  </tabstops>
  <resources>
   <include location="greware_icons.qrc"/>
@@ -514,8 +543,8 @@ selection-background-color: rgb(176, 76, 4);</string>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>618</x>
-     <y>575</y>
+     <x>927</x>
+     <y>872</y>
     </hint>
     <hint type="destinationlabel">
      <x>548</x>
@@ -530,8 +559,8 @@ selection-background-color: rgb(176, 76, 4);</string>
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>603</x>
-     <y>585</y>
+     <x>929</x>
+     <y>874</y>
     </hint>
     <hint type="destinationlabel">
      <x>694</x>

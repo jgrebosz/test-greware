@@ -19,10 +19,19 @@ T4user_condition_wizard::T4user_condition_wizard(QWidget *parent) :
 {
     ui->setupUi(this);
 
-    // I made it here, below, manually because the designer is buggy in this helpRequest case
+	// To avoid writing this in Polish
+	setButtonText(QWizard::NextButton, "Next  >" );
+	setButtonText(QWizard::BackButton, "<  Back" );
+	setButtonText(QWizard::CancelButton, "Cancel" );
+	setButtonText(QWizard::FinishButton, "Finish" );
+
+	// I made it here, below, manually because the designer is buggy in this helpRequest case
     setOption(HaveHelpButton, true);
     connect(this, SIGNAL(helpRequested()), this, SLOT(help()));
-    // ---------------------------------------------------------------------------------------------------------------
+
+	setButtonText(QWizard::HelpButton, "Help" );
+
+	// ---------------------------------------------------------------------------------------------------------------
 
     QStringList labels;
     labels << "What to do if the incrementer is NOT VALID\nfor particular event"
